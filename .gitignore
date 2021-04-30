@@ -1,0 +1,10 @@
+/node_modules
+/dist
+
+# local env files
+.env
+
+package-lock.json
+yarn.lock
+
+/mp3

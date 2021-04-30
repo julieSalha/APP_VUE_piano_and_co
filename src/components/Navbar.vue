@@ -1,12 +1,12 @@
 <template>
     <nav>
         <ul>
-            <li><a href="/account"><h2>My account</h2></a></li>
-            <li><a href="/"><h2>Chords suggestion</h2></a></li>
-            <li><a href="/interpretation"><h2>All interpretations</h2></a></li>
-            <li><a href="/community"><h2>Community</h2></a></li>
-            <li><a href="/my-player"><h2>My player</h2></a></li>
-            <li><a href="/about"><h2>About</h2></a></li>
+            <li><router-link to="/account"><h2>My account</h2></router-link></li>
+            <li><router-link to="/"><h2>Chords suggestion</h2></router-link></li>
+            <li><router-link to="/interpretation"><h2>All interpretations</h2></router-link></li>
+            <li><router-link to="/community"><h2>Community</h2></router-link></li>
+            <li><router-link to="/my-player"><h2>My player</h2></router-link></li>
+            <li><router-link to="/about"><h2>About</h2></router-link></li>
         </ul>
     </nav>
 </template>

@@ -6,18 +6,12 @@
         <div class="footer-content__bottom">
             <div class="footer-content__bottom__first-block">
                 <div class="footer-links">
-                <div><a href="/">Contact</a></div>
-                <div><a href="/">Mentions légales</a></div>
-            </div>
+                  <div><a href="/">Contact</a></div>
+                  <div><a href="/">Mentions légales</a></div>
+                </div>
             </div>
             <div class="footer-content__bottom__second-block">
-                <div class="footer-socials socials">
-                    <a class="footer-socials__item socials__linkedin" href="" target="_blank" rel="noopener noreferrer"><img src="../assets/picto/icon_linkedin.svg" alt="linkedin" /></a>
-                    <a class="footer-socials__item socials__instagram" href="" target="_blank" rel="noopener noreferrer"><img src="../assets/picto/icon_instagram.svg" alt="instagram" /></a>
-                    <!-- TODO Ajouter un lien github -->
-                    <!-- <a class="footer-socials__item socials__github" href="" target="_blank" rel="noopener noreferrer"><img src="../assets/picto/icon_facebook.svg" alt="facebook" /></a> -->
-                </div>
-                <p>© Copyright 2020 - Julie Salha</p>
+                <p>© Copyright 2021 - Julie Salha</p>
             </div>
         </div>
     </footer>

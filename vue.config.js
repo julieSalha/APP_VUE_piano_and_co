@@ -1,7 +1,8 @@
 // vue.config.js file to be place in the root of your repository
 
 module.exports = {
+  
     publicPath: process.env.NODE_ENV === 'production'
-      ? 'APP_VUE_piano_and_co'
+      ? '/APP_VUE_piano_and_co/'
       : '/'
   }

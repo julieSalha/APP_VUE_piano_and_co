@@ -1,18 +1,21 @@
 <template>
     <div v-if="user" class="account-container">
       <div class="account-content-profil">
-        <button class="button btn-third">Edit profile</button>
+        <!-- <button class="button btn-third">Edit profile</button> -->
         <h2>My informations</h2>
         <article>
             <div class="account-content__photo" >
                 <img alt="Profile picture" :src="user.profile_picture" >
             </div>
-            <div class="account-content__identification" >Given name / Name: {{ user.givenName }}</div>
-            <div class="account-content__gender" >Gender: {{ user.gender }}</div>
-            <div class="account-content__birth">Birthday: {{ new Date(user.date_of_birth).toUTCString().split(' ').slice(1,4).join(' ')  }}</div>
-            <div class="account-content__adress" >Adress: {{ user.adress }}</div>
-            <div class="account-content__biography" >Biography: {{ user.biography }}</div>
-            <div class="account-content__email" >Email: {{ user.email }}</div>
+            <div class="account-content__identification" >{{ user.givenName }} {{ user.familyName }}</div>
+            <div class="account-content__informations" >
+              <div class="account-content__gender" ><span>Gender: </span> {{ user.gender }}</div>
+              <div class="account-content__birth"><span>Birthday: </span>{{ new Date(user.date_of_birth).toUTCString().split(' ').slice(1,4).join(' ')  }}</div>
+              <div class="account-content__adress" ><span>Adress: </span>{{ user.adress }}</div>
+              <div class="account-content__biography" ><span>Biography: </span>{{ user.biography }}</div>
+              <div class="account-content__email" ><span>Email: </span>{{ user.email }}</div>
+            </div>
+
         </article>
       </div>
       <div class="account-content__music">
@@ -47,10 +50,10 @@
             </ul>   
           </div>
         </div>
-        <div class="account-playlists">
+        <!-- <div class="account-playlists">
           <h2>My playlists</h2>
           <button class="button btn-third">New playlist</button>
-        </div>
+        </div> -->
       </div> 
   </div>
 </template>
@@ -112,10 +115,30 @@ export default {
 
 .account-content__photo {
   img {
+    max-width: 50%;
+    width: 100%;
     border-radius: 50%;
-    border: 2px solid #42E4CE;
+    border: 2px solid;
   }
 }
+
+.account-content__identification {
+  margin-bottom: 20px;
+  color: #42E4CE;
+  font-size: 2.5rem;
+  text-transform: capitalize;
+}
+
+.account-content__informations {
+    padding-left: 50px;
+    text-align: left;
+
+    span {
+      color: #42E4CE;
+      font-size: 1.5rem;
+  }
+}
+
 
 .list-tracks {
   .button {
@@ -126,12 +149,18 @@ export default {
 
   li {
     display: flex;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: flex-end;
 
-    margin-bottom: 10px;
+    margin: 0 auto 10px;
     
+  }
+
+  span {
+    font-size: 1.6rem;
+    margin-bottom: 10px;
+    display: inline-block;
   }
 }
 

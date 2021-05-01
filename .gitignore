@@ -9,3 +9,6 @@ yarn.lock
 
 /mp3
 /dist
+
+eslintrc.js
+deploy.sh

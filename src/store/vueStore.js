@@ -44,15 +44,12 @@ const store = new Vuex.Store({
         UPDATE_INTERPRETATION_COMMENT(state, data){
           let idInterpretation;
           for (const item of state.interpretations) {
-            console.log(item[0]._id);
             if (item[0]._id === data.subjectOf) {
               idInterpretation = item[0]._id;
             }
           }
-          console.log('idInterpretation',idInterpretation);
           const index = state.interpretations.findIndex(interpretation => interpretation.id === idInterpretation)
           state.interpretations[index][1].push(data);
-          console.log('state.interpretations',state.interpretations);
         },   
         COMMENTS(state, payload) { state.comments = payload.data },
         DELETE_COMMENT(state, id) {
@@ -122,7 +119,6 @@ const store = new Vuex.Store({
           }
         },
         async postTrack(context, data){
-          console.log('data posttrack', data)
           try {
               const apiResponse = await axios.post(
                 'http://localhost:9966/api/interpretation', 
@@ -157,7 +153,6 @@ const store = new Vuex.Store({
                 withCredentials: true,
               }
             );
-            console.log('apiResponse comment', apiResponse.data.data)
             context.commit('COMMENTS', { data: apiResponse.data.data });            
           } catch (error) {
             console.log(error)
@@ -180,7 +175,6 @@ const store = new Vuex.Store({
                   withCredentials: true,
                 } 
               );
-              console.log('apiResponse comment', apiResponse.data.data);
               context.commit('UPDATE_INTERPRETATION_COMMENT', { data: apiResponse.data.data })
             } catch (error) {
               console.log(this.error);
@@ -197,7 +191,6 @@ const store = new Vuex.Store({
                 withCredentials: true,
               } 
             )
-            console.log('apiResponse',apiResponse);
             context.commit('DELETE_COMMENT', id);
           } catch (error) {
             console.log(error);
@@ -219,8 +212,6 @@ const store = new Vuex.Store({
                   withCredentials: true,
                 } 
               );
-              console.log('apiResponse create like', apiResponse);
-              //context.commit('LIKE', { data: apiResponse.data.data });
             } catch (error) {
               console.log(this.error);
             }
@@ -236,14 +227,11 @@ const store = new Vuex.Store({
                 withCredentials: true,
               } 
             )
-            console.log('apiResponse delete like',apiResponse);
-            //context.commit('DELETE_LIKE', id);
           } catch (error) {
             console.log(error);
           }
         },
         async fetchOneInterpretation(context, id) {
-          //console.log('fetchOneInterpretation id', id);
           try {
             const apiResponse = await axios.get(
               `http://localhost:9966/api/interpretation/${id}`,
@@ -254,7 +242,6 @@ const store = new Vuex.Store({
                 withCredentials: true,
               }
             );
-            //console.log('track to update',apiResponse.data.data);
             context.commit('INTERPRETATION_TO_EDIT', { data: apiResponse.data.data });
             
           } catch (error) {
@@ -273,7 +260,6 @@ const store = new Vuex.Store({
                 withCredentials: true,
               }
             );
-            console.log('all intrpretations', apiResponse.data);
             context.commit('INTERPRETATIONS', { data: apiResponse.data.data });            
           } catch (error) {
             console.log(error)
@@ -297,7 +283,6 @@ const store = new Vuex.Store({
           }
         },
         async editTrack(context, data) {  
-          console.log('data edit', data);
           try {
             const apiResponse = await axios.put(
               `http://localhost:9966/api/interpretation/${data.id}`,
@@ -316,7 +301,6 @@ const store = new Vuex.Store({
                 withCredentials: true,
               } 
             )
-            console.log('apiResponse',apiResponse);
             context.commit('UPDATE_TRACK', apiResponse.data.data);
           } catch (error) {
             console.log(error);
@@ -338,8 +322,6 @@ const store = new Vuex.Store({
                 context.commit('LOGGED');
               }
 
-              //console.log(this.state.statusLogged);
-              console.log('apiResponse check', apiResponse);
               context.commit('USER', { data: apiResponse.data.data[0] });
               context.commit('MY_TRACKS', { data: apiResponse.data.data[1] });
             } catch (error) {

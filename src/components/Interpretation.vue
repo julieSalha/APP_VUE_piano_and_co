@@ -4,7 +4,7 @@
       <div>
         <ul>
           <li v-for="item in interpretations.data" :key="item.id" :id="item.id">
-            <img :src="item[0].cover" :alt="item[0].title">
+            <img class="interpretation-visual" :src="item[0].cover" :alt="item[0].title">
             <figure>
               <figcaption>Listen to {{ item[0].title }} -- {{ item[0].artist_name }}</figcaption>
               <audio
@@ -15,7 +15,18 @@
               </audio>
             </figure>
             <div>
-              <button class="like-button button" @click="postLike($event, item[0]._id)">Like track</button>
+              <li v-for="like in item[2]" :key="like._id">{{ like.author }}</li>
+              <li v-if="checkLike(item[2])"> déjà liké</li>
+
+
+              <button class="like-button button" @click="postLike($event, item[0]._id)">
+                <span class="like-button_like">
+                  <img src="../assets/like.svg" alt="like music">
+                </span>
+                <span class="like-button_liked">
+                  <img src="../assets/liked.svg" alt="liked music">
+                </span>
+              </button>
             </div>
             <div class="comment-space">
               <ul>
@@ -70,16 +81,26 @@ export default {
       event.target.parentNode.classList.add('hidden');
       this.$store.dispatch('deleteComment', id);
     },
+    checkLike(data) {
+      let check = false;
+      console.log('likes',data)
+      console.log('user id', this.user._id);
+      data.forEach(like => {
+        console.log('author', like.author)
+        if (this.user._id === like.author) {
+          console.log('déjà liké')
+          check = true;
+          return check;
+        }
+      });
+    },
     postLike(event, id) {
       const data = {
         subjectOf: id,
         author: this.user
       }
-
-      console.log('id post like', id);
     
-      //console.log('data post Like',data)
-      if (!event.target.classList.contains('active')) {
+      if (!event.target.parentNode.parentNode.classList.contains('active')) {
         this.$store.dispatch('createLike', data);
         console.log('createLike')
       } else {
@@ -87,7 +108,7 @@ export default {
         console.log('deleteLike');
       }
 
-      event.target.classList.toggle('active');
+      event.target.parentNode.parentNode.classList.toggle('active');
     }
   },
   async mounted() {
@@ -102,7 +123,33 @@ export default {
 .like-button {
   &.active {
     color: blue;
+
+    .like-button_like {
+      display: none;
+    }
+
+    .like-button_liked {
+      display: block;
+    }
   }
+
+  span {
+    display: inline-block;
+    width: 30px;
+  }
+
+  .like-button_liked {
+    display: none;
+  }
+}
+
+.interpretation-visual {
+  max-width: 50%;
+  width: 100%;
+}
+
+figcaption {
+  margin-bottom: 20px;
 }
 </style>
 

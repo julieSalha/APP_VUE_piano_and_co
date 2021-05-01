@@ -1,7 +1,9 @@
 <template>
     <div class="modal block-modal-interpretation" id="interpretation-modal" @click="closeModal">
         <div class="modal-content block-modal-interpretation__content">
-            <span class="modal-close block-modal-interpretation__close" @click="close">x</span>
+            <span class="modal-close block-modal-interpretation__close" @click="close">
+              <img src="../../assets/arrow.svg" alt="arrow close">
+            </span>
             <form id="block-modal-interpretation__form" @submit.prevent="postTrack">
                 <h2 class="block-modal-interpretation__title">Add new interpretation</h2>
                 <label for="interpretationTitle">Title*</label>
@@ -52,12 +54,12 @@ export default {
   data() {
     return {
       isValidInput: Boolean,
-      title: 'fff',
-      artist: 'fff',
+      title: '',
+      artist: '',
       cover: '',
       track: '',
-      trackName: 'fffff',
-      duration:'fff'
+      trackName: '',
+      duration:''
     }
   },
   computed: {
@@ -184,6 +186,11 @@ export default {
         user: this.user
       })
       document.querySelector('#interpretation-modal').classList.remove('active');
+        this.title = '';
+        this.artist = '';
+        this.track = '';
+        this.cover = '';
+        this.duration = '';
     }
   }
 }
@@ -210,6 +217,7 @@ export default {
 
     /* Modals Content */
   .modal-content{
+    position: relative;
     margin: 15% auto; 
     padding: 20px;
     width: 100%; 
@@ -220,18 +228,9 @@ export default {
 
   /* The Close Button Modals */
   .modal-close {
-    color: #aaa;
-    background-color: #000000;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-  }
-
-.modal-close:hover,
-.modal-close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
+    position: absolute;
+    right: 20px;
+    top: 20px;
   }
   
   #bblock-modal-interpretation__form button {

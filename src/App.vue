@@ -9,7 +9,7 @@
         <a id="header-no-connect__register" class="button btn-third" href="/#register" @click="displayRegister">Register</a>
       </div>
       <div>
-        <p>Piano & Co Logo</p>
+        <p><img class="logo" src="./assets/logo.png" alt="piano and co"></p>
         <p>Lorem ipsum</p>
       </div>
 
@@ -58,9 +58,7 @@ export default {
     }
   },
   created(){
-    if (this.$store.state.statusLogged) {
-      this.$store.dispatch('checkUser');
-    }
+    this.$store.dispatch('checkUser');
   }
 }
 </script>  
@@ -95,6 +93,10 @@ body {
   color: $c-grey!important;
   font-family: 'Roboto', sans-serif;
   font-size: 1.2rem;
+}
+
+main {
+  min-height: calc(100vh - 150px);
 }
 
 h2 {
@@ -223,13 +225,12 @@ footer, header, hgroup, menu, nav, section {
   }
 }
 
-@media screen and (min-width: 1024px) {
-  main {
-      display: flex;
-      flex-wrap: nowrap;
-      justify-content: flex-start;
-  }
+.logo {
+  max-width: 200px;
+  width: 100%;
+}
 
+@media screen and (min-width: 1024px) {
   .home-content__menu {
     display: block;
 
@@ -241,9 +242,14 @@ footer, header, hgroup, menu, nav, section {
   }
 
   .home-content {
-      display: flex;
-      flex-wrap: nowrap;
-      justify-content: flex-start;
+    max-width: 1024px;
+    margin: auto;
+  }
+
+  main {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
   }
 }
 </style>

@@ -1,19 +1,6 @@
 <template>
     <footer>
-      <div class="footer-content__top">
-        <navbar  v-if="statusLogged"></navbar>
-      </div>
-        <div class="footer-content__bottom">
-            <div class="footer-content__bottom__first-block">
-                <div class="footer-links">
-                  <div><a href="/">Contact</a></div>
-                  <div><a href="/">Mentions légales</a></div>
-                </div>
-            </div>
-            <div class="footer-content__bottom__second-block">
-                <p>© Copyright 2021 - Julie Salha</p>
-            </div>
-        </div>
+        <p>© Copyright 2021 - Julie Salha</p>
     </footer>
 </template>
 
@@ -36,7 +23,6 @@ export default {
 <style lang="scss">
 footer {
     padding: 10px;
-    background-color: #A0C1D4;
     text-align: center;
 }
 

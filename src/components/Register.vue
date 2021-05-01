@@ -69,7 +69,7 @@
             <label for="userBiography">Your biography:</label>
           </p>
           <p>
-            <textarea id="userBiography" name="userBiography" rows="4" cols="50" placeholder="Your biography" v-model="biography"></textarea>
+            <textarea id="userBiography" name="userBiography" placeholder="Your biography" v-model="biography"></textarea>
           </p>
         </div>
         <div>
@@ -239,7 +239,12 @@ export default {
 
 <style>
 #register {
-  max-width: 50%;
   margin: 30px auto;
+}
+
+#userBiography {
+  width: 100%;
+  min-height: 100px;
+  padding: 10px;
 }
 </style>

@@ -121,9 +121,6 @@
       <section>
         <div v-if="!statusLogged" class="agreement-suggestion__connexion">
           <login></login>
-          <div class="agreement-suggestion__connexion-information">
-            <button class="button--register button btn-third" @click="displayRegister">Register</button>
-          </div>
           <register></register>
         </div>
       </section>
@@ -383,6 +380,11 @@ export default {
           document.querySelector('#agreement-suggestion__no-result').classList.remove('hidden');
         }
 
+        this.key_selected = '';
+        this.firstChord = '';
+        this.secondChord = '';
+        this.thirstChord = '';
+
       } catch (error) {
         console.log(this.error);
       }
@@ -417,6 +419,10 @@ section {
   margin-bottom: 40px;
 }
 
+#chords-suggestion-form {
+  margin-bottom: 20px;
+}
+
 .agreement-suggestion__content {
   .field {
     display: inline-block;
@@ -439,8 +445,10 @@ section {
 }
 
 .agreement-suggestion__connexion {
-  border: 2px solid;
+  max-width: 400px;
   padding: 10px 20px;
+  margin: auto;
+  border: 2px solid;
 }
 
 @media screen and (min-width:768px) {

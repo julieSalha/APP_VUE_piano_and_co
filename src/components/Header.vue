@@ -3,7 +3,7 @@
         <header>
             <div class="header-content">
                 <a href="/" alt="link to home Piano and co">
-                    <h1>Piano & Co.</h1>
+                    <p><img class="logo" src="../assets/logo.png" alt="piano and co"></p>
                 </a>
                 <button id="header-burger" class="header-burger button" @click="openMenu" v-if="statusLogged">
                     <span class="header__burger-icon">

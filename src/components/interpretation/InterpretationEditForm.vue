@@ -1,7 +1,9 @@
 <template>
     <div :interpretation="interpretation" class="modal block-modal-interpretation-edit" :id="interpretation._id" @click="closeModal($event)">
         <div class="modal-content block-modal-interpretation__content">
-            <span class="modal-close block-modal-interpretation__close" @click="close($event)">x</span>
+            <span class="modal-close block-modal-interpretation__close" @click="close($event)">
+              <img src="../../assets/arrow.svg" alt="arrow close">
+            </span>
             <form id="block-modal-interpretation__form" @submit.prevent="editTrack($event)">
                 <h2 class="block-modal-interpretation__title">Edit interpretation</h2>
                 <label for="editTitle">Title*</label>
@@ -56,8 +58,8 @@ export default {
   data() {
     return {
       isValidInput: Boolean,
-      title: 'fff',
-      artist: 'fff',
+      title: '',
+      artist: '',
       cover: '',
       track: '',
       trackName: '',
@@ -228,6 +230,7 @@ export default {
 
     /* Modals Content */
   .modal-content{
+    position: relative;
     margin: 15% auto; 
     padding: 20px;
     width: 100%; 
@@ -238,18 +241,9 @@ export default {
 
   /* The Close Button Modals */
   .modal-close {
-    color: #aaa;
-    background-color: #000000;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-  }
-
-.modal-close:hover,
-.modal-close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
+    position: absolute;
+    right: 20px;
+    top: 20px;
   }
   
   #bblock-modal-interpretation__form button {

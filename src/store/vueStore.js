@@ -41,6 +41,11 @@ const store = new Vuex.Store({
         },
         INTERPRETATION_TO_EDIT(state, payload){ state.interpretationToEdit = payload },
         INTERPRETATIONS( state, payload ){ state.interpretations = payload },
+        // UPDATE_LIKES_INTERPRETATION(state, payload){
+        //   const index = state.interpretations.findIndex(interpretation => interpretation._id === payload.subjectOf)
+        //   //console.log('index',index);
+        //   state.interpretations[index][1].push(payload);
+        // },
         UPDATE_INTERPRETATION_COMMENT(state, data){
           let idInterpretation;
           for (const item of state.interpretations) {
@@ -212,6 +217,11 @@ const store = new Vuex.Store({
                   withCredentials: true,
                 } 
               );
+
+              // Update likes interpretation
+              console.log('apiResponse',apiResponse.data.data);
+              //context.commit('UPDATE_LIKES_INTERPRETATION', { data: apiResponse.data.data });
+
             } catch (error) {
               console.log(this.error);
             }
@@ -227,6 +237,8 @@ const store = new Vuex.Store({
                 withCredentials: true,
               } 
             )
+
+            console.log('delete', apiResponse)
           } catch (error) {
             console.log(error);
           }

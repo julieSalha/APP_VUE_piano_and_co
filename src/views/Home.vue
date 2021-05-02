@@ -459,6 +459,10 @@ section {
       flex-wrap: nowrap;
       align-items: center;
     }
+
+    select {
+      margin: 0 20px;
+    }
   }
 }
 </style>

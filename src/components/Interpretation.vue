@@ -2,7 +2,7 @@
     <div v-if="user"> 
       <h2>Interpretations</h2>  
       <div>
-        <ul>
+        <ul class="list-interpretations">
           <li v-for="item in interpretations.data" :key="item.id" :id="item.id">
             <img class="interpretation-visual" :src="item[0].cover" :alt="item[0].title">
             <figure>
@@ -14,12 +14,31 @@
                       <code>audio</code> element.
               </audio>
             </figure>
-            <div>
-              <li v-for="like in item[2]" :key="like._id">{{ like.author }}</li>
-              <li v-if="checkLike(item[2])"> déjà liké</li>
-
-
-              <button class="like-button button" @click="postLike($event, item[0]._id)">
+            <div class="like-container">
+              <div v-if="item[2].length > 0">
+              <template v-if="checkLikes(item[2])">
+                <button class="like-button button active" @click="toggleLike($event, item[0]._id, item[2])">
+                  <span class="like-button_like">
+                    <img src="../assets/like.svg" alt="like music">
+                  </span>
+                  <span class="like-button_liked">
+                    <img src="../assets/liked.svg" alt="liked music">
+                  </span>
+                </button>
+              </template>
+              <template v-else>
+                <button class="like-button button" @click="toggleLike($event, item[0]._id, item[2])">
+                  <span class="like-button_like">
+                    <img src="../assets/like.svg" alt="like music">
+                  </span>
+                  <span class="like-button_liked">
+                    <img src="../assets/liked.svg" alt="liked music">
+                  </span>
+                </button>
+              </template>
+              </div>
+            <div v-else>
+              <button class="like-button button" @click="toggleLike($event, item[0]._id, item[2])">
                 <span class="like-button_like">
                   <img src="../assets/like.svg" alt="like music">
                 </span>
@@ -28,19 +47,32 @@
                 </span>
               </button>
             </div>
+            <p>Likes: {{ item[2].length }}</p> 
+            </div>
             <div class="comment-space">
               <ul>
-                <li v-for="item in item[1]" :key="item._id" :id="item._id">{{ item.content }} 
-                  <button @click="deleteComment($event, item._id)">delete</button>
-                  <button class="like-button button" @click="postLike($event, item._id)">Like Comm</button>
-                </li>
-                
+                <li class="comment-item" v-for="item in item[1]" :key="item._id" :id="item._id">
+                  <div>{{ item.content }}</div> 
+                  <div class="comment-item-actions">
+                    <button class="delete-button button" @click="deleteComment($event, item._id)">
+                      <span>
+                        <img src="../assets/trash.svg" alt="delete comment">
+                      </span>
+                    </button>
+                    <button class="like-button like-button-comment button" @click="toggleLike($event, item._id)">
+                      <span class="like-button_like">
+                        <img src="../assets/likeTwo.svg" alt="like comment">
+                      </span>
+                      <span class="like-button_liked">
+                        <img src="../assets/likedTwo.svg" alt="liked comment">
+                      </span>
+                    </button>
+                  </div>
+                </li> 
               </ul>
-              <ul>
-                <p>Likes: {{ item[2].length }}</p>
-              </ul>
-              <input @keyup.prevent.enter="postComment($event, item[0]._id)" placeholder="Add your comment" form="comment-form">
-          </div>
+              <label :for="'newcomment' + item[0]._id">Press enter to post comment</label>
+              <input :id="'newcomment' + item[0]._id" @keyup.prevent.enter="postComment($event, item[0]._id)" placeholder="your comment" form="comment-form">
+            </div>
           </li>
         </ul>
         <form action="#" method="" id="comment-form" class="hidden"></form>
@@ -53,6 +85,11 @@ import { mapState } from 'vuex'
 
 export default {
   name: 'Interpretation',
+  data() {
+    return {
+      //totalLikes: 0
+    }
+  },
   components: {
   },
   computed: {
@@ -81,20 +118,14 @@ export default {
       event.target.parentNode.classList.add('hidden');
       this.$store.dispatch('deleteComment', id);
     },
-    checkLike(data) {
-      let check = false;
-      console.log('likes',data)
-      console.log('user id', this.user._id);
+    checkLikes(data) {
+      const authors = [];
       data.forEach(like => {
-        console.log('author', like.author)
-        if (this.user._id === like.author) {
-          console.log('déjà liké')
-          check = true;
-          return check;
-        }
+        authors.push(like.author);
       });
+      return authors.includes(this.user._id);
     },
-    postLike(event, id) {
+    toggleLike(event, id, likes) {
       const data = {
         subjectOf: id,
         author: this.user
@@ -102,15 +133,13 @@ export default {
     
       if (!event.target.parentNode.parentNode.classList.contains('active')) {
         this.$store.dispatch('createLike', data);
-        console.log('createLike')
       } else {
         this.$store.dispatch('deleteLike', id);
-        console.log('deleteLike');
       }
-
       event.target.parentNode.parentNode.classList.toggle('active');
     }
   },
+
   async mounted() {
     await this.UserAccount();
     await this.allInterpretations();
@@ -120,19 +149,20 @@ export default {
 </script>
 
 <style lang="scss">
-.like-button {
-  &.active {
-    color: blue;
-
-    .like-button_like {
-      display: none;
-    }
-
-    .like-button_liked {
-      display: block;
-    }
+@media screen and (min-width:768px) {
+  .list-interpretations {
+    display: flex;
+    flex-wrap: wrap;
   }
 
+  li {
+    width: 50%;
+    min-width: 50%;
+    padding: 10px;
+  }
+}
+
+.like-button {
   span {
     display: inline-block;
     width: 30px;
@@ -141,11 +171,64 @@ export default {
   .like-button_liked {
     display: none;
   }
+
+  &.active {
+    .like-button_liked {
+      display: block;
+    }
+
+    .like-button_like {
+      display: none;
+    }
+  }
+
+  img {
+    max-width: 20px;
+  }
+}
+
+.like-container {
+  display: flex;
+  align-items: center;
+}
+
+.delete-button {
+  &.button {
+    margin: 0;
+  }
+  img {
+    max-width: 20px;
+  }
+}
+
+.comment-space {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+
+  ul {
+    margin-bottom: 10px;
+  }
+}
+
+.comment-item {
+  text-align: left;
+  padding-left: 20px;
+}
+
+.comment-item-actions {
+  display: flex;
+  flex-wrap: nowrap;
 }
 
 .interpretation-visual {
   max-width: 50%;
   width: 100%;
+
+  ul, input {
+    width: 100%;
+    min-width: 100%;
+  }
 }
 
 figcaption {

@@ -29,6 +29,7 @@ nav {
     a {
         text-decoration: none;
         transition: .3s ease;
+        white-space: nowrap;
 
         &:hover, &:active, &:focus {
             text-decoration: underline;

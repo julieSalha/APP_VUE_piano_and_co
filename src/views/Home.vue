@@ -102,7 +102,7 @@
       </form>
       <section id="agreement-suggestion" class="agreement-suggestion hidden">
         <h2>Songs inspiration</h2>
-        <p>Results of your search (10 max.):</p>
+        <p>Results of your search:</p>
         <div id="agreement-suggestion__list-hook" class="agreement-suggestion__list-hook">
           <ul>
             <li v-for="item in this.arraySongs.slice(1, 10)" :key="item.index">
@@ -110,7 +110,9 @@
                 <p>{{ item.artist }}</p>
                 <p>{{ item.song }}</p>
               </div>
-              <a :href="item.url" target="_blank" class="button btn-third agreement-suggestion__item">Music sheet</a>
+              <div>
+                <a :href="item.url" target="_blank" class="button btn-third agreement-suggestion__item">Music sheet</a>
+              </div>
             </li>
           </ul>
         </div>
@@ -372,7 +374,6 @@ export default {
           songContainer.innerHTML = '<p>No song for this chord sequence</p>'
         }
         this.arraySongs = arraySongs;
-        console.log('arraySongs',arraySongs);
         if (arraySongs !== 'No songs match this chord progressionnull') {
           document.querySelector('#agreement-suggestion').classList.remove('hidden');
           document.querySelector('#agreement-suggestion__no-result').classList.add('hidden');
@@ -438,8 +439,8 @@ section {
     justify-content: space-between;
 
     & > div {
-      min-width: 60%;
-      width: 60%;
+      min-width: 50%;
+      width: 50%;
     }
   }
 }
@@ -461,8 +462,13 @@ section {
     }
 
     select {
-      margin: 0 20px;
+      margin: 0 20px 20px;
     }
+  }
+
+  .agreement-suggestion__list-hook {
+    margin: auto;
+    max-width: 800px;
   }
 }
 </style>

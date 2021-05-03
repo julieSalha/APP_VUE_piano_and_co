@@ -22,7 +22,7 @@
                 <div v-else class="interpretationTrack__display">
                   <label for="editTrack">Track uploaded:  </label>
                   <audio controls :src="interpretation.track"></audio>
-                  <button @click="removeTrack">Remove track</button>
+                  <button class="button btn-third" @click="removeTrack">Remove track</button>
                 </div>
                 <div v-if="!interpretation.cover">
                   <label for="editCover">Select cover to upload*</label>
@@ -32,16 +32,14 @@
                 <div v-else class="interpretationCover__display">
                   <p>Cover uploaded:</p>
                   <img :src="interpretation.cover"/>
-                  <button @click="removeImage">Remove image</button>
+                  <button class="button btn-third" @click="removeImage">Remove image</button>
                 </div>
                 <div>
                     <label for="editDuration">Duration:*</label>
                     <input id="editDuration" name="editDuration" placeholder="Enter duration" minlength="5" maxlength="10" required v-model="duration" @keyup="checkInput($event)"> 
                     <p><span id='duration-informations-edit' hidden>Please enter a valid duration. (5-10 characters)</span></p>
                 </div>
-                <p>
-                  <input type="submit" value="Save" />
-                </p>
+                <button class="button btn-second form-submit" type="submit" >Save</button>
             </form>
         </div>
     </div>
@@ -232,7 +230,8 @@ export default {
   .modal-content{
     position: relative;
     margin: 15% auto; 
-    padding: 20px;
+    padding: 60px 20px 20px;
+    max-width: 560px;
     width: 100%; 
     background-color: #FFFFFF;
     color: #000000;
@@ -244,6 +243,7 @@ export default {
     position: absolute;
     right: 20px;
     top: 20px;
+    cursor: pointer;
   }
   
   #bblock-modal-interpretation__form button {
@@ -265,6 +265,7 @@ export default {
 }
 
 .interpretationCover__display {
+  padding: 10px 0;
   overflow: hidden;
 }
 

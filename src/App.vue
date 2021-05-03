@@ -9,20 +9,27 @@
         <a id="header-no-connect__register" class="button btn-third" href="/#register" @click="displayRegister">Register</a>
       </div>
       <div>
-        <p><img class="logo" src="./assets/logo.png" alt="piano and co"></p>
-        <p>Lorem ipsum</p>
+        <h1><img class="logo" src="./assets/logo.png" alt="piano and co"></h1>
       </div>
 
     </div>
       <main>
-        <div v-if="statusLogged" class="home-content__menu">
-          <navbar></navbar>
-          <button class="button btn-second" v-if="statusLogged">Dark Mode (currently off)</button>
-          <button class="button btn-second" v-if="statusLogged">Logout</button>
+        <div v-if="statusLogged" class="home-container home-container--menu">
+          <div class="home-content__menu">
+            <navbar></navbar>
+            <button class="button btn-second" v-if="statusLogged">Dark Mode (currently off)</button>
+            <button class="button btn-second" v-if="statusLogged">Logout</button>
+          </div>
+          <div class="content-views">
+            <router-view/>
+          </div>
         </div>
-        <div>
-          <router-view/>
+        <div v-else class="home-container">
+          <div>
+            <router-view/>
+          </div>
         </div>
+
       </main>
     
     <Footer id="footer"/>
@@ -88,15 +95,15 @@ html {
 }
 
 body {
-  padding: 20px !important;
   text-align: center;
   color: $c-grey!important;
   font-family: 'Roboto', sans-serif;
   font-size: 1.2rem;
 }
 
-main {
-  min-height: calc(100vh - 150px);
+.home-container {
+  min-height: calc(100vh - 200px);
+  padding: 10px;
 }
 
 h2 {
@@ -113,7 +120,7 @@ ul {
 .button {
   display: block;
   padding: 6px 12px;
-  margin: 10px auto;
+  margin: 15px auto 30px;
   background-color: transparent;
   border-width: 0;
   border-radius: 20px;
@@ -206,9 +213,22 @@ footer, header, hgroup, menu, nav, section {
     width:       0;
 }
 
+
+.hide-scrollbar {
+  scrollbar-width: none; /* For Firefox */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;  /* For Chrome and Safari */
+}
+
 .home-content__menu {
   display: none;
 }
+
+.header-content, .header-no-connect  {
+  padding: 10px;
+} 
 
 .header-no-connect {
 
@@ -230,15 +250,23 @@ footer, header, hgroup, menu, nav, section {
   width: 100%;
 }
 
+.content-views {
+  padding: 10px;
+}
+
 @media screen and (min-width: 1024px) {
   .home-content__menu {
     display: block;
 
     margin: 0 10px 20px 0;
-    padding: 20px;
+    padding: 10px;
 
     border: 2px solid $c-cyan;
-    text-align: left;
+    text-align: center;  
+
+    h2 {
+      font-size: 2rem;
+    }
   }
 
   .home-content {
@@ -246,10 +274,29 @@ footer, header, hgroup, menu, nav, section {
     margin: auto;
   }
 
-  main {
+  .home-container--menu {
     display: flex;
     flex-wrap: nowrap;
     justify-content: flex-start;
+
+    .home-content__menu {
+      width: 20%;
+      min-width: 20%;
+    }
+
+    .content-views {
+      width: 80%;
+      min-width: 80%;
+    }
+  }
+}
+
+@media screen and (min-width: 1400px) {
+  .home-content__menu {
+
+    h2 {
+      font-size: 3rem;
+    }
   }
 }
 </style>

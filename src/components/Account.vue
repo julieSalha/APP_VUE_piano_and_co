@@ -7,12 +7,12 @@
             <div class="account-content__photo" >
                 <img alt="Profile picture" :src="user.profile_picture" >
             </div>
-            <div class="account-content__identification" >{{ user.givenName }} {{ user.familyName }}</div>
+            <div class="account-content__identification" >{{ user.givenName }} <span v-if="user.familyName != ''">{{ user.familyName }}</span></div>
             <div class="account-content__informations" >
               <div class="account-content__gender" ><span>Gender: </span> {{ user.gender }}</div>
-              <div class="account-content__birth"><span>Birthday: </span>{{ new Date(user.date_of_birth).toUTCString().split(' ').slice(1,4).join(' ')  }}</div>
-              <div class="account-content__adress" ><span>Adress: </span>{{ user.adress }}</div>
-              <div class="account-content__biography" ><span>Biography: </span>{{ user.biography }}</div>
+              <div class="account-content__birth" v-if="user.date_of_birth != ''"><span>Birthday: </span>{{ new Date(user.date_of_birth).toUTCString().split(' ').slice(1,4).join(' ')  }}</div>
+              <div class="account-content__adress" v-if="user.adress != ''"><span>Adress: </span>{{ user.adress }}</div>
+              <div class="account-content__biography" v-if="user.biography != ''" ><span>Biography: </span>{{ user.biography }}</div>
               <div class="account-content__email" ><span>Email: </span>{{ user.email }}</div>
             </div>
 
@@ -108,14 +108,14 @@ export default {
 
 <style lang="scss">
 .account-content-profil, .account-content__music {
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 
   text-align: center;
 }
 
 .account-content__photo {
   img {
-    max-width: 50%;
+    max-width: 230px;
     width: 100%;
     border-radius: 50%;
     border: 2px solid;
@@ -130,8 +130,7 @@ export default {
 }
 
 .account-content__informations {
-    padding-left: 50px;
-    text-align: left;
+    text-align: center;
 
     span {
       color: #42E4CE;
@@ -141,7 +140,7 @@ export default {
 
 
 .list-tracks {
-  .button {
+  .button:not(.form-submit) {
     display: inline-block;
 
     margin: 5px 10px !important;
@@ -154,6 +153,11 @@ export default {
     align-items: flex-end;
 
     margin: 0 auto 10px;
+
+    div:not(.modal-content) {
+      width: 100%;
+      min-width: 100%;
+    }
     
   }
 
@@ -173,12 +177,20 @@ export default {
     .button {
       margin: 0;
     }
+
+    .list-tracks {
+      padding-top: 20px;
+    }
   }
 
   .account-content-profil, .account-content__music {
     width: 50%;
     min-width: 50%;
 
+    text-align: left;
+  }
+
+  .account-content__informations {
     text-align: left;
   }
 

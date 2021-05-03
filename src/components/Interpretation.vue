@@ -153,12 +153,12 @@ export default {
   .list-interpretations {
     display: flex;
     flex-wrap: wrap;
-  }
 
-  li {
-    width: 50%;
-    min-width: 50%;
-    padding: 10px;
+    li {
+      width: 50%;
+      min-width: 50%;
+      padding: 10px;
+    }
   }
 }
 

@@ -53,7 +53,7 @@
         <div v-else class="userpicture__display">
           <p>Picture uploaded:</p>
           <img :src="profile_picture"/>
-          <button @click="removeImage">Remove image</button>
+          <button class="button btn-third" @click="removeImage">Remove image</button>
         </div>
         <div>
           <p>

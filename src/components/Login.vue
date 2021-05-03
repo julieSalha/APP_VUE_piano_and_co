@@ -2,6 +2,7 @@
   <div>
     <div id="login">
       <form action="#" method="" id="loginForm" class="login-form" @submit.prevent="login">
+        <h2>Login</h2>
         <div>
           <p>
             <label for="userEmailLogin">Email *</label>
@@ -20,12 +21,10 @@
           </p>
           <p><span id='login-password-infos' hidden>Please enter a valid password.</span></p>
         </div>
-        <p><a href="/">Forgot your password ?</a></p>
+        <!-- <p><a href="/">Forgot your password ?</a></p> -->
         <button type="submit" class="button btn-second">Login</button>
         <p>Join the Piano & Co. community and share your interpretations
             with musicians from all over the world
-        </p>
-        <p>You can also create your own playlists with your favorite songs
         </p>
       </form>
     </div>

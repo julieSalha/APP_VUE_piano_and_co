@@ -21,7 +21,7 @@
                 </div>
                 <div v-else class="interpretationTrack__display">
                   <label for="interpretationTrack">Track uploaded: {{trackName}} </label>
-                  <button @click="removeTrack">Remove track</button>
+                  <button class="button btn-third" @click="removeTrack">Remove track</button>
                 </div>
                 <div v-if="!cover">
                   <label for="interpretationCover">Select cover to upload*</label>
@@ -31,7 +31,7 @@
                 <div v-else class="interpretationCover__display">
                   <p>Cover uploaded:</p>
                   <img :src="cover"/>
-                  <button @click="removeImage">Remove image</button>
+                  <button class="button btn-third" @click="removeImage">Remove image</button>
                 </div>
                 <div>
                     <label for="interpretationDuration">Duration:*</label>
@@ -39,7 +39,7 @@
                     <p><span id='duration-informations' hidden>Please enter a valid duration. (5-10 characters)</span></p>
                 </div>
                 <p>
-                  <input type="submit" value="Create" />
+                  <button class="button btn-second form-submit" type="submit">Create</button>
                 </p>
             </form>
         </div>
@@ -261,6 +261,22 @@ input:valid {
 
 input:invalid {
   border: 1px solid red;
+}
+
+form:not(#chords-suggestion-form) {
+  text-align: left;
+}
+
+.form-submit {
+  max-width: 100px;
+
+  &.button {
+    margin: auto !important;
+  }
+}
+
+.block-modal-interpretation__title {
+  text-align: center;
 }
 
 @media screen and (min-width:768px) {

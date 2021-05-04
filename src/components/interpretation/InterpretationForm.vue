@@ -252,6 +252,7 @@ export default {
 }
 
 .interpretationCover__display {
+  padding: 10px 0;
   overflow: hidden;
 }
 

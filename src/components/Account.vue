@@ -4,18 +4,19 @@
         <!-- <button class="button btn-third">Edit profile</button> -->
         <h2>My informations</h2>
         <article>
-            <div class="account-content__photo" >
-                <img alt="Profile picture" :src="user.profile_picture" >
+          <div class="account-content__photo__container">
+            <div class="account-content__photo aspect-ratio-box-account" >
+                <img class="aspect-ratio-box-inside-account" alt="Profile picture" :src="user.profile_picture" >
             </div>
-            <div class="account-content__identification" >{{ user.givenName }} <span v-if="user.familyName != ''">{{ user.familyName }}</span></div>
-            <div class="account-content__informations" >
-              <div class="account-content__gender" ><span>Gender: </span> {{ user.gender }}</div>
-              <div class="account-content__birth" v-if="user.date_of_birth != ''"><span>Birthday: </span>{{ new Date(user.date_of_birth).toUTCString().split(' ').slice(1,4).join(' ')  }}</div>
-              <div class="account-content__adress" v-if="user.adress != ''"><span>Adress: </span>{{ user.adress }}</div>
-              <div class="account-content__biography" v-if="user.biography != ''" ><span>Biography: </span>{{ user.biography }}</div>
-              <div class="account-content__email" ><span>Email: </span>{{ user.email }}</div>
-            </div>
-
+          </div>
+          <div class="account-content__identification" >{{ user.givenName }} <span v-if="user.familyName != ''">{{ user.familyName }}</span></div>
+          <div class="account-content__informations" >
+            <div class="account-content__gender" ><span>Gender: </span> {{ user.gender }}</div>
+            <div class="account-content__birth" v-if="user.date_of_birth != ''"><span>Birthday: </span>{{ new Date(user.date_of_birth).toUTCString().split(' ').slice(1,4).join(' ')  }}</div>
+            <div class="account-content__adress" v-if="user.adress != ''"><span>Adress: </span>{{ user.adress }}</div>
+            <div class="account-content__biography" v-if="user.biography != ''" ><span>Biography: </span>{{ user.biography }}</div>
+            <div class="account-content__email" ><span>Email: </span>{{ user.email }}</div>
+          </div>
         </article>
       </div>
       <div class="account-content__music">
@@ -71,7 +72,7 @@ export default {
     InterpretationEditForm
   },
   computed: {
-    ...mapState(['user', 'interpretations', 'myTracks'])
+    ...mapState(['user', 'interpretations', 'myTracks', 'interpretationToEdit'])
   },
   methods: {
     oneInterpretation(id) {
@@ -113,9 +114,29 @@ export default {
   text-align: center;
 }
 
+.account-content__photo__container {
+  max-width: 200px;
+  margin: auto;
+}
+
+.aspect-ratio-box-account {
+  height: 0;
+  overflow: hidden;
+  padding-top: 100%;
+  background: white;
+  position: relative;
+}
+
+.aspect-ratio-box-inside-account {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
 .account-content__photo {
   img {
-    max-width: 230px;
     width: 100%;
     border-radius: 50%;
     border: 2px solid;

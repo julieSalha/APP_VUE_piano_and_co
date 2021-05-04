@@ -201,7 +201,9 @@ export default {
           user: this.user 
         }
       }
-      this.$store.dispatch('editTrack', dataTuUpdate)
+      this.$store.dispatch('editTrack', dataTuUpdate);
+      // Close
+      event.target.parentNode.parentNode.classList.remove('active');
     }
   }
 }

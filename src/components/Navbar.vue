@@ -16,7 +16,6 @@ export default {
     name: 'Navbar',
     methods: {
         closeMenu() {
-            console.log('coucou')
             document.querySelector('#header-menu').classList.add('hidden');
         }
     }   

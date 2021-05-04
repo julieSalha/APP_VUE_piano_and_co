@@ -109,6 +109,7 @@
               <div>
                 <p>{{ item.artist }}</p>
                 <p>{{ item.song }}</p>
+                <p>{{ item.section }}</p>
               </div>
               <div>
                 <a :href="item.url" target="_blank" class="button btn-third agreement-suggestion__item">Music sheet</a>
@@ -373,7 +374,9 @@ export default {
           const songContainer = document.querySelector('.agreement-suggestion__list-hook');
           songContainer.innerHTML = '<p>No song for this chord sequence</p>'
         }
-        this.arraySongs = arraySongs;
+        const uniqueSongs = [...new Set(arraySongs)];
+        this.arraySongs = uniqueSongs;
+        console.log('uniqueSongs',this.arraySongs);
         if (arraySongs !== 'No songs match this chord progressionnull') {
           document.querySelector('#agreement-suggestion').classList.remove('hidden');
           document.querySelector('#agreement-suggestion__no-result').classList.add('hidden');

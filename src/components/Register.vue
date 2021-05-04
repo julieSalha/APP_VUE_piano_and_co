@@ -25,17 +25,17 @@
           <p>
             <label class="block-forms__description">Gender *</label>
           </p>
-          <div>
-            <input type="radio" id="userMale" name="gender" value="male" v-model="gender">
-            <label for="userMale">Male</label>
+          <div class="container-gender">
+            <input class="input-gender" type="radio" id="userMale" name="gender" value="male" v-model="gender">
+            <label class="label-gender" for="userMale">Male</label>
           </div>
-          <div>
-            <input type="radio" id="userFemale" name="gender" value="female" v-model="gender">
-            <label for="userFemale">Female</label>
+          <div class="container-gender">
+            <input class="input-gender" type="radio" id="userFemale" name="gender" value="female" v-model="gender">
+            <label class="label-gender" for="userFemale">Female</label>
           </div>
-          <div>
-            <input type="radio" id="userOther" name="gender" value="other" v-model="gender">
-            <label for="userOther">Other</label>
+          <div class="container-gender">
+            <input class="input-gender" type="radio" id="userOther" name="gender" value="other" v-model="gender">
+            <label class="label-gender" for="userOther">Other</label>
           </div>
         </div>
         <div>
@@ -167,7 +167,7 @@ export default {
           break;
       }
     },
-    resizeImage(base64Str, maxWidth = 400, maxHeight = 400) {
+    resizeImage(base64Str, maxWidth = 300, maxHeight = 300) {
       return new Promise((resolve) => {
       const img = new Image()
       img.src = base64Str
@@ -237,7 +237,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 #register {
   margin: 30px auto;
 }
@@ -246,5 +246,22 @@ export default {
   width: 100%;
   min-height: 100px;
   padding: 10px;
+}
+
+.container-gender {
+  display: flex;
+  flex-direction: row-reverse;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.label-gender {
+  width: 20%;
+  min-width: 20%;
+}
+
+.input-gender {
+  width: 15px;
 }
 </style>

@@ -61,7 +61,9 @@ export default {
       cover: '',
       track: '',
       trackName: '',
-      duration:''
+      duration:'',
+      trackChange: false,
+      coverChange: false
     }
   },
   computed: {
@@ -78,8 +80,6 @@ export default {
             form.classList.remove('active');
         }
       }
-      //document.querySelector('#interpretation-modal').classList.remove('active');
-      //event.target.closest('block-modal-interpretation-edit').classList.remove('active');
     },
     checkInput: function(event) {
       const inputTitle = document.querySelector('#interpretationTitle');
@@ -115,6 +115,7 @@ export default {
       }
     },
     onTrackChange(e) {
+      this.trackChange = true;
       this.trackName = e.target.files[0].name;
 
       const files = e.target.files || e.dataTransfer.files;
@@ -136,7 +137,7 @@ export default {
     removeTrack: function () {
       this.interpretation.track = '';
     },
-    resizeImage(base64Str, maxWidth = 400, maxHeight = 400) {
+    resizeImage(base64Str, maxWidth = 300, maxHeight = 300) {
       return new Promise((resolve) => {
       const img = new Image()
       img.src = base64Str
@@ -167,6 +168,7 @@ export default {
       })
     },
     onFileChange(e) {
+      this.coverChange = true;
       const files = e.target.files || e.dataTransfer.files;
       if (!files.length) {
         return;
@@ -174,7 +176,6 @@ export default {
       this.createImage(files[0]);
     },
     createImage(file) {
-      //this.cover = new Image();
       const reader = new FileReader();
 
       reader.onload = (e) => {
@@ -187,20 +188,71 @@ export default {
       this.interpretation.cover = '';
     },
     editTrack: function(event) {
-   this.id = event.target.closest('.block-modal-interpretation-edit').getAttribute('id');
-      console.log('id local',this.id);
+      console.log('this.coverChange', this.coverChange);
+      console.log('this.trackChange', this.trackChange);
 
-      const dataTuUpdate = {
-        id: this.id,
-        payload: {
-          title : this.title, 
-          artist_name : this.artist,
-          track: this.$store.state.interpretationToEdit.data.track,
-          cover: this.$store.state.interpretationToEdit.data.cover,
-          duration: this.duration,
-          user: this.user 
+      this.id = event.target.closest('.block-modal-interpretation-edit').getAttribute('id');
+      let dataTuUpdate;
+      if (this.trackChange) {
+        console.log('this.trackChange');
+        dataTuUpdate = {
+          id: this.id,
+          payload: {
+            title : this.interpretation.title, 
+            artist_name : this.interpretation.artist_name,
+            track: this.track,
+            cover: this.$store.state.interpretationToEdit.data.cover,
+            duration: this.interpretation.duration,
+            user: this.user 
+          }
+        }
+      } else if (this.coverChange) {
+        console.log('this.coverChange');
+        dataTuUpdate = {
+          id: this.id,
+          payload: {
+            title : this.interpretation.title, 
+            artist_name : this.interpretation.artist_name,
+            track: this.$store.state.interpretationToEdit.data.track,
+            cover: this.cover,
+            duration: this.interpretation.duration,
+            user: this.user 
+          }
+        }
+      } else if (this.trackChange && this.coverChange) {
+        console.log('this.trackChange && this.coverChange');
+        dataTuUpdate = {
+          id: this.id,
+          payload: {
+            title : this.interpretation.title, 
+            artist_name : this.interpretation.artist_name,
+            track: this.track,
+            cover: this.cover,
+            duration: this.interpretation.duration,
+            user: this.user 
+          }
+        }
+      } else {
+        console.log('else');
+        dataTuUpdate = {
+          id: this.id,
+          payload: {
+            title : this.interpretation.title, 
+            artist_name : this.interpretation.artist_name,
+            track: this.$store.state.interpretationToEdit.data.track,
+            cover: this.$store.state.interpretationToEdit.data.cover,
+            duration: this.interpretation.duration,
+            user: this.user 
+          }
         }
       }
+
+
+
+      //this.trackChange ? dataTuUpdate.payload.track = this.track : this.$store.state.interpretationToEdit.data.track;
+      //this.coverChange ? dataTuUpdate.payload.cover = this.cover : this.$store.state.interpretationToEdit.data.cover;
+
+      console.log('dataTuUpdate',dataTuUpdate)
       this.$store.dispatch('editTrack', dataTuUpdate);
       // Close
       event.target.parentNode.parentNode.classList.remove('active');

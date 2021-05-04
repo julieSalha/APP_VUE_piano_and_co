@@ -92,7 +92,6 @@ export default {
       this.$store.dispatch('deleteTrack', id);
     },
     updateThisTrack(id) {
-      console.log('id update', id);
       this.oneInterpretation(id);
       const allFormsEdit = Array.from(document.querySelectorAll('.block-modal-interpretation-edit'));
       const formEdit = allFormsEdit.find(form => form.getAttribute('id') === id );

@@ -3,7 +3,7 @@
         <ul>
             <li><router-link to="/account"><h2>My account</h2></router-link></li>
             <li><router-link to="/"><h2>Chords suggestion</h2></router-link></li>
-            <li><router-link to="/interpretation"><h2>All interpretations</h2></router-link></li>
+            <li><router-link to="/interpretation"><h2>Music</h2></router-link></li>
             <!-- <li><router-link to="/community"><h2>Community</h2></router-link></li>
             <li><router-link to="/my-player"><h2>My player</h2></router-link></li>
             <li><router-link to="/about"><h2>About</h2></router-link></li> -->

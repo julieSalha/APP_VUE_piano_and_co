@@ -1,10 +1,15 @@
 <template>
     <div v-if="user"> 
-      <h2>Interpretations</h2>  
+      <h2>Music</h2>
+      <Player />  
       <div>
         <ul class="list-interpretations">
           <li v-for="item in interpretations.data" :key="item.id" :id="item.id">
-            <img class="interpretation-visual" :src="item[0].cover" :alt="item[0].title">
+            <div class="interpretation-visual__container">
+              <div class="interpretation-visual__photo aspect-ratio-box-track" >
+                <img class="interpretation-visual aspect-ratio-box-inside-track" :src="item[0].cover" :alt="item[0].title">
+              </div>
+            </div>
             <figure>
               <figcaption>Listen to {{ item[0].title }} -- {{ item[0].artist_name }}</figcaption>
               <audio
@@ -81,7 +86,8 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState } from 'vuex';
+import Player from './Player'
 
 export default {
   name: 'Interpretation',
@@ -91,6 +97,7 @@ export default {
     }
   },
   components: {
+    Player
   },
   computed: {
     ...mapState(['interpretations', 'user', 'comments'])
@@ -149,6 +156,27 @@ export default {
 </script>
 
 <style lang="scss">
+
+.interpretation-visual__container {
+  max-width: 200px;
+  margin: auto;
+}
+
+.aspect-ratio-box-track {
+  height: 0;
+  overflow: hidden;
+  padding-top: 100%;
+  background: white;
+  position: relative;
+}
+
+.aspect-ratio-box-inside-track {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
 @media screen and (min-width:768px) {
   .list-interpretations {
     display: flex;
@@ -224,8 +252,9 @@ export default {
 }
 
 .interpretation-visual {
-  max-width: 50%;
   width: 100%;
+  border-radius: 50%;
+  border: 2px solid;
 
   ul, input {
     width: 100%;

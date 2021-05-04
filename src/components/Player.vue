@@ -644,12 +644,6 @@ div#player-bottom {
       display: block;
       float: left;
       margin-top: -9px; }
-    div#player-bottom div#volume-container input[type="range"].amplitude-volume-slider {
-      width: calc(100% - 30px);
-      -webkit-appearance: none;
-      display: block;
-      margin-left: 10px;
-      float: left; }
     div#player-bottom div#volume-container input[type="range"].amplitude-volume-slider:focus {
       outline: none; }
     div#player-bottom div#volume-container input[type="range"].amplitude-volume-slider::-webkit-slider-runnable-track {
@@ -740,7 +734,6 @@ body {
 
 div#flat-black-player-container {
   position: relative;
-  max-width: 400px;
   margin: auto; }
 
 /*

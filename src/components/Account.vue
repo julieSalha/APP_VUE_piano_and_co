@@ -203,6 +203,10 @@ export default {
     }
   }
 
+  .account-content__photo__container {
+    margin: 0;
+  }
+
   .account-content-profil, .account-content__music {
     width: 50%;
     min-width: 50%;

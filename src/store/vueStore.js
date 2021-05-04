@@ -254,7 +254,8 @@ const store = new Vuex.Store({
                 withCredentials: true,
               }
             );
-            context.commit('INTERPRETATION_TO_EDIT', { data: apiResponse.data.data });
+            console.log('apiResponse',apiResponse.data.data[0]);
+            context.commit('INTERPRETATION_TO_EDIT', { data: apiResponse.data.data[0] });
             
           } catch (error) {
             console.log(error)

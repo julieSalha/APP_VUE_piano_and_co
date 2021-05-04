@@ -7,11 +7,11 @@
             <form id="block-modal-interpretation__form" @submit.prevent="editTrack($event)">
                 <h2 class="block-modal-interpretation__title">Edit interpretation</h2>
                 <label for="editTitle">Title*</label>
-                <input id="editTitle" type="text" name="editTitle" required minlength="2" maxlength="20" placeholder="Title interpretation" v-model="title" @keyup="checkInput($event)">
+                <input id="editTitle" type="text" name="editTitle" required minlength="2" maxlength="20" placeholder="Title interpretation" v-model="interpretation.title" @keyup="checkInput($event)">
                 <p><span id='title-informations-edit' hidden>Please enter a title between 2 and 20 characters.</span></p>
                 <div>
                     <label for="editArtist">Artist name*</label>
-                    <input id="editArtist" type="text" name="editArtist" required minlength="2" maxlength="25" placeholder="Artist interpretation" v-model="artist" @keyup="checkInput($event)">
+                    <input id="editArtist" type="text" name="editArtist" required minlength="2" maxlength="25" placeholder="Artist interpretation" v-model="interpretation.artist_name" @keyup="checkInput($event)">
                     <p><span id='artist-informations-edit' hidden>Please enter an artist between 2 and 20 characters.</span></p>
                 </div>
                 <div v-if="!interpretation.track">
@@ -36,7 +36,7 @@
                 </div>
                 <div>
                     <label for="editDuration">Duration:*</label>
-                    <input id="editDuration" name="editDuration" placeholder="Enter duration" minlength="5" maxlength="10" required v-model="duration" @keyup="checkInput($event)"> 
+                    <input id="editDuration" name="editDuration" placeholder="Enter duration" minlength="5" maxlength="10" required v-model="interpretation.duration" @keyup="checkInput($event)"> 
                     <p><span id='duration-informations-edit' hidden>Please enter a valid duration. (5-10 characters)</span></p>
                 </div>
                 <button class="button btn-second form-submit" type="submit" >Save</button>

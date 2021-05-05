@@ -122,7 +122,6 @@ export default {
   height: 0;
   overflow: hidden;
   padding-top: 100%;
-  background: white;
   position: relative;
 }
 

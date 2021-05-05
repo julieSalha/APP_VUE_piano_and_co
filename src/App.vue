@@ -96,9 +96,27 @@ html {
 
 body {
   text-align: center;
-  color: $c-grey!important;
+  color: $c-grey;
   font-family: 'Roboto', sans-serif;
   font-size: 1.2rem;
+
+  &.dark-mode, .header-menu-content, .modal-content {
+    background-color: #000000;
+    color: #FFFFFF;
+
+    .header__burger-icon__subtitle, 
+    a:not(#header-no-connect__login):not(#header-no-connect__register), 
+    .btn-primary {
+      color: #FFFFFF;
+    }
+
+    .icon-arrow, 
+    .icon-trash,
+    .icon-like-two,
+    .icon-liked-two {
+      fill:white;
+    }
+  }
 }
 
 .home-container {

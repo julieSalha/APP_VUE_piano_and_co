@@ -18,12 +18,6 @@
                 <div class="header-menu-container">
                     <div class="header-menu-content">
                         <navbar></navbar>  
-                        <div>
-                            <button class="button btn-second">Dark Mode (currently off)</button>
-                        </div>
-                        <div>
-                            <button class="button btn-second">Logout</button>
-                        </div>
                     </div>
                 </div>
             </div>

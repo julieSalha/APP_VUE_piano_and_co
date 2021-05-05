@@ -61,8 +61,8 @@
                   <div class="comment-item-actions">
                     <button class="delete-button button" @click="deleteComment($event, item._id)">
                       <span>
-                        <img src="../assets/trash.svg" alt="delete comment">
-                        <img src="../assets/trash-dark.svg" alt="delete comment">                      
+                        <img class="trash-clear" src="../assets/trash.svg" alt="delete comment">
+                        <img class="trash-dark" src="../assets/trash-dark.svg" alt="delete comment">                      
                       </span>
                     </button>
                     <button class="like-button like-button-comment button" @click="toggleLike($event, item._id)">
@@ -123,7 +123,7 @@ export default {
       this.$store.dispatch('createComment', data);
     },
     deleteComment(event, id) {
-      event.target.parentNode.classList.add('hidden');
+      event.target.parentNode.parentNode.classList.add('hidden');
       this.$store.dispatch('deleteComment', id);
     },
     checkLikes(data) {
@@ -185,6 +185,9 @@ export default {
   fill: black;
 }
 
+.trash-dark {
+  display: none;
+}
 
 @media screen and (min-width:768px) {
   .list-interpretations {
@@ -233,9 +236,6 @@ export default {
   &.button {
     margin: 0;
   }
-  img {
-    max-width: 20px;
-  }
 }
 
 .comment-space {
@@ -258,6 +258,13 @@ export default {
 .comment-item-actions {
   display: flex;
   flex-wrap: nowrap;
+
+  .button {
+    padding: 0;
+    margin: 0;
+    width: 20px;
+    height: 20px;
+  }
 }
 
 .interpretation-visual {

@@ -17,8 +17,6 @@
         <div v-if="statusLogged" class="home-container home-container--menu">
           <div class="home-content__menu">
             <navbar></navbar>
-            <button class="button btn-second" v-if="statusLogged">Dark Mode (currently off)</button>
-            <button class="button btn-second" v-if="statusLogged">Logout</button>
           </div>
           <div class="content-views">
             <router-view/>
@@ -100,10 +98,13 @@ body {
   font-family: 'Roboto', sans-serif;
   font-size: 1.2rem;
 
-  &.dark-mode, .header-menu-content, .modal-content {
+  &.dark-mode {
     background-color: #000000;
     color: #FFFFFF;
-
+    .header-menu-content, .modal-content {
+      background-color: #000000;
+      color: #FFFFFF;
+    }
     .header__burger-icon__subtitle, 
     a:not(#header-no-connect__login):not(#header-no-connect__register), 
     .btn-primary {
@@ -115,6 +116,14 @@ body {
     .icon-like-two,
     .icon-liked-two {
       fill:white;
+    }
+
+    .trash-dark {
+      display: block;
+    }
+
+    .trash-clear {
+      display: none;
     }
   }
 }
@@ -230,7 +239,6 @@ footer, header, hgroup, menu, nav, section {
     padding:     0;
     width:       0;
 }
-
 
 .hide-scrollbar {
   scrollbar-width: none; /* For Firefox */

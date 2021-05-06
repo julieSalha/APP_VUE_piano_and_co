@@ -97,12 +97,13 @@ body {
   color: $c-grey;
   font-family: 'Roboto', sans-serif;
   font-size: 1.2rem;
+  transition: .3s ease;
 
   &.dark-mode {
-    background-color: #000000;
+    background-color: #272727;
     color: #FFFFFF;
     .header-menu-content, .modal-content {
-      background-color: #000000;
+      background-color: #272727;
       color: #FFFFFF;
     }
     .header__burger-icon__subtitle, 

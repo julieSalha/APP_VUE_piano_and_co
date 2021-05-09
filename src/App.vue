@@ -9,7 +9,7 @@
         <a id="header-no-connect__register" class="button btn-third" href="/#register" @click="displayRegister">Register</a>
       </div>
       <div>
-        <h1><img class="logo" src="./assets/logo.png" alt="piano and co"></h1>
+        <h1><img class="logo" src="./assets/logo.svg" alt="piano and co"></h1>
       </div>
 
     </div>
@@ -273,7 +273,7 @@ footer, header, hgroup, menu, nav, section {
 }
 
 .logo {
-  max-width: 200px;
+  max-width: 130px;
   width: 100%;
 }
 

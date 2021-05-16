@@ -28,13 +28,14 @@
           </div>
           <div>
             <ul class="list-tracks">
+              //TODO: play file audio
               <li v-for="(track) in myTracks" :key="track.id">
                 <div>
                   <span>{{ track.title }}</span> - <span>{{ track.artist_name }}</span>
                   <figure>
                     <audio
                         controls
-                        :src="track.track">
+                        :src="track.track.path">
                             Your browser does not support the
                             <code>audio</code> element.
                     </audio>
@@ -142,7 +143,7 @@ export default {
 
 .account-content__identification {
   margin-bottom: 20px;
-  color: #42E4CE;
+  color: #1C6D6D;
   font-size: 2.5rem;
   text-transform: capitalize;
 }
@@ -151,11 +152,16 @@ export default {
     text-align: center;
 
     span {
-      color: #42E4CE;
+      color: #1C6D6D;
       font-size: 1.5rem;
   }
 }
 
+.dark-mode {
+  .account-content__identification, .account-content__informations span {
+    color: #FFFFFF;
+  }
+}
 
 .list-tracks {
   .button:not(.form-submit) {

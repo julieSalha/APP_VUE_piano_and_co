@@ -33,13 +33,13 @@ export default {
     ...mapState(['interpretations', 'user', 'comments'])
   },
   methods: {
-    allInterpretations() {
-        this.$store.dispatch('fetchAllInterpretations');
-    }
+    // allInterpretations() {
+    //     this.$store.dispatch('fetchAllInterpretations');
+    // }
 
   },
   async mounted() {
-    await this.allInterpretations();
+    //await this.allInterpretations();
 
   }
 };

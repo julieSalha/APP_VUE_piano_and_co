@@ -11,7 +11,6 @@
       <div>
         <h1><img class="logo" src="./assets/logo.svg" alt="piano and co"></h1>
       </div>
-
     </div>
       <main>
         <div v-if="statusLogged" class="home-container home-container--menu">

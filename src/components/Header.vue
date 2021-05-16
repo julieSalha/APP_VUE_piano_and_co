@@ -2,8 +2,8 @@
     <div>
         <header>
             <div class="header-content">
-                <a href="/" alt="link to home Piano and co">
-                    <p>Piano & Co.</p>
+                <a href="/" alt="link to home Piano and co" class="logo-header">
+                    <h1><img class="logo" src="../assets/logo.svg" alt="piano and co"></h1>
                 </a>
                 <button id="header-burger" class="header-burger button" @click="openMenu" v-if="statusLogged">
                     <span class="header__burger-icon">
@@ -104,6 +104,11 @@ computed: {
         color: #000000;
     }
 
+    .logo-header {
+        max-width: 80px !important;
+        width: 100%;
+    }
+
 @media screen and (min-width: 1024px) {
     header {
         margin-bottom: 30px;
@@ -115,6 +120,10 @@ computed: {
 
     .header-menu-container {
         display: none;
+    }
+
+    .logo-header {
+        max-width: 100px !important;
     }
 }
 </style>

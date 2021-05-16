@@ -2,10 +2,9 @@
     <div class="modal block-modal-interpretation" id="interpretation-modal" @click="closeModal">
         <div class="modal-content block-modal-interpretation__content">
             <span class="modal-close block-modal-interpretation__close" @click="close">
-              <!-- <img src="../../assets/arrow.svg" alt="arrow close"> -->
               <svg class="icon-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 496" width="30" fill="#000000"><path d="M248 0C111.033 0 0 111.033 0 248s111.033 248 248 248 248-111.033 248-248C495.841 111.099 384.901.159 248 0zm0 480C119.87 480 16 376.13 16 248S119.87 16 248 16s232 103.87 232 232c-.141 128.072-103.928 231.859-232 232z"/><path d="M361.136 134.864a8 8 0 00-11.312 0L248 236.688 146.176 134.864a8 8 0 10-11.312 11.312L236.688 248 134.864 349.824a8 8 0 00-.196 11.312 8 8 0 0011.508 0L248 259.312l101.824 101.824a8 8 0 0011.312-.196 8 8 0 000-11.116L259.312 248l101.824-101.824a8 8 0 000-11.312z"/></svg>
             </span>
-            <form id="block-modal-interpretation__form" @submit.prevent="postTrack">
+              <form enctype="multipart/form-data" id="block-modal-interpretation__form" @submit.prevent="postStreaming">
                 <h2 class="block-modal-interpretation__title">Add new interpretation</h2>
                 <label for="interpretationTitle">Title*</label>
                 <input id="interpretationTitle" type="text" name="interpretationTitle" required minlength="2" maxlength="20" placeholder="Title interpretation" v-model="title" @keyup="checkInput($event)">
@@ -16,23 +15,30 @@
                     <p><span id='artist-informations' hidden>Please enter an artist between 2 and 20 characters.</span></p>
                 </div>
                 <div v-if="!track">
-                  <label for="interpretationTrack">Select track to upload*</label>
-                  <input type="file" @change="onTrackChange($event)" name="interpretationTrack" id="interpretationTrack" accept=".mp3" required>
+                  <label for="streamingTrack">Select track to upload*</label>
+                  <input ref="file" type="file" @change="onTrackChange($event)" name="track" id="streamingTrack" accept=".mp3" required>
                   <p><span id='track-informations' hidden>Please enter a track.</span></p>
                 </div>
                 <div v-else class="interpretationTrack__display">
                   <label for="interpretationTrack">Track uploaded: {{trackName}} </label>
                   <button class="button btn-third" @click="removeTrack">Remove track</button>
                 </div>
-                <div v-if="!cover">
-                  <label for="interpretationCover">Select cover to upload*</label>
-                  <input type="file" @change="onFileChange" name="interpretationCover" id="interpretationCover" accept=".png, .jpg, .jpeg" required>
-                  <p><span id='cover-informations' hidden>Please enter a cover.</span></p>
+                <div v-if="!cover" class="upload-image-container">
+                  <label for="streamingCover">Select cover to upload*</label>
+                  <div class="dropbox">
+                    <input ref="file" id="streamingCover" type="file" name="cover" @change="onCoverChange($event)"
+                      accept="image/*" class="input-file" required>
+                      <p>
+                        Drag your file(s) here to begin<br> or click to browse
+                      </p>
+                  </div>
                 </div>
-                <div v-else class="interpretationCover__display">
-                  <p>Cover uploaded:</p>
-                  <img :src="cover"/>
-                  <button class="button btn-third" @click="removeImage">Remove image</button>
+                <div v-else class="upload-image-container">
+                  <label for="streamingCover">Cover uploaded: </label>
+                  <div class="dropbox droppox-uploaded">
+                    <img :src="coverUrl" alt="cover uploaded">
+                  </div>
+                  <button class="button btn-third" @click="removeCover">Remove cover</button>
                 </div>
                 <div>
                     <label for="interpretationDuration">Duration:*</label>
@@ -55,12 +61,14 @@ export default {
   data() {
     return {
       isValidInput: Boolean,
-      title: '',
-      artist: '',
+      title: 'rrrrr',
+      artist: 'rrrrrr',
       cover: '',
+      coverUrl: '',
       track: '',
       trackName: '',
-      duration:''
+      duration:'rrrr',
+      formData: new FormData()
     }
   },
   computed: {
@@ -107,92 +115,38 @@ export default {
       }
     },
     onTrackChange(e) {
+      this.track = e.target.files[0];
       this.trackName = e.target.files[0].name;
-
-      const files = e.target.files || e.dataTransfer.files;
-      if (!files.length) {
-        return;
-      }
-      this.createAudio(files[0]);
+      this.formData.append('track', this.track)
     },
-    createAudio(file) {
-      this.track = new Audio();
-      const reader = new FileReader();
-
-      reader.onload = (e) => {
-        this.track = e.target.result;
-
-      };
-      reader.readAsDataURL(file);
+    onCoverChange(e) {
+      this.cover = e.target.files[0];
+      this.formData.append('cover', this.cover)
+      this.coverUrl = URL.createObjectURL(e.target.files[0]);
     },
     removeTrack: function () {
       this.track = '';
     },
-    resizeImage(base64Str, maxWidth = 400, maxHeight = 400) {
-      return new Promise((resolve) => {
-      const img = new Image()
-      img.src = base64Str
-      img.onload = () => {
-          const canvas = document.createElement('canvas')
-          const MAX_WIDTH = maxWidth
-          const MAX_HEIGHT = maxHeight
-          let width = img.width
-          let height = img.height
-
-          if (width > height) {
-          if (width > MAX_WIDTH) {
-              height *= MAX_WIDTH / width
-              width = MAX_WIDTH
-          }
-          } else {
-          if (height > MAX_HEIGHT) {
-              width *= MAX_HEIGHT / height
-              height = MAX_HEIGHT
-          }
-          }
-          canvas.width = width
-          canvas.height = height
-          const ctx = canvas.getContext('2d')
-          ctx.drawImage(img, 0, 0, width, height)
-          resolve(this.cover = canvas.toDataURL());
-        }
-      })
-    },
-    onFileChange(e) {
-      const files = e.target.files || e.dataTransfer.files;
-      if (!files.length) {
-        return;
-      }
-      this.createImage(files[0]);
-    },
-    createImage(file) {
-      //this.cover = new Image();
-      const reader = new FileReader();
-
-      reader.onload = (e) => {
-        this.cover = this.resizeImage(e.target.result);
-      };
-      reader.readAsDataURL(file);
-    },
-    removeImage: function () {
+    removeCover: function () {
       this.cover = '';
     },
-    postTrack: function() {
-      this.$store.dispatch('postTrack', { 
-        title : this.title, 
-        artist_name : this.artist,
-        track: this.track,
-        cover: this.cover,
-        duration: this.duration,
-        user: this.user
-      })
+    postStreaming: function() {
+      this.formData.append('title', this.title);
+      this.formData.append('artist_name', this.artist);
+      this.formData.append('duration', this.duration);
+      this.formData.append('user', this.user);
+
+      this.$store.dispatch('postStream', this.formData);
       document.querySelector('#interpretation-modal').classList.remove('active');
-        this.title = '';
-        this.artist = '';
-        this.track = '';
-        this.cover = '';
-        this.duration = '';
+      this.title = '';
+      this.artist = '';
+      this.track = null;
+      this.cover = null;
+      this.duration = '';
     }
+  },
+  mounted() {
+    //this.reset();
   }
 }
 </script>
@@ -280,6 +234,42 @@ form:not(#chords-suggestion-form) {
 .block-modal-interpretation__title {
   text-align: center;
 }
+
+// Upload image
+  .dropbox {
+    outline: 2px dashed grey; /* the dash box */
+    outline-offset: -10px;
+    color: dimgray;
+    padding: 10px 10px;
+    min-height: 200px; /* minimum height */
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    max-height: 230px;
+    height: 100%;
+  }
+
+  .droppox-uploaded {
+    outline: 0;
+  }
+
+  .input-file {
+    opacity: 0; /* invisible but it's there! */
+    width: 100%;
+    height: 200px;
+    position: absolute;
+    cursor: pointer;
+  }
+
+  .dropbox:hover {
+    cursor: pointer;
+  }
+
+  .dropbox p {
+    font-size: 1.2em;
+    text-align: center;
+    padding: 50px 0;
+  }
 
 @media screen and (min-width:768px) {
   .modal-content {

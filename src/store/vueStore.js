@@ -12,7 +12,11 @@ const store = new Vuex.Store({
         myTracks : [],
         interpretations : [],
         interpretationToEdit: {},
-        comments: []
+        myStreamings : [],
+        streamings : [],
+        streamingToEdit: {},
+        comments: [],
+        uploadedFiles: []
     },
     
     getters: {
@@ -22,24 +26,43 @@ const store = new Vuex.Store({
     mutations: {
         USER( state, payload ){ state.user = payload.data },
         LOGGED( state ){ state.statusLogged = true },
-        MY_TRACKS( state, payload ){ 
-          const myTracks = [];
+        // MY_TRACKS( state, payload ){ 
+        //   const myTracks = [];
+        //   for (const item of payload.data) {
+        //     if (item.user === state.user._id) {
+        //       myTracks.push(item);
+        //     }
+        //   }
+        //   state.myTracks = myTracks;
+        //  },
+        // TRACK( state, payload ){ state.myTracks.push(payload.data) },
+        // DELETE_TRACK(state, id){
+        //   const index = state.myTracks.findIndex(track => track.id === id)
+        //   state.myTracks.splice(index, 1)
+        // }, 
+        // UPDATE_TRACK(state, data){
+        //   const index = state.myTracks.findIndex(track => track.id === data.id)
+        //   state.myTracks[index] = data.payload;
+        // },
+        MY_STREAMINGS( state, payload ){ 
+          const myStreamings = [];
           for (const item of payload.data) {
             if (item.user === state.user._id) {
-              myTracks.push(item);
+              myStreamings.push(item);
             }
           }
-          state.myTracks = myTracks;
+          state.myStreamings = myStreamings;
          },
-        TRACK( state, payload ){ state.myTracks.push(payload.data) },
-        DELETE_TRACK(state, id){
-          const index = state.myTracks.findIndex(track => track.id === id)
-          state.myTracks.splice(index, 1)
+        STREAMING( state, payload ){ state.myStreamings.push(payload.data) },
+        DELETE_STREAMING(state, id){
+          const index = state.myStreamings.findIndex(track => track.id === id)
+          state.myStreamings.splice(index, 1)
         }, 
-        UPDATE_TRACK(state, data){
-          const index = state.myTracks.findIndex(track => track.id === data.id)
-          state.myTracks[index] = data.payload;
+        UPDATE_STREAMING(state, data){
+          const index = state.myStreamings.findIndex(track => track.id === data.id)
+          state.myStreamings[index] = data.payload;
         },
+        
         INTERPRETATION_TO_EDIT(state, payload){ state.interpretationToEdit = payload },
         INTERPRETATIONS( state, payload ){ state.interpretations = payload },
         // UPDATE_LIKES_INTERPRETATION(state, payload){
@@ -71,7 +94,9 @@ const store = new Vuex.Store({
 
           //let deleteCo = state.comments.find(comment => comment._id === id);
           //deleteCo = {};
-        }      
+        },
+        UPLOADS(state, payload) { state.uploadedFiles = [].concat(payload.data) },
+      
     },
 
     actions: {
@@ -124,29 +149,194 @@ const store = new Vuex.Store({
               console.log(this.error);
           }
         },
-        async postTrack(context, data){
+        // async postTrack(context, data){
+        //   try {
+        //       const apiResponse = await axios.post(
+        //         'http://localhost:9966/api/interpretation', 
+        //         { 
+        //           title : data.title, 
+        //           artist_name : data.artist_name,
+        //           track: data.track,
+        //           cover: data.cover,
+        //           duration: data.duration,
+        //           user: data.user
+        //         },
+        //         {
+        //           headers: {
+        //             'Content-Type': 'application/json'
+        //           },
+        //           withCredentials: true,
+        //         } 
+        //       );
+        //       context.commit('TRACK', { data: apiResponse.data.data });
+        //     } catch (error) {
+        //       console.log(this.error);
+        //     }
+        // },
+        // async fetchOneInterpretation(context, id) {
+        //   try {
+        //     const apiResponse = await axios.get(
+        //       `http://localhost:9966/api/interpretation/${id}`,
+        //       {
+        //         headers: {
+        //           'Content-Type': 'application/json'
+        //         },
+        //         withCredentials: true,
+        //       }
+        //     );
+        //     console.log('apiResponse',apiResponse.data.data[0]);
+        //     context.commit('INTERPRETATION_TO_EDIT', { data: apiResponse.data.data[0] });
+            
+        //   } catch (error) {
+        //     console.log(error)
+        //   }
+
+        // },
+        // async fetchAllInterpretations(context) {
+        //   try {
+        //     const apiResponse = await axios.get(
+        //       'http://localhost:9966/api/interpretation',
+        //       {
+        //         headers: {
+        //           'Content-Type': 'application/json'
+        //         },
+        //         withCredentials: true,
+        //       }
+        //     );
+        //     context.commit('INTERPRETATIONS', { data: apiResponse.data.data });            
+        //   } catch (error) {
+        //     console.log(error)
+        //   }
+
+        // },
+        // async deleteTrack(context, id) {
+        //   try {
+        //     const apiResponse = await axios.delete(
+        //       `http://localhost:9966/api/interpretation/${id}`,
+        //       {
+        //         headers: {
+        //           'Content-Type': 'application/json'
+        //         },
+        //         withCredentials: true,
+        //       } 
+        //     )
+        //     context.commit('DELETE_TRACK', id);
+        //   } catch (error) {
+        //     console.log(error);
+        //   }
+        // },
+        // async editTrack(context, data) {  
+        //   try {
+        //     const apiResponse = await axios.put(
+        //       `http://localhost:9966/api/interpretation/${data.id}`,
+        //       { 
+        //         title : data.payload.title, 
+        //         artist_name : data.payload.artist_name,
+        //         track: data.payload.track,
+        //         cover: data.payload.cover,
+        //         duration: data.payload.duration,
+        //         user: data.payload.user
+        //       },
+        //       {
+        //         headers: {
+        //           'Content-Type': 'application/json'
+        //         },
+        //         withCredentials: true,
+        //       } 
+        //     )
+        //     context.commit('UPDATE_TRACK', apiResponse.data.data);
+        //   } catch (error) {
+        //     console.log(error);
+        //   }
+        // },
+        async postStream(context, formData){
           try {
               const apiResponse = await axios.post(
-                'http://localhost:9966/api/interpretation', 
-                { 
-                  title : data.title, 
-                  artist_name : data.artist_name,
-                  track: data.track,
-                  cover: data.cover,
-                  duration: data.duration,
-                  user: data.user
-                },
+                'http://localhost:9966/upload/', formData, 
                 {
                   headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'multipart/form-data;  boundary=--------------------------898552055688392969814829'
                   },
                   withCredentials: true,
                 } 
               );
-              context.commit('TRACK', { data: apiResponse.data.data });
             } catch (error) {
               console.log(this.error);
             }
+        },
+        async fetchOneStreaming(context, id) {
+          try {
+            const apiResponse = await axios.get(
+              `http://localhost:9966/api/interpretation/${id}`,
+              {
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                withCredentials: true,
+              }
+            );
+            console.log('apiResponse',apiResponse.data.data[0]);
+            context.commit('INTERPRETATION_TO_EDIT', { data: apiResponse.data.data[0] });
+            
+          } catch (error) {
+            console.log(error)
+          }
+        },
+        async fetchAllStreamings(context) {
+          try {
+            const apiResponse = await axios.get(
+              'http://localhost:9966/api/interpretation',
+              {
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                withCredentials: true,
+              }
+            );
+            context.commit('INTERPRETATIONS', { data: apiResponse.data.data });            
+          } catch (error) {
+            console.log(error)
+          }
+        },
+        async deleteStreaming(context, id) {
+          try {
+            const apiResponse = await axios.delete(
+              `http://localhost:9966/api/interpretation/${id}`,
+              {
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                withCredentials: true,
+              } 
+            )
+            context.commit('DELETE_TRACK', id);
+          } catch (error) {
+            console.log(error);
+          }
+        },
+        async editTrack(context, data) {  
+          try {
+            const apiResponse = await axios.put(
+              `http://localhost:9966/api/interpretation/${data.id}`,
+              { 
+                title : data.payload.title, 
+                artist_name : data.payload.artist_name,
+                track: data.payload.track,
+                cover: data.payload.cover,
+                duration: data.payload.duration,
+                user: data.payload.user
+              },
+              {
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                withCredentials: true,
+              } 
+            )
+            context.commit('UPDATE_TRACK', apiResponse.data.data);
+          } catch (error) {
+            console.log(error);
+          }
         },
         async fetchAllComments(context) {
           try {
@@ -244,82 +434,6 @@ const store = new Vuex.Store({
             console.log(error);
           }
         },
-        async fetchOneInterpretation(context, id) {
-          try {
-            const apiResponse = await axios.get(
-              `http://localhost:9966/api/interpretation/${id}`,
-              {
-                headers: {
-                  'Content-Type': 'application/json'
-                },
-                withCredentials: true,
-              }
-            );
-            console.log('apiResponse',apiResponse.data.data[0]);
-            context.commit('INTERPRETATION_TO_EDIT', { data: apiResponse.data.data[0] });
-            
-          } catch (error) {
-            console.log(error)
-          }
-
-        },
-        async fetchAllInterpretations(context) {
-          try {
-            const apiResponse = await axios.get(
-              'http://localhost:9966/api/interpretation',
-              {
-                headers: {
-                  'Content-Type': 'application/json'
-                },
-                withCredentials: true,
-              }
-            );
-            context.commit('INTERPRETATIONS', { data: apiResponse.data.data });            
-          } catch (error) {
-            console.log(error)
-          }
-
-        },
-        async deleteTrack(context, id) {
-          try {
-            const apiResponse = await axios.delete(
-              `http://localhost:9966/api/interpretation/${id}`,
-              {
-                headers: {
-                  'Content-Type': 'application/json'
-                },
-                withCredentials: true,
-              } 
-            )
-            context.commit('DELETE_TRACK', id);
-          } catch (error) {
-            console.log(error);
-          }
-        },
-        async editTrack(context, data) {  
-          try {
-            const apiResponse = await axios.put(
-              `http://localhost:9966/api/interpretation/${data.id}`,
-              { 
-                title : data.payload.title, 
-                artist_name : data.payload.artist_name,
-                track: data.payload.track,
-                cover: data.payload.cover,
-                duration: data.payload.duration,
-                user: data.payload.user
-              },
-              {
-                headers: {
-                  'Content-Type': 'application/json'
-                },
-                withCredentials: true,
-              } 
-            )
-            context.commit('UPDATE_TRACK', apiResponse.data.data);
-          } catch (error) {
-            console.log(error);
-          }
-        },
         async checkUser(context){
           try {
               const apiResponse = await axios.get(
@@ -337,7 +451,7 @@ const store = new Vuex.Store({
               }
 
               context.commit('USER', { data: apiResponse.data.data[0] });
-              context.commit('MY_TRACKS', { data: apiResponse.data.data[1] });
+              //context.commit('MY_TRACKS', { data: apiResponse.data.data[1] });
             } catch (error) {
               console.log(this.error);
           }

@@ -79,8 +79,7 @@ export default {
       this.$store.dispatch('fetchOneInterpretation', id)
     },
     allInterpretations() {
-      //console.log('allInterpretations', this.state.myTracks);
-      this.$store.dispatch('fetchAllInterpretations');
+      this.$store.dispatch('fetchAllStreamings');
     },
     checkDataUser() {
       this.$store.dispatch('checkUser');

@@ -28,14 +28,13 @@
           </div>
           <div>
             <ul class="list-tracks">
-              //TODO: play file audio
-              <li v-for="(track) in myTracks" :key="track.id">
+              <li v-for="track in myStreamings.data" :key="track.id">
                 <div>
                   <span>{{ track.title }}</span> - <span>{{ track.artist_name }}</span>
                   <figure>
                     <audio
                         controls
-                        :src="track.track.path">
+                        :src="track.track">
                             Your browser does not support the
                             <code>audio</code> element.
                     </audio>
@@ -73,13 +72,13 @@ export default {
     InterpretationEditForm
   },
   computed: {
-    ...mapState(['user', 'interpretations', 'myTracks', 'interpretationToEdit'])
+    ...mapState(['user', 'interpretations', 'myStreamings', 'interpretationToEdit'])
   },
   methods: {
     oneInterpretation(id) {
-      this.$store.dispatch('fetchOneInterpretation', id)
+      this.$store.dispatch('fetchOneStreaming', id)
     },
-    allInterpretations() {
+    allStreamings() {
       this.$store.dispatch('fetchAllStreamings');
     },
     checkDataUser() {
@@ -89,7 +88,7 @@ export default {
       document.querySelector('#interpretation-modal').classList.add('active');
     },
     deleteThisTrack(id) {
-      this.$store.dispatch('deleteTrack', id);
+      this.$store.dispatch('deleteStreaming', id);
     },
     updateThisTrack(id) {
       this.oneInterpretation(id);
@@ -100,7 +99,7 @@ export default {
   ,
   },
   async mounted() {
-    await this.allInterpretations();
+    await this.allStreamings();
     await this.checkDataUser();
   }
 };
@@ -143,7 +142,7 @@ export default {
 
 .account-content__identification {
   margin-bottom: 20px;
-  color: #1C6D6D;
+  color: #000000;
   font-size: 2.5rem;
   text-transform: capitalize;
 }
@@ -152,7 +151,7 @@ export default {
     text-align: center;
 
     span {
-      color: #1C6D6D;
+      color: #000000;
       font-size: 1.5rem;
   }
 }
@@ -196,7 +195,7 @@ export default {
   .account-container {
     display: flex;
     flex-wrap: nowrap;
-    justify-content: flex-start;
+    justify-content: space-between;
 
     .button {
       margin: 0;
@@ -208,18 +207,23 @@ export default {
   }
 
   .account-content__photo__container {
-    margin: 0;
+    margin: 0 auto;
   }
 
-  .account-content-profil, .account-content__music {
+  .account-content__music {
     width: 50%;
     min-width: 50%;
 
     text-align: left;
   }
 
+  .account-content-profil {
+    max-width: 300px;
+    width: 100%;
+  }
+
   .account-content__informations {
-    text-align: left;
+    text-align: center;
   }
 
 }

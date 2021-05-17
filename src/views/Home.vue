@@ -376,7 +376,6 @@ export default {
         }
         const uniqueSongs = [...new Set(arraySongs)];
         this.arraySongs = uniqueSongs;
-        console.log('uniqueSongs',this.arraySongs);
         if (arraySongs !== 'No songs match this chord progressionnull') {
           document.querySelector('#agreement-suggestion').classList.remove('hidden');
           document.querySelector('#agreement-suggestion__no-result').classList.add('hidden');

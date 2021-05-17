@@ -35,40 +35,24 @@ const store = new Vuex.Store({
           }
           state.myTracks = myTracks;
          },
-        TRACK( state, payload ){ state.myTracks.push(payload.data) },
-        DELETE_TRACK(state, id){
-          const index = state.myTracks.findIndex(track => track.id === id)
-          state.myTracks.splice(index, 1)
-        }, 
         UPDATE_TRACK(state, data){
           const index = state.myTracks.findIndex(track => track.id === data.id)
           state.myTracks[index] = data.payload;
         },
         MY_STREAMINGS( state, payload ){ 
-          const myStreamings = [];
-          for (const item of payload.data) {
-            if (item.user === state.user._id) {
-              myStreamings.push(item);
-            }
-          }
-          state.myStreamings = myStreamings;
+          state.myStreamings = payload;
          },
         STREAMING( state, payload ){ state.myStreamings.push(payload.data) },
+        STREAMINGS( state, payload ){ state.streamings = payload },
         DELETE_STREAMING(state, id){
-          const index = state.myStreamings.findIndex(track => track.id === id)
-          state.myStreamings.splice(index, 1)
+          const index = state.myStreamings.data.findIndex(track => track.id === id)
+          state.myStreamings.data.splice(index, 1)
         }, 
         UPDATE_STREAMING(state, data){
           const index = state.myStreamings.findIndex(track => track.id === data.id)
           state.myStreamings[index] = data.payload;
         },
         INTERPRETATION_TO_EDIT(state, payload){ state.interpretationToEdit = payload },
-        INTERPRETATIONS( state, payload ){ state.interpretations = payload },
-        // UPDATE_LIKES_INTERPRETATION(state, payload){
-        //   const index = state.interpretations.findIndex(interpretation => interpretation._id === payload.subjectOf)
-        //   //console.log('index',index);
-        //   state.interpretations[index][1].push(payload);
-        // },
         UPDATE_INTERPRETATION_COMMENT(state, data){
           let idInterpretation;
           for (const item of state.interpretations) {
@@ -158,8 +142,8 @@ const store = new Vuex.Store({
                   withCredentials: true,
                 } 
               );
-              console.log('apiResponse post', apiResponse.data.data)
-              context.commit('TRACK', { data: apiResponse.data.data })
+              //console.log('apiResponse post', apiResponse.data.data)
+              context.commit('STREAMING', { data: apiResponse.data.data })
             } catch (error) {
               console.log(this.error);
             }
@@ -167,7 +151,7 @@ const store = new Vuex.Store({
         async fetchOneStreaming(context, id) {
           try {
             const apiResponse = await axios.get(
-              `http://localhost:9966/api/interpretation/${id}`,
+              `http://localhost:9966/upload/${id}`,
               {
                 headers: {
                   'Content-Type': 'application/json'
@@ -175,7 +159,7 @@ const store = new Vuex.Store({
                 withCredentials: true,
               }
             );
-            console.log('apiResponse',apiResponse.data.data[0]);
+            //console.log('apiResponse',apiResponse.data.data[0]);
             context.commit('INTERPRETATION_TO_EDIT', { data: apiResponse.data.data[0] });
             
           } catch (error) {
@@ -185,7 +169,7 @@ const store = new Vuex.Store({
         async fetchAllStreamings(context) {
           try {
             const apiResponse = await axios.get(
-              'http://localhost:9966/api/interpretation',
+              'http://localhost:9966/upload',
               {
                 headers: {
                   'Content-Type': 'application/json'
@@ -193,7 +177,8 @@ const store = new Vuex.Store({
                 withCredentials: true,
               }
             );
-            context.commit('INTERPRETATIONS', { data: apiResponse.data.data });            
+            context.commit('STREAMINGS', { data: apiResponse.data.data });
+            //context.commit('MY_STREAMINGS', { data: apiResponse.data.data });  
           } catch (error) {
             console.log(error)
           }
@@ -201,7 +186,7 @@ const store = new Vuex.Store({
         async deleteStreaming(context, id) {
           try {
             const apiResponse = await axios.delete(
-              `http://localhost:9966/api/interpretation/${id}`,
+              `http://localhost:9966/upload/${id}`,
               {
                 headers: {
                   'Content-Type': 'application/json'
@@ -209,7 +194,7 @@ const store = new Vuex.Store({
                 withCredentials: true,
               } 
             )
-            context.commit('DELETE_TRACK', id);
+            context.commit('DELETE_STREAMING', id);
           } catch (error) {
             console.log(error);
           }
@@ -217,7 +202,7 @@ const store = new Vuex.Store({
         async editTrack(context, data) {  
           try {
             const apiResponse = await axios.put(
-              `http://localhost:9966/api/interpretation/${data.id}`,
+              `http://localhost:9966/interpretation/${data.id}`,
               { 
                 title : data.payload.title, 
                 artist_name : data.payload.artist_name,
@@ -310,7 +295,7 @@ const store = new Vuex.Store({
               );
 
               // Update likes interpretation
-              console.log('apiResponse',apiResponse.data.data);
+              //console.log('apiResponse',apiResponse.data.data);
               //context.commit('UPDATE_LIKES_INTERPRETATION', { data: apiResponse.data.data });
 
             } catch (error) {
@@ -329,7 +314,7 @@ const store = new Vuex.Store({
               } 
             )
 
-            console.log('delete', apiResponse)
+            //console.log('delete', apiResponse)
           } catch (error) {
             console.log(error);
           }
@@ -349,9 +334,8 @@ const store = new Vuex.Store({
               if (apiResponse.status === 200) {
                 context.commit('LOGGED');
               }
-
               context.commit('USER', { data: apiResponse.data.data[0] });
-              context.commit('MY_TRACKS', { data: apiResponse.data.data[1] });
+              context.commit('MY_STREAMINGS', { data: apiResponse.data.data[1] });
             } catch (error) {
               console.log(this.error);
           }

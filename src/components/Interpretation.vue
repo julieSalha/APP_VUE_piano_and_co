@@ -4,7 +4,7 @@
       <!-- <Player />  -->
       <div>
         <ul class="list-interpretations">
-          <li class="list-interpretations__li" v-for="(item, index) in interpretations.data" :key="item.id" :id="item.id">
+          <li class="list-interpretations__li" v-for="(item, index) in streamings.data" :key="item.id" :id="item.id">
             <TrackCard :track="item" :index="index" />
           </li>
         </ul>
@@ -30,17 +30,16 @@ export default {
     TrackCard
   },
   computed: {
-    ...mapState(['interpretations', 'user', 'comments'])
+    ...mapState(['streamings', 'user', 'comments'])
   },
   methods: {
-    // allInterpretations() {
-    //     this.$store.dispatch('fetchAllInterpretations');
-    // }
+    allStreamings() {
+      this.$store.dispatch('fetchAllStreamings');
+    }
 
   },
   async mounted() {
-    //await this.allInterpretations();
-
+    await this.allStreamings();
   }
 };
 </script>

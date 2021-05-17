@@ -1,8 +1,7 @@
 <template>
-    <div :interpretation="interpretation" class="modal block-modal-interpretation-edit" :id="interpretation._id" @click="closeModal($event)">
+    <div class="modal block-modal-interpretation-edit" :id="interpretation._id" @click="closeModal($event)">
         <div class="modal-content block-modal-interpretation__content">
             <span class="modal-close block-modal-interpretation__close" @click="close($event)">
-              <!-- <img src="../../assets/arrow.svg" alt="arrow close"> -->
               <svg class="icon-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 496" width="30" fill="#000000"><path d="M248 0C111.033 0 0 111.033 0 248s111.033 248 248 248 248-111.033 248-248C495.841 111.099 384.901.159 248 0zm0 480C119.87 480 16 376.13 16 248S119.87 16 248 16s232 103.87 232 232c-.141 128.072-103.928 231.859-232 232z"/><path d="M361.136 134.864a8 8 0 00-11.312 0L248 236.688 146.176 134.864a8 8 0 10-11.312 11.312L236.688 248 134.864 349.824a8 8 0 00-.196 11.312 8 8 0 0011.508 0L248 259.312l101.824 101.824a8 8 0 0011.312-.196 8 8 0 000-11.116L259.312 248l101.824-101.824a8 8 0 000-11.312z"/></svg>
             </span>
             <form id="block-modal-interpretation__form" @submit.prevent="editTrack($event)">
@@ -83,14 +82,16 @@ export default {
       }
     },
     checkInput: function(event) {
-      const inputTitle = document.querySelector('#interpretationTitle');
-      const infosTitle = document.querySelector('#title-informations');
+      console.log(event.target)
+      const inputTitle = document.querySelector('#editTitle');
+      console.log(inputTitle)
+      const infosTitle = document.querySelector('#title-informations-edit');
 
-      const inputArtist = document.querySelector('#interpretationArtist');
-      const infosArtist = document.querySelector('#artist-informations');
+      const inputArtist = document.querySelector('#editArtist');
+      const infosArtist = document.querySelector('#artist-informations-edit');
 
-      const inputDuration = document.querySelector('#interpretationDuration');
-      const infosDuration = document.querySelector('#duration-informations');
+      const inputDuration = document.querySelector('#editDuration');
+      const infosDuration = document.querySelector('#duration-informations-edit');
 
       let isValidInput;
 
@@ -189,9 +190,6 @@ export default {
       this.interpretation.cover = '';
     },
     editTrack: function(event) {
-      console.log('this.coverChange', this.coverChange);
-      console.log('this.trackChange', this.trackChange);
-
       this.id = event.target.closest('.block-modal-interpretation-edit').getAttribute('id');
       let dataTuUpdate;
       if (this.trackChange) {

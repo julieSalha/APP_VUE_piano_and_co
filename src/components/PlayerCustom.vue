@@ -255,12 +255,10 @@ export default {
         document.querySelector('#white-player-playlist-container').style.display = "block";
         document.querySelector('#show-playlist').style.display = "none";
         document.querySelector('#close-playlist').style.display = "none";
-        console.log('style.display = "block";')
       } else {
         document.querySelector('#white-player-playlist-container').style.display = "none";
         document.querySelector('#show-playlist').style.display = "block";
         document.querySelector('#close-playlist').style.display = "block";
-        console.log('style.display = "none";')
       }
     }
   },

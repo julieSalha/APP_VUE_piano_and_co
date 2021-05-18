@@ -7,17 +7,14 @@
             <form id="block-modal-interpretation__form" @submit.prevent="editTrack($event)">
                 <h2 class="block-modal-interpretation__title">Edit interpretation</h2>
                 <label for="editTitle">Title*</label>
-                <input id="editTitle" type="text" name="editTitle" required minlength="2" maxlength="20" placeholder="Title interpretation" v-model="interpretation.title" @keyup="checkInput($event)">
-                <p><span id='title-informations-edit' hidden>Please enter a title between 2 and 20 characters.</span></p>
+                <input id="editTitle" type="text" name="editTitle" required minlength="2" maxlength="20" placeholder="Title interpretation" v-model="interpretation.title" >
                 <div>
                     <label for="editArtist">Artist name*</label>
-                    <input id="editArtist" type="text" name="editArtist" required minlength="2" maxlength="25" placeholder="Artist interpretation" v-model="interpretation.artist_name" @keyup="checkInput($event)">
-                    <p><span id='artist-informations-edit' hidden>Please enter an artist between 2 and 20 characters.</span></p>
+                    <input id="editArtist" type="text" name="editArtist" required minlength="2" maxlength="25" placeholder="Artist interpretation" v-model="interpretation.artist_name" >
                 </div>
                 <div v-if="!interpretation.track">
                   <label for="editTrack">Select track to upload*</label>
                   <input type="file" @change="onTrackChange($event)" name="editTrack" id="editTrack" accept=".mp3" required>
-                  <p><span id='track-informations-edit' hidden>Please enter a track.</span></p>
                 </div>
                 <div v-else class="interpretationTrack__display">
                   <label for="editTrack">Track uploaded:  </label>
@@ -27,7 +24,6 @@
                 <div v-if="!interpretation.cover">
                   <label for="editCover">Select cover to upload*</label>
                   <input type="file" @change="onFileChange" name="editCover" id="editCover" accept=".png, .jpg, .jpeg" required>
-                  <p><span id='cover-informations-edit' hidden>Please enter a cover.</span></p>
                 </div>
                 <div v-else class="interpretationCover__display">
                   <p>Cover uploaded:</p>
@@ -36,8 +32,7 @@
                 </div>
                 <div>
                     <label for="editDuration">Duration:*</label>
-                    <input id="editDuration" name="editDuration" placeholder="Enter duration" minlength="5" maxlength="10" required v-model="interpretation.duration" @keyup="checkInput($event)"> 
-                    <p><span id='duration-informations-edit' hidden>Please enter a valid duration. (5-10 characters)</span></p>
+                    <input id="editDuration" name="editDuration" placeholder="Enter duration" minlength="5" maxlength="10" required v-model="interpretation.duration" > 
                 </div>
                 <button class="button btn-second form-submit" type="submit" >Save</button>
             </form>
@@ -79,41 +74,6 @@ export default {
         if (form.classList.contains('active')) {
             form.classList.remove('active');
         }
-      }
-    },
-    checkInput: function(event) {
-      console.log(event.target)
-      const inputTitle = document.querySelector('#editTitle');
-      console.log(inputTitle)
-      const infosTitle = document.querySelector('#title-informations-edit');
-
-      const inputArtist = document.querySelector('#editArtist');
-      const infosArtist = document.querySelector('#artist-informations-edit');
-
-      const inputDuration = document.querySelector('#editDuration');
-      const infosDuration = document.querySelector('#duration-informations-edit');
-
-      let isValidInput;
-
-      function displayInfos(infos) {
-          isValidInput ? infos.hidden = true : infos.hidden = false;
-        }
-
-      switch (event.target) {
-        case inputTitle:
-          isValidInput = inputTitle.checkValidity();
-          displayInfos(infosTitle);
-          break;
-
-        case inputArtist:
-          isValidInput = inputArtist.checkValidity();
-          displayInfos(infosArtist);
-          break;
-
-        case inputDuration:
-          isValidInput = inputDuration.checkValidity();
-          displayInfos(infosDuration);
-          break;
       }
     },
     onTrackChange(e) {
@@ -325,6 +285,10 @@ export default {
 .interpretationCover__display {
   padding: 10px 0;
   overflow: hidden;
+
+  p {
+    margin-bottom: 10px;
+  }
 }
 
 input:valid {
@@ -333,6 +297,10 @@ input:valid {
 
 input:invalid {
   border: 1px solid red;
+}
+
+label[for="editTrack"] {
+  display: block;
 }
 
 @media screen and (min-width:768px) {

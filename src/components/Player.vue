@@ -285,7 +285,6 @@ export default {
   },
   mounted() {
     this.keyDown();
-    console.log('keyDown')
   }
 }
 </script>

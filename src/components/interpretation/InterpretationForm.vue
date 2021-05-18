@@ -211,7 +211,7 @@ export default {
   overflow: hidden;
 }
 
-input:valid {
+input:valid:not(input[type="range"]) {
   border: 1px solid #404642;
 }
 

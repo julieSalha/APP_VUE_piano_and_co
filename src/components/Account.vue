@@ -78,9 +78,6 @@ export default {
     oneInterpretation(id) {
       this.$store.dispatch('fetchOneStreaming', id)
     },
-    allStreamings() {
-      this.$store.dispatch('fetchAllStreamings');
-    },
     checkDataUser() {
       this.$store.dispatch('checkUser');
     },
@@ -99,7 +96,6 @@ export default {
   ,
   },
   async mounted() {
-    await this.allStreamings();
     await this.checkDataUser();
   }
 };

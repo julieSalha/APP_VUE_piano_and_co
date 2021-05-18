@@ -1,22 +1,23 @@
 <template>
     <div v-if="user"> 
-      <h2>Music</h2>
-      <!-- <Player />  -->
+      <h2>Piano and Co</h2>
+      <PlayerCustom :tracks="streamings.data" /> 
       <div>
-        <ul class="list-interpretations">
+        <!-- <ul class="list-interpretations">
           <li class="list-interpretations__li" v-for="(item, index) in streamings.data" :key="item.id" :id="item.id">
             <TrackCard :track="item" :index="index" />
           </li>
         </ul>
-        <form action="#" method="" id="comment-form" class="hidden"></form>
+        <form action="#" method="" id="comment-form" class="hidden"></form> -->
       </div>
     </div>
 </template>
 
 <script>
 import { mapState } from 'vuex';
-import Player from './Player';
+import PlayerCustom from './PlayerCustom';
 import TrackCard from './interpretation/TrackCard'
+import Amplitude from 'amplitudejs'
 
 export default {
   name: 'Interpretation',
@@ -26,7 +27,7 @@ export default {
     }
   },
   components: {
-    Player,
+    PlayerCustom,
     TrackCard
   },
   computed: {
@@ -36,7 +37,6 @@ export default {
     allStreamings() {
       this.$store.dispatch('fetchAllStreamings');
     }
-
   },
   async mounted() {
     await this.allStreamings();
@@ -51,7 +51,6 @@ export default {
 
   .list-interpretations__li {
     margin-bottom: 10px;
-    border-bottom: 1px solid;
 
     &.hidden {
       border-bottom: 0;

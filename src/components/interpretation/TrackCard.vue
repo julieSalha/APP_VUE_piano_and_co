@@ -1,6 +1,6 @@
 <template>
     <div class="interpretation-item">
-      <div class="interpretation-item__description">
+      <!-- <div class="interpretation-item__description">
         <span class="logo-play" @click="displayPlayer($event)"><svg xmlns="http://www.w3.org/2000/svg" width="30.051" height="30.047"><title>play</title><path data-name="Tracé 58" d="M19.982 14.436l-6.24-4.538a.752.752 0 00-1.2.607v9.069a.75.75 0 00.411.671.758.758 0 00.342.081.748.748 0 00.442-.146l6.24-4.532a.746.746 0 000-1.214z"/><path data-name="Tracé 59" d="M15.026-.002a15.023 15.023 0 1015.025 15.028A15.024 15.024 0 0015.026-.002zm0 27.54A12.516 12.516 0 1127.54 15.026 12.514 12.514 0 0115.026 27.54z"/></svg></span>
         <span class="interpretation-item__title">{{ track[0].title }}</span>
         <span class="interpretation-item__artist">{{ track[0].artist_name }}</span>
@@ -87,12 +87,42 @@
             <input :id="'newcomment' + track[0]._id" @keyup.prevent.enter="postComment($event, track[0]._id)" placeholder="Add your comment..." form="comment-form">
           </div>  
         </div>
+      </div> -->
+      <div class="player">
+        <img :src="track[0].cover" class="album-art"/>
+        <div class="meta-container">
+          <div class="song-title">{{ track[0].title }}</div>
+          <div class="song-artist">{{ track[0].artist_name }}</div>
+
+          <div class="time-container">
+            <div class="current-time">
+              <span class="amplitude-current-minutes" data-amplitude-song-index="0"></span>:<span class="amplitude-current-seconds" data-amplitude-song-index="0"></span>
+            </div>
+
+            <div class="duration">
+              <span class="amplitude-duration-minutes" data-amplitude-song-index="0">3</span>:<span class="amplitude-duration-seconds" data-amplitude-song-index="0">30</span>
+            </div>
+          </div>
+          <progress class="amplitude-song-played-progress" data-amplitude-song-index="0" @click="progressBar($event)"></progress>
+          <div class="control-container">
+            <div class="amplitude-prev">
+
+            </div>
+            <div class="amplitude-play-pause" data-amplitude-song-index="0">
+
+            </div>
+            <div class="amplitude-next">
+
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 </template>
 
 <script>
 import { mapState } from 'vuex';
+import Amplitude from 'amplitudejs'
 
 export default {
     name: 'TrackCard',
@@ -157,6 +187,14 @@ export default {
       deleteComment(event, id) {
         event.target.closest('.comment-track').classList.add('hidden');
         this.$store.dispatch('deleteComment', id);
+      },
+      progressBar(e) {
+        if ( Amplitude.getActiveIndex() === 0 ){
+          var offset = e.target.getBoundingClientRect();
+          var x = e.pageX - offset.left;
+
+          Amplitude.setSongPlayedPercentage( ( parseFloat( x ) / parseFloat( this.offsetWidth) ) * 100 );
+        }
       }
     },
     async mounted() {
@@ -418,4 +456,144 @@ figcaption {
     pointer-events: none;
   }
 }
+
+// Custom player
+body div#preload {
+  display: none; 
+}
+
+div.player {
+  border: 1px solid #eaeaea;
+  margin-bottom: 20px;
+  max-width: 750px;
+  margin: auto;
+  margin-top: 40px; }
+  div.player:after {
+    content: "";
+    display: table;
+    clear: both; }
+  div.player img.album-art {
+    width: 245px;
+    height: 245px;
+    float: left; }
+
+@media screen and (max-width: 39.9375em) {
+  div.player img.album-art {
+    width: 100%;
+    height: auto; } }
+
+div.meta-container {
+  float: left;
+  width: calc(100% - 270px);
+  padding: 10px; }
+  div.meta-container div.song-title {
+    text-align: center;
+    color: #263238;
+    font-size: 30px;
+    font-weight: 600;
+    font-family: "Open Sans", sans-serif; }
+  div.meta-container div.song-artist {
+    text-align: center;
+    font-family: "Open Sans", sans-serif;
+    font-size: 16px;
+    color: #263238;
+    margin-top: 10px; }
+  div.meta-container div.time-container {
+    font-family: Helvetica;
+    font-size: 18px;
+    color: #000;
+    margin-bottom: 10px; }
+    div.meta-container div.time-container:after {
+      content: "";
+      display: table;
+      clear: both; }
+    div.meta-container div.time-container div.current-time {
+      float: left; }
+    div.meta-container div.time-container div.duration {
+      float: right; }
+
+  @media screen and (max-width: 39.9375em) {
+  div.meta-container {
+    width: 100%; } }
+
+  div.control-container {
+  text-align: center;
+  margin-top: 40px; }
+  div.control-container div.amplitude-prev {
+    width: 28px;
+    height: 24px;
+    cursor: pointer;
+    background: url("https://521dimensions.com/img/open-source/amplitudejs/examples/multiple-songs/previous.svg");
+    display: inline-block;
+    vertical-align: middle; }
+  div.control-container div.amplitude-play-pause {
+    width: 40px;
+    height: 44px;
+    cursor: pointer;
+    display: inline-block;
+
+    background: url(https://521dimensions.com/img/open-source/amplitudejs/examples/multiple-songs/play.svg);
+
+    vertical-align: middle; }
+    div.control-container div.amplitude-play-pause.amplitude-paused {
+      background: url("https://521dimensions.com/img/open-source/amplitudejs/examples/multiple-songs/play.svg"); }
+    div.control-container div.amplitude-play-pause.amplitude-playing {
+      background: url("https://521dimensions.com/img/open-source/amplitudejs/examples/multiple-songs/pause.svg"); }
+  div.control-container div.amplitude-next {
+    width: 28px;
+    height: 24px;
+    cursor: pointer;
+    background: url("https://521dimensions.com/img/open-source/amplitudejs/examples/multiple-songs/next.svg");
+    display: inline-block;
+    vertical-align: middle; }
+
+  @media screen and (max-width: 39.9375em) {
+  div.control-container div.amplitude-prev {
+    margin-right: 75px; }
+  div.control-container div.amplitude-next {
+    margin-left: 75px; } }
+
+  @media screen and (min-width: 40em) and (max-width: 63.9375em) {
+  div.control-container div.amplitude-prev {
+    margin-right: 40px; }
+  div.control-container div.amplitude-next {
+    margin-left: 40px; } }
+
+  @media screen and (min-width: 64em) {
+  div.control-container div.amplitude-prev {
+    margin-right: 75px; }
+  div.control-container div.amplitude-next {
+    margin-left: 75px; } }
+progress.amplitude-song-played-progress:not([value]) {
+  background-color: #313252; }
+
+progress.amplitude-song-played-progress {
+  background-color: #d7dee3;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 5px;
+  display: block;
+  cursor: pointer;
+  border-radius: 3px;
+  height: 8px;
+  border: none; }
+
+
+  progress[value]::-webkit-progress-bar {
+  background-color: #d7dee3;
+  border-radius: 3px; }
+
+progress[value]::-moz-progress-bar {
+  background-color: #00a0ff;
+  border-radius: 3px; }
+
+progress[value]::-webkit-progress-value {
+  background-color: #00a0ff;
+  border-radius: 3px; }
+
+
+
+  
 </style>

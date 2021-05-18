@@ -191,10 +191,7 @@ export default {
       document.getElementById('white-player-playlist-container').style.display = "none";
     },
     addToPlaylist(index) {
-      console.log('index', index);
-
       const newIndex = Amplitude.addSong(this.songsList[index]);
-      console.log('newIndex',newIndex);
       this.appendToSongDisplay(this.songsList[index], newIndex);
       Amplitude.bindNewElements();
 

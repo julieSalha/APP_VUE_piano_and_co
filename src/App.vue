@@ -133,11 +133,18 @@ body {
   padding: 10px;
 }
 
+h2, h3 {
+  font-family: 'Playfair Display', serif;
+}
+
 h2 {
   margin-bottom: 10px;
-
-  font-family: 'Playfair Display', serif;
   font-size: 3rem;
+}
+
+h3 {
+  margin: 10px 0;
+  font-size: 2rem;
 }
 
 ul {

@@ -1,7 +1,7 @@
 <template>
     <div v-if="user"> 
       <h2>Piano and Co</h2>
-      <PlayerCustom :tracks="streamings.data" /> 
+      <PlayerCustom :tracks="lastStreamings.data" /> 
     </div>
 </template>
 
@@ -9,7 +9,6 @@
 import { mapState } from 'vuex';
 import PlayerCustom from './PlayerCustom';
 import TrackCard from './interpretation/TrackCard'
-import Amplitude from 'amplitudejs'
 
 export default {
   name: 'Interpretation',
@@ -23,15 +22,15 @@ export default {
     TrackCard
   },
   computed: {
-    ...mapState(['streamings', 'user', 'comments'])
+    ...mapState(['lastStreamings', 'user', 'comments'])
   },
   methods: {
-    allStreamings() {
-      this.$store.dispatch('fetchAllStreamings');
+    LastStreamings() {
+      this.$store.dispatch('fetchLastStreamings');
     }
   },
   async mounted() {
-    await this.allStreamings();
+    await this.LastStreamings();
   }
 };
 </script>

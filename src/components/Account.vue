@@ -1,7 +1,6 @@
 <template>
     <div v-if="user" class="account-container">
       <div class="account-content-profil">
-        <!-- <button class="button btn-third">Edit profile</button> -->
         <h2>My informations</h2>
         <article>
           <div class="account-content__photo__container">

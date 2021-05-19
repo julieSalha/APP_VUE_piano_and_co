@@ -41,13 +41,10 @@
               </div>
             </div>
           <div id="white-player-controls">
-            <div class="amplitude-shuffle amplitude-shuffle-off" id="shuffle"></div>
             <div class="amplitude-prev" id="previous"></div>
             <div class="amplitude-play-pause" id="play-pause"></div>
             <div class="amplitude-next" id="next"></div>
-            <div class="amplitude-repeat" id="repeat"></div>
           </div>
-
           </div>
 
           <div class="white-player__block">
@@ -104,8 +101,13 @@
         <div class="player-container__songs-container">
           <div v-for="(song, index) in songsList" :key="song.id" class="song-to-add" :song-to-add="index">
             <a class="add-to-playlist-button button btn-second" song-to-add="0" @click="addToPlaylist(index)">
-              <img :src="song.cover_art_url" :alt="song.name + '-' + song.artist"/>
-              Add To Playlist
+              <div>
+                <img :src="song.cover_art_url" :alt="song.name + '-' + song.artist"/>
+              </div>
+              <div>
+                <p>{{song.name}} - {{song.artist}}</p>
+                <span>Add To Playlist</span>
+              </div>
             </a>
           </div>
         </div>
@@ -285,8 +287,11 @@ div#white-player-center img.main-album-art {
   margin-bottom: 50px;
   border-radius: 8px;
   box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.12);
-  width: 280px;
-  height: 280px; }
+  max-width: 280px;
+  width: 100%;
+  max-height: 280px; 
+  height: 100%;
+}
 div#white-player-center div.song-meta-data span.song-name {
   color: #414344;
   display: block;
@@ -842,8 +847,14 @@ a.more-on-ssu{
 }
 
 .add-to-playlist-button.button {
+  min-height: 185px;
   padding: 2px;
+  margin: 0;
   font-size: 1.2rem;
+
+  span {
+    text-decoration: underline;
+  }
 }
 
 .dark-mode {
@@ -868,6 +879,15 @@ a.more-on-ssu{
 }
 
 @media screen and (min-width:1024px) {
+  div#white-player {
+    max-width: 100%;
+  }
+
+  div#white-player-center img.main-album-art {
+    max-width: 400px;
+    max-height: 400px;
+  }
+
   .add-to-playlist-button.button {
     padding: 6px 12px;
     font-size: 1.4rem;

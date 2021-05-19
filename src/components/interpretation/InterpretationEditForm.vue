@@ -4,17 +4,17 @@
             <span class="modal-close block-modal-interpretation__close" @click="close($event)">
               <svg class="icon-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 496" width="30" fill="#000000"><path d="M248 0C111.033 0 0 111.033 0 248s111.033 248 248 248 248-111.033 248-248C495.841 111.099 384.901.159 248 0zm0 480C119.87 480 16 376.13 16 248S119.87 16 248 16s232 103.87 232 232c-.141 128.072-103.928 231.859-232 232z"/><path d="M361.136 134.864a8 8 0 00-11.312 0L248 236.688 146.176 134.864a8 8 0 10-11.312 11.312L236.688 248 134.864 349.824a8 8 0 00-.196 11.312 8 8 0 0011.508 0L248 259.312l101.824 101.824a8 8 0 0011.312-.196 8 8 0 000-11.116L259.312 248l101.824-101.824a8 8 0 000-11.312z"/></svg>
             </span>
-            <form id="block-modal-interpretation__form" @submit.prevent="editTrack($event)">
+            <form id="block-modal-interpretation__form" @submit.prevent="editStreaming($event)">
                 <h2 class="block-modal-interpretation__title">Edit interpretation</h2>
                 <label for="editTitle">Title*</label>
-                <input id="editTitle" type="text" name="editTitle" required minlength="2" maxlength="20" placeholder="Title interpretation" v-model="interpretation.title" >
+                <input id="editTitle" type="text" name="editTitle" required minlength="2" maxlength="40" placeholder="Title interpretation" v-model="interpretation.title" >
                 <div>
                     <label for="editArtist">Artist name*</label>
                     <input id="editArtist" type="text" name="editArtist" required minlength="2" maxlength="25" placeholder="Artist interpretation" v-model="interpretation.artist_name" >
                 </div>
                 <div v-if="!interpretation.track">
                   <label for="editTrack">Select track to upload*</label>
-                  <input type="file" @change="onTrackChange($event)" name="editTrack" id="editTrack" accept=".mp3" required>
+                  <input type="file" @change="onTrackChange($event)" name="track" id="editTrack" accept=".mp3" required>
                 </div>
                 <div v-else class="interpretationTrack__display">
                   <label for="editTrack">Track uploaded:  </label>
@@ -23,7 +23,7 @@
                 </div>
                 <div v-if="!interpretation.cover">
                   <label for="editCover">Select cover to upload*</label>
-                  <input type="file" @change="onFileChange" name="editCover" id="editCover" accept=".png, .jpg, .jpeg" required>
+                  <input type="file" @change="onCoverChange" name="cover" id="editCover" accept=".png, .jpg, .jpeg" required>
                 </div>
                 <div v-else class="interpretationCover__display">
                   <p>Cover uploaded:</p>
@@ -58,7 +58,8 @@ export default {
       trackName: '',
       duration:'',
       trackChange: false,
-      coverChange: false
+      coverChange: false,
+      formData: new FormData()
     }
   },
   computed: {
@@ -77,79 +78,22 @@ export default {
       }
     },
     onTrackChange(e) {
-      this.trackChange = true;
+      this.track = e.target.files[0];
       this.trackName = e.target.files[0].name;
-
-      const files = e.target.files || e.dataTransfer.files;
-      if (!files.length) {
-        return;
-      }
-      this.createAudio(files[0]);
+      this.formData.append('track', this.track)
     },
-    createAudio(file) {
-      const reader = new FileReader();
-
-      reader.onload = (e) => {
-        this.track = e.target.result;
-
-      };
-      console.log('this.track', this.track);
-      reader.readAsDataURL(file);
+    onCoverChange(e) {
+      this.cover = e.target.files[0];
+      this.formData.append('cover', this.cover)
+      this.coverUrl = URL.createObjectURL(e.target.files[0]);
     },
     removeTrack: function () {
       this.interpretation.track = '';
     },
-    resizeImage(base64Str, maxWidth = 300, maxHeight = 300) {
-      return new Promise((resolve) => {
-      const img = new Image()
-      img.src = base64Str
-      img.onload = () => {
-          const canvas = document.createElement('canvas')
-          const MAX_WIDTH = maxWidth
-          const MAX_HEIGHT = maxHeight
-          let width = img.width
-          let height = img.height
-
-          if (width > height) {
-          if (width > MAX_WIDTH) {
-              height *= MAX_WIDTH / width
-              width = MAX_WIDTH
-          }
-          } else {
-          if (height > MAX_HEIGHT) {
-              width *= MAX_HEIGHT / height
-              height = MAX_HEIGHT
-          }
-          }
-          canvas.width = width
-          canvas.height = height
-          const ctx = canvas.getContext('2d')
-          ctx.drawImage(img, 0, 0, width, height)
-          resolve(this.cover = canvas.toDataURL());
-        }
-      })
-    },
-    onFileChange(e) {
-      this.coverChange = true;
-      const files = e.target.files || e.dataTransfer.files;
-      if (!files.length) {
-        return;
-      }
-      this.createImage(files[0]);
-    },
-    createImage(file) {
-      const reader = new FileReader();
-
-      reader.onload = (e) => {
-        this.cover = this.resizeImage(e.target.result);
-      };
-      console.log('this.cover',this.cover);
-      reader.readAsDataURL(file);
-    },
     removeImage: function () {
       this.interpretation.cover = '';
     },
-    editTrack: function(event) {
+    editStreaming: function(event) {
       this.id = event.target.closest('.block-modal-interpretation-edit').getAttribute('id');
       let dataTuUpdate;
       if (this.trackChange) {
@@ -192,7 +136,6 @@ export default {
           }
         }
       } else {
-        console.log('else');
         dataTuUpdate = {
           id: this.id,
           payload: {
@@ -206,15 +149,16 @@ export default {
         }
       }
 
+      // this.formData.append('title', this.title);
+      // this.formData.append('artist_name', this.artist);
+      // this.formData.append('duration', this.duration);
+      // this.formData.append('user', this.user);
 
+      this.$store.dispatch('editStream', dataTuUpdate);
+      //this.$store.dispatch('fetchLastStreamings');
 
-      //this.trackChange ? dataTuUpdate.payload.track = this.track : this.$store.state.interpretationToEdit.data.track;
-      //this.coverChange ? dataTuUpdate.payload.cover = this.cover : this.$store.state.interpretationToEdit.data.cover;
-
-      console.log('dataTuUpdate',dataTuUpdate)
-      this.$store.dispatch('editTrack', dataTuUpdate);
       // Close
-      event.target.parentNode.parentNode.classList.remove('active');
+      //event.target.parentNode.parentNode.classList.remove('active');
     }
   }
 }

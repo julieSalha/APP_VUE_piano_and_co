@@ -144,7 +144,7 @@ const store = new Vuex.Store({
                   withCredentials: true,
                 } 
               );
-              //console.log('apiResponse post', apiResponse.data.data)
+              console.log('apiResponse post', apiResponse.data.data)
               context.commit('STREAMING', { data: apiResponse.data.data })
             } catch (error) {
               console.log(this.error);
@@ -217,30 +217,48 @@ const store = new Vuex.Store({
             console.log(error);
           }
         },
-        async editTrack(context, data) {  
+        async editStream(context, data){
           try {
-            const apiResponse = await axios.put(
-              `http://localhost:9966/interpretation/${data.id}`,
-              { 
-                title : data.payload.title, 
-                artist_name : data.payload.artist_name,
-                track: data.payload.track,
-                cover: data.payload.cover,
-                duration: data.payload.duration,
-                user: data.payload.user
-              },
-              {
-                headers: {
-                  'Content-Type': 'application/json'
-                },
-                withCredentials: true,
-              } 
-            )
-            context.commit('UPDATE_TRACK', apiResponse.data.data);
-          } catch (error) {
-            console.log(error);
-          }
+              const apiResponse = await axios.post(
+                `http://localhost:9966/upload/${data.id}`, data.payload, 
+                {
+                  headers: {
+                    'Content-Type': 'multipart/form-data;  boundary=--------------------------898552055688392969814829'
+                  },
+                  withCredentials: true,
+                } 
+              );
+              console.log('apiResponse update', apiResponse.data.data)
+              //context.commit('STREAMING', { data: apiResponse.data.data })
+            } catch (error) {
+              console.log(this.error);
+            }
         },
+        // async editStreaming(context, data) {  
+        //   try {
+        //     const apiResponse = await axios.put(
+        //       `http://localhost:9966/upload/${data.id}`,
+        //       { 
+        //         title : data.payload.title, 
+        //         artist_name : data.payload.artist_name,
+        //         track: data.payload.track,
+        //         cover: data.payload.cover,
+        //         duration: data.payload.duration,
+        //         user: data.payload.user
+        //       },
+        //       {
+        //         headers: {
+        //           'Content-Type': 'application/json'
+        //         },
+        //         withCredentials: true,
+        //       } 
+        //     )
+        //     console.log('editTrack', apiResponse);
+        //     context.commit('UPDATE_TRACK', apiResponse.data.data);
+        //   } catch (error) {
+        //     console.log(error);
+        //   }
+        // },
         async fetchAllComments(context) {
           try {
             const apiResponse = await axios.get(

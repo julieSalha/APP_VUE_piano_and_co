@@ -7,11 +7,11 @@
               <form enctype="multipart/form-data" id="block-modal-interpretation__form" @submit.prevent="postStreaming">
                 <h2 class="block-modal-interpretation__title">Add new interpretation</h2>
                 <label for="interpretationTitle">Title*</label>
-                <input id="interpretationTitle" type="text" name="interpretationTitle" required minlength="2" maxlength="20" placeholder="Title interpretation" v-model="title" @keyup="checkInput($event)">
+                <input id="interpretationTitle" type="text" name="interpretationTitle" required minlength="2" maxlength="40" placeholder="Title interpretation" v-model="title" @keyup="checkInput($event)">
                 <p><span id='title-informations' hidden>Please enter a title between 2 and 20 characters.</span></p>
                 <div>
                     <label for="interpretationArtist">Artist name*</label>
-                    <input id="interpretationArtist" type="text" name="interpretationArtist" required minlength="2" maxlength="25" placeholder="Artist interpretation" v-model="artist" @keyup="checkInput($event)">
+                    <input id="interpretationArtist" type="text" name="interpretationArtist" required minlength="2" maxlength="40" placeholder="Artist interpretation" v-model="artist" @keyup="checkInput($event)">
                     <p><span id='artist-informations' hidden>Please enter an artist between 2 and 20 characters.</span></p>
                 </div>
                 <div v-if="!track">
@@ -61,13 +61,13 @@ export default {
   data() {
     return {
       isValidInput: Boolean,
-      title: 'rrrrr',
-      artist: 'rrrrrr',
+      title: '',
+      artist: '',
       cover: '',
       coverUrl: '',
       track: '',
       trackName: '',
-      duration:'rrrr',
+      duration:'',
       formData: new FormData()
     }
   },
@@ -250,6 +250,7 @@ form:not(#chords-suggestion-form) {
   }
 
   .droppox-uploaded {
+    margin-bottom: 10px;
     outline: 0;
   }
 

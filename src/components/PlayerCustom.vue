@@ -103,9 +103,8 @@
         <h3>Last interpretations...</h3>
         <div class="player-container__songs-container">
           <div v-for="(song, index) in songsList" :key="song.id" class="song-to-add" :song-to-add="index">
-            <img :src="song.cover_art_url" :alt="song.name + '-' + song.artist"/>
-
             <a class="add-to-playlist-button button btn-second" song-to-add="0" @click="addToPlaylist(index)">
+              <img :src="song.cover_art_url" :alt="song.name + '-' + song.artist"/>
               Add To Playlist
             </a>
           </div>
@@ -239,29 +238,11 @@ export default {
       */
       playlistSong.appendChild( playlistSongImg );
       playlistSong.appendChild( playlistSongMeta );
-    },
-    displayList() {
-      if (window.matchMedia("(min-width: 1024px)").matches) {
-        document.querySelector('#white-player-playlist-container').style.display = "block";
-        document.querySelector('#show-playlist').style.display = "none";
-        document.querySelector('#close-playlist').style.display = "none";
-      } else {
-        document.querySelector('#white-player-playlist-container').style.display = "none";
-        document.querySelector('#show-playlist').style.display = "block";
-        document.querySelector('#close-playlist').style.display = "block";
-      }
     }
   },
   async mounted() {
     this.keyDown();
     this.initPlayer();
-    this.displayList();
-  },
-  created() {
-    window.addEventListener('resize', this.displayList);
-  },
-  destroyed() {
-    window.removeEventListener('resize', this.displayList);
   }
 }
 </script>
@@ -887,21 +868,6 @@ a.more-on-ssu{
 }
 
 @media screen and (min-width:1024px) {
-  div#white-player {
-    display: flex;
-    flex-wrap: nowrap;
-    max-width: 100%;
-  }
-
-  .white-player__block {
-    width: 50%;
-    min-width: 50%;
-  }
-
-  div#white-player-playlist-container {
-    position: static;
-  }
-
   .add-to-playlist-button.button {
     padding: 6px 12px;
     font-size: 1.4rem;

@@ -7,7 +7,6 @@
             <div>
               &nbsp;
             </div>
-            
             <div class="center">
               <span class="now-playing">Now Playing</span>
             </div>
@@ -78,15 +77,6 @@
                     <span class="playlist-artist-album">{{ song.artist }}</span>
                   </div>
                 </div>
-
-                <!-- <div class="white-player-playlist-song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="4">
-                  <img src="https://521dimensions.com/img/open-source/amplitudejs/album-art/soon-it-will-be-cold-enough.jpg"/>
-
-                  <div class="playlist-song-meta">
-                    <span class="playlist-song-name">First Snow</span>
-                    <span class="playlist-artist-album">Emancipator &bull; Soon It Will Be Cold Enough</span>
-                  </div>
-                </div> -->
               </div>
 
               <div class="white-player-playlist-controls">
@@ -110,12 +100,15 @@
         </div>
       </div>
       <div class="player-container__songs">
-        <div v-for="(song, index) in songsList" :key="song.id" class="song-to-add" :song-to-add="index">
-          <img :src="song.cover_art_url" :alt="song.name + '-' + song.artist"/>
+        <h3>Last interpretations...</h3>
+        <div class="player-container__songs-container">
+          <div v-for="(song, index) in songsList" :key="song.id" class="song-to-add" :song-to-add="index">
+            <img :src="song.cover_art_url" :alt="song.name + '-' + song.artist"/>
 
-          <a class="add-to-playlist-button button btn-second" song-to-add="0" @click="addToPlaylist(index)">
-            Add To Playlist
-          </a>
+            <a class="add-to-playlist-button button btn-second" song-to-add="0" @click="addToPlaylist(index)">
+              Add To Playlist
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -135,22 +128,22 @@ export default {
       songsList: Array,
       demoSongs: [
           {
-            name: "Father and son",
-            artist: "Cat Stevens",
-            url: "./uploads/track-father_and_son.mp3",
-            cover_art_url: "./uploads/cover-father_and_son.jpeg"
+            name: "Bohemian Rhapsody",
+            artist: "Queen",
+            url: "./uploads/track-bohemian_rhapsody.mp3",
+            cover_art_url: "./uploads/cover-bohemian_rhapsody.jpg"
           },
           {
-            name: "Just another day in paradise",
-            artist: "Patrick Watson",
-            url: "./uploads/track-just_another_ordinary_day.mp3",
-            cover_art_url: "./uploads/cover-just_another_ordinary_day.jpeg"
+            name: "La vie en rose",
+            artist: "Edith Piaf",
+            url: "./uploads/track-la_vie_en_rose.mp3",
+            cover_art_url: "./uploads/cover-la_vie_en_rose.jpeg"
           },
           {
-            name: "Let it be",
+            name: "Hey Jude",
             artist: "The Beatles",
-            url: "./uploads/track-let_it_be.mp3",
-            cover_art_url: "./uploads/cover-let_it_be.jpeg"
+            url: "./uploads/track-hey_jude.mp3",
+            cover_art_url: "./uploads/cover-hey_jude.jpeg"
           }
         ]
     }
@@ -281,10 +274,9 @@ div#white-player {
   box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.12);
   border-radius: 8px;
   font-family: "Lato", sans-serif;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 50px;
-  position: relative; }
+  margin: 50px auto;
+  position: relative; 
+}
 
 div.white-player-top {
   height: 64px;
@@ -746,7 +738,6 @@ div.song-to-add {
   max-width: 250px; }
   div.song-to-add img {
     border-radius: 6px;
-    margin-top: 50px;
     width: 100%; }
 
 
@@ -863,10 +854,15 @@ a.more-on-ssu{
 }
 
 
-.player-container__songs {
+.player-container__songs-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
+}
+
+.add-to-playlist-button.button {
+  padding: 2px;
+  font-size: 1.2rem;
 }
 
 .dark-mode {
@@ -904,6 +900,11 @@ a.more-on-ssu{
 
   div#white-player-playlist-container {
     position: static;
+  }
+
+  .add-to-playlist-button.button {
+    padding: 6px 12px;
+    font-size: 1.4rem;
   }
 }
 </style>

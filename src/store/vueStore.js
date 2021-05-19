@@ -16,7 +16,8 @@ const store = new Vuex.Store({
         streamings : [],
         streamingToEdit: {},
         comments: [],
-        uploadedFiles: []
+        uploadedFiles: [],
+        lastStreamings: []
     },
     
     getters: {
@@ -79,6 +80,7 @@ const store = new Vuex.Store({
           //deleteCo = {};
         },
         UPLOADS(state, payload) { state.uploadedFiles = [].concat(payload.data) },
+        LAST_STREAMINGS(state, payload) { state.lastStreamings = payload }
     },
 
     actions: {
@@ -178,7 +180,23 @@ const store = new Vuex.Store({
               }
             );
             context.commit('STREAMINGS', { data: apiResponse.data.data });
-            //context.commit('MY_STREAMINGS', { data: apiResponse.data.data });  
+          } catch (error) {
+            console.log(error)
+          }
+        },
+        async fetchLastStreamings(context) {
+          try {
+            const apiResponse = await axios.get(
+              'http://localhost:9966/upload/last',
+              {
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                withCredentials: true,
+              }
+            );
+            console.log('lassst', apiResponse.data.data);
+            context.commit('LAST_STREAMINGS', { data: apiResponse.data.data });
           } catch (error) {
             console.log(error)
           }
@@ -313,8 +331,6 @@ const store = new Vuex.Store({
                 withCredentials: true,
               } 
             )
-
-            //console.log('delete', apiResponse)
           } catch (error) {
             console.log(error);
           }

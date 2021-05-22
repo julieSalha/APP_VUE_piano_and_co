@@ -50,10 +50,6 @@
             </ul>   
           </div>
         </div>
-        <!-- <div class="account-playlists">
-          <h2>My playlists</h2>
-          <button class="button btn-third">New playlist</button>
-        </div> -->
       </div> 
   </div>
 </template>

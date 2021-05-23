@@ -106,7 +106,7 @@ body {
       color: #FFFFFF;
     }
     .header__burger-icon__subtitle, 
-    a:not(#header-no-connect__login):not(#header-no-connect__register):not(.add-to-playlist-button), 
+    a:not(#header-no-connect__login):not(#header-no-connect__register):not(.add-to-playlist-button):not(.agreement-suggestion__item), 
     .btn-primary {
       color: #FFFFFF;
     }

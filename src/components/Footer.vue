@@ -14,17 +14,6 @@
       <div class="footer-links"><a href="mailto:julie.salha@gmail.com">Contact</a></div>
       <div class="footer-copyright">
         <p>© Copyright 2021 - Julie Salha</p>
-        <!-- <div class="footer-certifications">
-          <a class="certi-logo certi-opquast link-content" href="https://certificates.opquast.com/certificate/4C6LY1" target="_blank" rel="noopener noreferrer">
-            <img src="../assets/picto/opquast.svg" alt="opquast avancé">
-          </a>
-          <a class="certi-logo certi-green link-content" href="https://www.greenit.fr/" target="_blank" rel="noopener noreferrer">
-            <img src="../assets/picto/green_it.jpeg" alt="green-it.fr">
-          </a>
-          <a class="certi-logo certi-voltaire link-content" href="https://www.certificat-voltaire.fr/" target="_blank" rel="noopener noreferrer">
-            <img src="../assets/picto/voltaire.svg" alt="certification voltaire">
-          </a>
-        </div> -->
       </div>
     </footer>
 </template>

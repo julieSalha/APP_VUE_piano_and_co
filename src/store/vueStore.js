@@ -146,7 +146,7 @@ const store = new Vuex.Store({
               );
               console.log('logout', apiResponse);
               //location.href="https://julie.dwsapp.io/"
-              location.href="http://localhost:8080/"
+              location.href = "http://localhost:8080/"
     
             } catch (error) {
               console.log(this.error);

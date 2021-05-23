@@ -243,6 +243,13 @@ export default {
       background: none;
       background-image: url('../assets/play.svg');
       background-repeat: no-repeat;
+
+      &.amplitude-playing {
+        background-image: url('../assets/pause.svg');
+      }
+      &.amplitude-paused {
+        background-image: url('../assets/play.svg');
+      }
     }
 
     div.meta-container {

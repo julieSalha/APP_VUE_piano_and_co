@@ -99,7 +99,7 @@
       <div class="player-container__songs">
         <h3>Last interpretations...</h3>
         <div class="player-container__songs-container">
-          <div v-for="(song, index) in songsList" :key="song.id" class="song-to-add" :song-to-add="index">
+          <div v-for="(song, index) in lastStreamings.data" :key="song.id" class="song-to-add" :song-to-add="index">
             <a class="add-to-playlist-button button btn-second" song-to-add="0" @click="addToPlaylist(index)">
               <div>
                 <img :src="song.cover_art_url" :alt="song.name + '-' + song.artist"/>
@@ -150,7 +150,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['streamings'])
+    ...mapState(['lastStreamings'])
   },
   methods: {
     keyDown: function() {
@@ -159,17 +159,6 @@ export default {
       };
     },
     initPlayer() {
-      const songs = [];
-      this.tracks.forEach(song => {
-        songs.push({
-          name: song[0].title,
-          artist: song[0].artist_name,
-          url: song[0].track,
-          cover_art_url: song[0].cover
-        });
-      });
-      this.songsList = songs;
-
       Amplitude.init({
         songs: this.demoSongs
       });
@@ -185,8 +174,8 @@ export default {
       document.getElementById('white-player-playlist-container').style.display = "none";
     },
     addToPlaylist(index) {
-      const newIndex = Amplitude.addSong(this.songsList[index]);
-      this.appendToSongDisplay(this.songsList[index], newIndex);
+      const newIndex = Amplitude.addSong(this.lastStreamings.data[index]);
+      this.appendToSongDisplay(this.lastStreamings.data[index], newIndex);
       Amplitude.bindNewElements();
 
       const songToAddRemove = document.querySelector('.song-to-add[song-to-add="' + index + '"]');
@@ -342,6 +331,7 @@ export default {
   padding: 10px;
 
   cursor: pointer;
+  z-index: 1;
 }
 
 

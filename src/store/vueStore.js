@@ -10,7 +10,6 @@ const store = new Vuex.Store({
         user: undefined,
         statusLogged: false,
         myTracks : [],
-        interpretations : [],
         interpretationToEdit: {},
         myStreamings : [],
         streamings : [],
@@ -42,7 +41,7 @@ const store = new Vuex.Store({
         },
         MY_STREAMINGS( state, payload ){ 
           state.myStreamings = payload;
-         },
+        },
         STREAMING( state, payload ){ state.myStreamings.push(payload.data) },
         STREAMINGS( state, payload ){ state.streamings = payload },
         DELETE_STREAMING(state, id){
@@ -54,31 +53,31 @@ const store = new Vuex.Store({
           state.myStreamings[index] = data.payload;
         },
         INTERPRETATION_TO_EDIT(state, payload){ state.interpretationToEdit = payload },
-        UPDATE_INTERPRETATION_COMMENT(state, data){
-          let idInterpretation;
-          for (const item of state.interpretations) {
-            if (item[0]._id === data.subjectOf) {
-              idInterpretation = item[0]._id;
-            }
-          }
-          const index = state.interpretations.findIndex(interpretation => interpretation.id === idInterpretation)
-          state.interpretations[index][1].push(data);
-        },   
-        COMMENTS(state, payload) { state.comments = payload.data },
-        DELETE_COMMENT(state, id) {
-          /*let itemDelete;
-          for (const item of state.comments) {
-            if (item._id === id) {
-              itemDelete = item;
-            }
-          }*/
+        // UPDATE_INTERPRETATION_COMMENT(state, data){
+        //   let idInterpretation;
+        //   for (const item of state.interpretations) {
+        //     if (item[0]._id === data.subjectOf) {
+        //       idInterpretation = item[0]._id;
+        //     }
+        //   }
+        //   const index = state.interpretations.findIndex(interpretation => interpretation.id === idInterpretation)
+        //   state.interpretations[index][1].push(data);
+        // },   
+        // COMMENTS(state, payload) { state.comments = payload.data },
+        // DELETE_COMMENT(state, id) {
+        //   /*let itemDelete;
+        //   for (const item of state.comments) {
+        //     if (item._id === id) {
+        //       itemDelete = item;
+        //     }
+        //   }*/
 
-          //const index = indexOf(itemDelete);
-          //state.comments.splice(index, 1)
+        //   //const index = indexOf(itemDelete);
+        //   //state.comments.splice(index, 1)
 
-          //let deleteCo = state.comments.find(comment => comment._id === id);
-          //deleteCo = {};
-        },
+        //   //let deleteCo = state.comments.find(comment => comment._id === id);
+        //   //deleteCo = {};
+        // },
         UPLOADS(state, payload) { state.uploadedFiles = [].concat(payload.data) },
         LAST_STREAMINGS(state, payload){ state.lastStreamings = payload }
     },
@@ -195,8 +194,18 @@ const store = new Vuex.Store({
                 withCredentials: true,
               }
             );
-            console.log('lassst', apiResponse.data.data);
-            context.commit('LAST_STREAMINGS', { data: apiResponse.data.data });
+            const lastStreamings = apiResponse.data.data;
+            const songsPiano = [];
+            lastStreamings.forEach(streaming => {
+              songsPiano.push({
+                name: streaming[0].title,
+                artist: streaming[0].artist_name,
+                url: streaming[0].track,
+                cover_art_url: streaming[0].cover
+              })
+            });
+            //console.log('songsPiano',songsPiano);
+            context.commit('LAST_STREAMINGS', { data: songsPiano });
           } catch (error) {
             console.log(error)
           }
@@ -369,7 +378,16 @@ const store = new Vuex.Store({
                 context.commit('LOGGED');
               }
               context.commit('USER', { data: apiResponse.data.data[0] });
-              context.commit('MY_STREAMINGS', { data: apiResponse.data.data[1] });
+              const myStreamings = apiResponse.data.data[1];
+              const songsAccount = [];
+              myStreamings.forEach(streaming => {
+                songsAccount.push({
+                  name: streaming.title,
+                  artist: streaming.artist_name,
+                  url: streaming.track
+                })
+              });
+              context.commit('MY_STREAMINGS', { data: songsAccount });
             } catch (error) {
               console.log(this.error);
           }

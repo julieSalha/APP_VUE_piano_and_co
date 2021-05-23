@@ -8,21 +8,14 @@
 <script>
 import { mapState } from 'vuex';
 import PlayerCustom from './PlayerCustom';
-import TrackCard from './interpretation/TrackCard'
 
 export default {
   name: 'Interpretation',
-  data() {
-    return {
-      //totalLikes: 0
-    }
-  },
   components: {
-    PlayerCustom,
-    TrackCard
+    PlayerCustom
   },
   computed: {
-    ...mapState(['lastStreamings', 'user', 'comments'])
+    ...mapState(['lastStreamings', 'user'])
   },
   methods: {
     LastStreamings() {

@@ -27,7 +27,42 @@
           </div>
           <div>
             <ul class="list-tracks">
-              <li v-for="track in myStreamings.data" :key="track.id">
+              <li v-for="(track, index) in myStreamings.data" :key="track.id">
+                <div>
+                  <div class="player">
+                    <div class="meta-container">
+                      <div class="song-title">{{ track.name }}</div>
+                      <div class="song-artist">{{ track.artist }}</div>
+
+                      <div class="player__container">
+                        <div class="control-container">
+                          <div class="amplitude-play-pause" :data-amplitude-song-index="index">
+                          </div>
+                        </div>
+                        <div class="time-container">
+                          <div class="current-time">
+                            <span class="amplitude-current-minutes" :data-amplitude-song-index="index"></span>:<span class="amplitude-current-seconds" :data-amplitude-song-index="index"></span>  /
+                          </div>
+                          
+                          <div class="duration">
+                            <span class="amplitude-duration-minutes" :data-amplitude-song-index="index"></span>:<span class="amplitude-duration-seconds" :data-amplitude-song-index="index"></span>
+                          </div>
+                        </div>
+                        <progress class="amplitude-song-played-progress" :data-amplitude-song-index="index" @click="clickProgress($event, index)"></progress>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <button class="button btn-primary" @click="updateThisTrack(track._id)">Edit</button>
+                    <InterpretationEditForm 
+                      :interpretation="track"
+                    />
+                  <button class="button btn-third" @click="deleteThisTrack(track._id)">Delete</button>
+                </div>
+              </li>
+              <!-- <li v-for="track in myStreamings.data" :key="track.id">
                 <div>
                   <span>{{ track.title }}</span> - <span>{{ track.artist_name }}</span>
                   <figure>
@@ -46,7 +81,7 @@
                     />
                   <button class="button btn-third" @click="deleteThisTrack(track._id)">Delete</button>
                 </div>
-              </li>
+              </li> -->
             </ul>   
           </div>
         </div>
@@ -56,6 +91,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import Amplitude from 'amplitudejs'
 
 import InterpretationForm from './interpretation/InterpretationForm.vue';
 import InterpretationEditForm from './interpretation/InterpretationEditForm.vue';
@@ -66,10 +102,28 @@ export default {
     InterpretationForm,
     InterpretationEditForm
   },
+  data(){
+    return {
+      songsList: Array
+    }
+  },
   computed: {
-    ...mapState(['user', 'interpretations', 'myStreamings', 'interpretationToEdit'])
+    ...mapState(['user', 'myStreamings', 'interpretationToEdit'])
   },
   methods: {
+    initPlayers() {
+      Amplitude.init({
+        songs: this.myStreamings.data
+      });
+    },
+    clickProgress(e, index) {
+      if( Amplitude.getActiveIndex() == index ){
+        const offset = e.target.getBoundingClientRect();
+        const x = e.pageX - offset.left;
+
+        Amplitude.setSongPlayedPercentage( ( parseFloat( x ) / parseFloat( e.target.offsetWidth) ) * 100 );
+      }
+    },
     oneInterpretation(id) {
       this.$store.dispatch('fetchOneStreaming', id)
     },
@@ -92,6 +146,7 @@ export default {
   },
   async mounted() {
     await this.checkDataUser();
+    await this.initPlayers();
   }
 };
 </script>
@@ -168,7 +223,7 @@ export default {
 
     margin: 0 auto 10px;
 
-    div:not(.modal-content) {
+    div:not(.modal-content):not(.player__container):not(.control-container):not(.time-container) {
       width: 100%;
       min-width: 100%;
     }
@@ -179,6 +234,79 @@ export default {
     font-size: 1.6rem;
     margin-bottom: 10px;
     display: inline-block;
+  }
+
+  div.player {
+    border: 0;
+    div.control-container div.amplitude-play-pause {
+      height: 30px;
+      background: none;
+      background-image: url('../assets/play.svg');
+      background-repeat: no-repeat;
+    }
+
+    div.meta-container {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: nowrap;
+    }
+
+    .time-container {
+      display: flex;
+      min-width: 60px;
+      width: 60px;
+      justify-content: flex-start;
+    }
+  }
+
+  div.meta-container div.song-title, div.meta-container div.song-artist {
+    font-family: 'Roboto', sans-serif;
+    text-align: left;
+  }
+
+  div.meta-container div.song-title {
+    font-size: 2rem;
+  }
+
+  div.meta-container div.song-artist {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+  }
+
+  .player__container {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: flex-start;
+
+    div.control-container {
+      margin-top: 0;
+    }
+
+    progress.amplitude-song-played-progress {
+      margin-bottom: 15px;
+    }
+  }
+
+  .control-container {
+    width: 11%;
+    min-width: 11%;
+
+    div.control-container div.amplitude-play-pause {
+      height: 30px;
+    }
+  }
+
+  .time-container {
+    width: 22%;
+    min-width: 22%;
+
+    margin-right: 60px;
+  }
+
+  .amplitude-song-played-progress {
+    width: 50%;
+    min-width: 50%;
   }
 }
 

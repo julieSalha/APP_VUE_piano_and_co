@@ -99,7 +99,7 @@
       <div class="player-container__songs">
         <h3>Last interpretations...</h3>
         <div class="player-container__songs-container">
-          <div v-for="(song, index) in songsList" :key="song.id" class="song-to-add" :song-to-add="index">
+          <div v-for="(song, index) in lastStreamings.data" :key="song.id" class="song-to-add" :song-to-add="index">
             <a class="add-to-playlist-button button btn-second" song-to-add="0" @click="addToPlaylist(index)">
               <div>
                 <img :src="song.cover_art_url" :alt="song.name + '-' + song.artist"/>
@@ -150,7 +150,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['streamings'])
+    ...mapState(['lastStreamings'])
   },
   methods: {
     keyDown: function() {
@@ -159,17 +159,6 @@ export default {
       };
     },
     initPlayer() {
-      const songs = [];
-      this.tracks.forEach(song => {
-        songs.push({
-          name: song[0].title,
-          artist: song[0].artist_name,
-          url: song[0].track,
-          cover_art_url: song[0].cover
-        });
-      });
-      this.songsList = songs;
-
       Amplitude.init({
         songs: this.demoSongs
       });
@@ -185,8 +174,8 @@ export default {
       document.getElementById('white-player-playlist-container').style.display = "none";
     },
     addToPlaylist(index) {
-      const newIndex = Amplitude.addSong(this.songsList[index]);
-      this.appendToSongDisplay(this.songsList[index], newIndex);
+      const newIndex = Amplitude.addSong(this.lastStreamings.data[index]);
+      this.appendToSongDisplay(this.lastStreamings.data[index], newIndex);
       Amplitude.bindNewElements();
 
       const songToAddRemove = document.querySelector('.song-to-add[song-to-add="' + index + '"]');
@@ -250,159 +239,179 @@ export default {
 </script>
 
 <style lang="scss">
-div#white-player {
+#white-player {
+  position: relative; 
   width: 100%;
   max-width: 375px;
+
+  margin: 50px auto;
+
   background-color: #FFFFFF;
   box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.12);
   border-radius: 8px;
-  font-family: "Lato", sans-serif;
-  margin: 50px auto;
-  position: relative; 
+  font-family: 'Roboto', sans-serif;
 }
 
-div.white-player-top {
-  height: 64px;
+.white-player-top {
   display: flex;
-  width: 100%;
-  align-items: center; }
-  div.white-player-top div {
-    flex: 1; }
-    div.white-player-top div.center {
-      text-align: center; }
-  div.white-player-top span.now-playing {
-    color: #414344;
-    font-family: "Lato", sans-serif;
-    line-height: 64px;
-    font-weight: 600; }
-  div.white-player-top img#show-playlist {
-    float: right;
-    cursor: pointer;
-    margin-right: 10px; }
+  align-items: center; 
 
-div#white-player-center img.main-album-art {
-  display: block;
-  margin: auto;
-  margin-top: 16px;
-  margin-bottom: 50px;
-  border-radius: 8px;
-  box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.12);
-  max-width: 280px;
   width: 100%;
-  max-height: 280px; 
-  height: 100%;
+
+  padding: 20px 10px;
+
+  div {
+    flex: 1; 
+
+    &.center {
+      text-align: center;
+    }
+  }
+
+  span.now-playing {
+    color: #414344;
+    font-weight: 600; 
+  }
 }
-div#white-player-center div.song-meta-data span.song-name {
-  color: #414344;
-  display: block;
-  text-align: center;
-  font-size: 20px; }
-div#white-player-center div.song-meta-data span.song-artist {
-  color: #AAAFB3;
-  display: block;
-  text-align: center;
-  font-size: 14px; }
-div#white-player-center div.time-progress {
-  margin-bottom: 30px; }
-  div#white-player-center div.time-progress span.current-time {
+
+#show-playlist { 
+  margin-left: 60px;
+  cursor: pointer;
+  float: right;
+}
+
+#white-player-center {
+  .main-album-art {
+    display: block;
+
+    max-width: 280px;
+    width: 100%;
+    max-height: 280px; 
+    height: 100%;
+
+    margin: 16px auto 50px;
+
+    border-radius: 8px;
+    box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.12);
+  }
+
+  .song-name, .song-artist {
+    display: block;
+    text-align: center;
+  }
+
+  .song-name {
+    color: #414344;
+    font-size: 20px; 
+  }
+
+  .song-artist {
+    color: #AAAFB3;
+    font-size: 14px; 
+    }
+
+  .time-progress {
+    margin-bottom: 30px; 
+  }
+
+  .current-time {
     color: #AAAFB3;
     font-size: 12px;
     display: block;
     float: left;
-    margin-left: 20px; }
-  div#white-player-center div.time-progress div#progress-container {
-    margin-left: 20px;
-    margin-right: 20px;
-    position: relative;
-    height: 20px;
-    cursor: pointer;
-    /*
-      IE 11
-    */ }
-    div#white-player-center div.time-progress div#progress-container:hover input[type=range].amplitude-song-slider::-webkit-slider-thumb {
-      display: block; }
-    div#white-player-center div.time-progress div#progress-container:hover input[type=range].amplitude-song-slider::-moz-range-thumb {
-      visibility: visible; }
-    div#white-player-center div.time-progress div#progress-container progress#song-played-progress {
-      width: 100%;
-      position: absolute;
-      left: 0;
-      top: 8px;
-      right: 0;
-      width: 100%;
-      z-index: 60;
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      appearance: none;
-      height: 4px;
-      border-radius: 5px;
-      background: transparent;
-      border: none;
-      /* Needed for Firefox */ }
-    @media all and (-ms-high-contrast: none) {
-      div#white-player-center div.time-progress div#progress-container *::-ms-backdrop, div#white-player-center div.time-progress div#progress-container progress#song-played-progress {
-        color: #FA6733;
-        border: none;
-        background-color: #E1E1E1; } }
-    @supports (-ms-ime-align: auto) {
-      div#white-player-center div.time-progress div#progress-container progress#song-played-progress {
-        color: #FA6733;
-        border: none; } }
-    div#white-player-center div.time-progress div#progress-container progress#song-played-progress[value]::-webkit-progress-bar {
-      background: none;
-      border-radius: 5px; }
-    div#white-player-center div.time-progress div#progress-container progress#song-played-progress[value]::-webkit-progress-value {
-      background-color: #FA6733;
-      border-radius: 5px; }
-    div#white-player-center div.time-progress div#progress-container progress#song-played-progress::-moz-progress-bar {
-      background: none;
-      border-radius: 5px;
-      background-color: #FA6733;
-      height: 5px;
-      margin-top: -2px; }
-    div#white-player-center div.time-progress div#progress-container progress#song-buffered-progress {
-      position: absolute;
-      left: 0;
-      top: 8px;
-      right: 0;
-      width: 100%;
-      z-index: 10;
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      appearance: none;
-      height: 4px;
-      border-radius: 5px;
-      background: transparent;
-      border: none;
-      background-color: #D7DEE3; }
-    div#white-player-center div.time-progress div#progress-container progress#song-buffered-progress[value]::-webkit-progress-bar {
-      background-color: #E1E1E1;
-      border-radius: 5px; }
-    div#white-player-center div.time-progress div#progress-container progress#song-buffered-progress[value]::-webkit-progress-value {
-      background-color: #E1E1E1;
-      border-radius: 5px;
-      transition: width .1s ease; }
-    div#white-player-center div.time-progress div#progress-container progress#song-buffered-progress::-moz-progress-bar {
-      background: none;
-      border-radius: 5px;
-      background-color: #E1E1E1;
-      height: 5px;
-      margin-top: -2px; }
-    div#white-player-center div.time-progress div#progress-container progress::-ms-fill {
-      border: none; }
+    margin-left: 20px; 
+  }
+}
+
+#progress-container {
+  position: relative;
+
+  margin-left: 20px;
+  margin-right: 20px;
+  padding: 10px;
+
+  cursor: pointer;
+  z-index: 1;
+}
+
+
+#song-played-progress {
+  position: absolute;
+  left: 0;
+  top: 8px;
+  right: 0;
+
+  width: 100%;
+  height: 4px;
+
+
+  z-index: 60;
+
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border-radius: 5px;
+  background: transparent;
+  border: none;
+}
+
+#song-played-progress[value]::-webkit-progress-bar {
+  background: none;
+  border-radius: 5px; }
+#song-played-progress[value]::-webkit-progress-value {
+  background-color: #FA6733;
+  border-radius: 5px; }
+#song-played-progress::-moz-progress-bar {
+  background: none;
+  border-radius: 5px;
+  background-color: #FA6733;
+  height: 5px;
+  margin-top: -2px; }
+#song-buffered-progress {
+  position: absolute;
+  left: 0;
+  top: 8px;
+  right: 0;
+  width: 100%;
+  z-index: 10;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  height: 4px;
+  border-radius: 5px;
+  background: transparent;
+  border: none;
+  background-color: #D7DEE3; }
+#song-buffered-progress[value]::-webkit-progress-bar {
+  background-color: #E1E1E1;
+  border-radius: 5px; }
+#song-buffered-progress[value]::-webkit-progress-value {
+  background-color: #E1E1E1;
+  border-radius: 5px;
+  transition: width .1s ease; }
+#song-buffered-progress::-moz-progress-bar {
+  background: none;
+  border-radius: 5px;
+  background-color: #E1E1E1;
+  height: 5px;
+  margin-top: -2px; }
+div#progress-container progress::-ms-fill {
+  border: none; 
+}
+
 @-moz-document url-prefix() {
-  div#white-player-center div.time-progress div#progress-container progress#song-buffered-progress {
+  #song-buffered-progress {
     top: 9px;
     border: none; } }
     @media all and (-ms-high-contrast: none) {
-      div#white-player-center div.time-progress div#progress-container *::-ms-backdrop, div#white-player-center div.time-progress div#progress-container progress#song-buffered-progress {
+      #progress-container *::-ms-backdrop, #song-buffered-progress {
         color: #78909C;
         border: none; } }
     @supports (-ms-ime-align: auto) {
-      div#white-player-center div.time-progress div#progress-container progress#song-buffered-progress {
+      #song-buffered-progress {
         color: #78909C;
         border: none; } }
-    div#white-player-center div.time-progress div#progress-container input[type=range] {
+      #progress-container input[type=range] {
       -webkit-appearance: none;
       width: 100%;
       margin: 7.5px 0;
@@ -414,9 +423,9 @@ div#white-player-center div.time-progress {
       height: 20px;
       cursor: pointer;
       background-color: inherit; }
-    div#white-player-center div.time-progress div#progress-container input[type=range]:focus {
+      #progress-container input[type=range]:focus {
       outline: none; }
-    div#white-player-center div.time-progress div#progress-container input[type=range]::-webkit-slider-runnable-track {
+    #progress-container input[type=range]::-webkit-slider-runnable-track {
       width: 100%;
       height: 0px;
       cursor: pointer;
@@ -424,7 +433,7 @@ div#white-player-center div.time-progress {
       background: #FA6733;
       border-radius: 0px;
       border: 0px solid #010101; }
-    div#white-player-center div.time-progress div#progress-container input[type=range]::-webkit-slider-thumb {
+    #progress-container input[type=range]::-webkit-slider-thumb {
       box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
       border: 1px solid #FA6733;
       height: 15px;
@@ -434,9 +443,9 @@ div#white-player-center div.time-progress {
       cursor: pointer;
       -webkit-appearance: none;
       margin-top: -7.5px; }
-    div#white-player-center div.time-progress div#progress-container input[type=range]:focus::-webkit-slider-runnable-track {
+    #progress-container input[type=range]:focus::-webkit-slider-runnable-track {
       background: #FA6733; }
-    div#white-player-center div.time-progress div#progress-container input[type=range]::-moz-range-track {
+    #progress-container input[type=range]::-moz-range-track {
       width: 100%;
       height: 0px;
       cursor: pointer;
@@ -444,7 +453,7 @@ div#white-player-center div.time-progress {
       background: #FA6733;
       border-radius: 0px;
       border: 0px solid #010101; }
-    div#white-player-center div.time-progress div#progress-container input[type=range]::-moz-range-thumb {
+    #progress-container input[type=range]::-moz-range-thumb {
       box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
       border: 1px solid #FA6733;
       height: 15px;
@@ -452,24 +461,24 @@ div#white-player-center div.time-progress {
       border-radius: 16px;
       background: #FA6733;
       cursor: pointer; }
-    div#white-player-center div.time-progress div#progress-container input[type=range]::-ms-track {
+    #progress-container input[type=range]::-ms-track {
       width: 100%;
       height: 0px;
       cursor: pointer;
       background: transparent;
       border-color: transparent;
       color: transparent; }
-    div#white-player-center div.time-progress div#progress-container input[type=range]::-ms-fill-lower {
+    #progress-container input[type=range]::-ms-fill-lower {
       background: #003d57;
       border: 0px solid #010101;
       border-radius: 0px;
       box-shadow: 0px 0px 0px rgba(0, 0, 0, 0), 0px 0px 0px rgba(13, 13, 13, 0); }
-    div#white-player-center div.time-progress div#progress-container input[type=range]::-ms-fill-upper {
+    #progress-container input[type=range]::-ms-fill-upper {
       background: #FA6733;
       border: 0px solid #010101;
       border-radius: 0px;
       box-shadow: 0px 0px 0px rgba(0, 0, 0, 0), 0px 0px 0px rgba(13, 13, 13, 0); }
-    div#white-player-center div.time-progress div#progress-container input[type=range]::-ms-thumb {
+    #progress-container input[type=range]::-ms-thumb {
       box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
       border: 1px solid #FA6733;
       height: 15px;
@@ -480,54 +489,54 @@ div#white-player-center div.time-progress {
       height: 0px;
       display: none; }
     @media all and (-ms-high-contrast: none) {
-      div#white-player-center div.time-progress div#progress-container *::-ms-backdrop, div#white-player-center div.time-progress div#progress-container input[type="range"].amplitude-song-slider {
+      #progress-container *::-ms-backdrop, #progress-container input[type="range"].amplitude-song-slider {
         padding: 0px; }
-      div#white-player-center div.time-progress div#progress-container *::-ms-backdrop, div#white-player-center div.time-progress div#progress-container input[type=range].amplitude-song-slider::-ms-thumb {
+      #progress-container *::-ms-backdrop, #progress-container input[type=range].amplitude-song-slider::-ms-thumb {
         height: 15px;
         width: 15px;
         border-radius: 10px;
         cursor: pointer;
         margin-top: -8px; }
-      div#white-player-center div.time-progress div#progress-container *::-ms-backdrop, div#white-player-center div.time-progress div#progress-container input[type=range].amplitude-song-slider::-ms-track {
+      #progress-container *::-ms-backdrop, #progress-container input[type=range].amplitude-song-slider::-ms-track {
         border-width: 15px 0;
         border-color: transparent; }
-      div#white-player-center div.time-progress div#progress-container *::-ms-backdrop, div#white-player-center div.time-progress div#progress-container input[type=range].amplitude-song-slider::-ms-fill-lower {
+      #progress-container *::-ms-backdrop, #progress-container input[type=range].amplitude-song-slider::-ms-fill-lower {
         background: #E1E1E1;
         border-radius: 10px; }
-      div#white-player-center div.time-progress div#progress-container *::-ms-backdrop, div#white-player-center div.time-progress div#progress-container input[type=range].amplitude-song-slider::-ms-fill-upper {
+      #progress-container *::-ms-backdrop, #progress-container input[type=range].amplitude-song-slider::-ms-fill-upper {
         background: #E1E1E1;
         border-radius: 10px; } }
     @supports (-ms-ime-align: auto) {
-      div#white-player-center div.time-progress div#progress-container input[type=range].amplitude-song-slider::-ms-thumb {
+      #progress-container input[type=range].amplitude-song-slider::-ms-thumb {
         height: 15px;
         width: 15px;
         margin-top: 3px; } }
-    div#white-player-center div.time-progress div#progress-container input[type=range]:focus::-ms-fill-lower {
+    #progress-container input[type=range]:focus::-ms-fill-lower {
       background: #FA6733; }
-    div#white-player-center div.time-progress div#progress-container input[type=range]:focus::-ms-fill-upper {
+    #progress-container input[type=range]:focus::-ms-fill-upper {
       background: #FA6733; }
-  div#white-player-center div.time-progress span.duration {
+  #white-player-center span.duration {
     color: #AAAFB3;
     font-size: 12px;
     display: block;
     float: right;
     margin-right: 20px; }
 
-div#white-player-controls {
+#white-player-controls {
   text-align: center;
   padding-bottom: 35px; }
-  div#white-player-controls div#shuffle {
+  #white-player-controls div#shuffle {
     display: inline-block;
     width: 19px;
     height: 16px;
     cursor: pointer;
     vertical-align: middle;
     margin-right: 24px; }
-    div#white-player-controls div#shuffle.amplitude-shuffle-off {
+    #white-player-controls div#shuffle.amplitude-shuffle-off {
       background: url("https://521dimensions.com/img/open-source/amplitudejs/examples/dynamic-songs/shuffle-off.svg"); }
-    div#white-player-controls div#shuffle.amplitude-shuffle-on {
+    #white-player-controls div#shuffle.amplitude-shuffle-on {
       background: url("https://521dimensions.com/img/open-source/amplitudejs/examples/dynamic-songs/shuffle-on.svg"); }
-  div#white-player-controls div#previous {
+  #white-player-controls div#previous {
     display: inline-block;
     height: 53px;
     width: 53px;
@@ -535,18 +544,18 @@ div#white-player-controls {
     background: url("https://521dimensions.com/img/open-source/amplitudejs/examples/dynamic-songs/previous.svg");
     vertical-align: middle;
     margin-right: 16px; }
-  div#white-player-controls div#play-pause {
+  #white-player-controls div#play-pause {
     display: inline-block;
     width: 85px;
     height: 85px;
     cursor: pointer;
     vertical-align: middle;
     margin-right: 16px; }
-    div#white-player-controls div#play-pause.amplitude-paused {
+    #white-player-controls div#play-pause.amplitude-paused {
       background: url("https://521dimensions.com/img/open-source/amplitudejs/examples/dynamic-songs/play.svg"); }
-    div#white-player-controls div#play-pause.amplitude-playing {
+    #white-player-controls div#play-pause.amplitude-playing {
       background: url("https://521dimensions.com/img/open-source/amplitudejs/examples/dynamic-songs/pause.svg"); }
-  div#white-player-controls div#next {
+  #white-player-controls div#next {
     display: inline-block;
     height: 53px;
     width: 53px;
@@ -554,18 +563,18 @@ div#white-player-controls {
     background: url("https://521dimensions.com/img/open-source/amplitudejs/examples/dynamic-songs/next.svg");
     vertical-align: middle;
     margin-right: 24px; }
-  div#white-player-controls div#repeat {
+  #white-player-controls div#repeat {
     display: inline-block;
     width: 18px;
     height: 16px;
     cursor: pointer;
     vertical-align: middle; }
-    div#white-player-controls div#repeat.amplitude-repeat-off {
+    #white-player-controls div#repeat.amplitude-repeat-off {
       background: url("https://521dimensions.com/img/open-source/amplitudejs/examples/dynamic-songs/repeat-off.svg"); }
-    div#white-player-controls div#repeat.amplitude-repeat-on {
+    #white-player-controls div#repeat.amplitude-repeat-on {
       background: url("https://521dimensions.com/img/open-source/amplitudejs/examples/dynamic-songs/repeat-on.svg"); }
 
-div#white-player-playlist-container {
+#white-player-playlist-container {
   position: absolute;
   top: 0;
   right: 0;
@@ -576,54 +585,54 @@ div#white-player-playlist-container {
   display: none;
   border-radius: 8px; }
 
-div.white-player-playlist-top {
+.white-player-playlist-top {
   height: 64px;
   text-align: center;
   display: flex; }
-  div.white-player-playlist-top div {
+  .white-player-playlist-top div {
     flex: 1; }
-    div.white-player-playlist-top div span.queue {
+    .white-player-playlist-top div span.queue {
       color: #414344;
-      font-family: "Lato", sans-serif;
+      font-family: "Roboto", sans-serif;
       line-height: 64px;
       font-weight: 600; }
-    div.white-player-playlist-top div img#close-playlist {
+    .white-player-playlist-top div img#close-playlist {
       margin-right: 16px;
       margin-top: 22px;
       float: right;
       cursor: pointer; }
 
-div.white-player-up-next {
+.white-player-up-next {
   margin-top: 6px;
   padding-left: 20px;
   font-size: 24px;
   color: #414344; }
 
-div.white-player-playlist {
+.white-player-playlist {
   margin-top: 32px;
   height: calc( 100% - 234px );
   overflow-y: scroll; }
 
-div.white-player-playlist-song {
+.white-player-playlist-song {
   border-bottom: 1px solid #F5F5F6;
   padding-top: 8px;
   padding-bottom: 8px;
   cursor: pointer; }
-  div.white-player-playlist-song:hover {
+  .white-player-playlist-song:hover {
     background-color: rgba(211, 94, 154, 0.3); }
-  div.white-player-playlist-song.amplitude-active-song-container {
+  .white-player-playlist-song.amplitude-active-song-container {
     background-color: rgba(238, 100, 82, 0.3); }
-  div.white-player-playlist-song img {
+  .white-player-playlist-song img {
     width: 48px;
     height: 48px;
     border-radius: 3px;
     margin-left: 16px;
     float: left; }
-  div.white-player-playlist-song div.playlist-song-meta {
+  .white-player-playlist-song div.playlist-song-meta {
     float: left;
     margin-left: 15px;
     width: calc( 100% - 80px ); }
-    div.white-player-playlist-song div.playlist-song-meta span.playlist-song-name {
+    .white-player-playlist-song div.playlist-song-meta span.playlist-song-name {
       color: #414344;
       font-size: 14px;
       display: block;
@@ -631,7 +640,7 @@ div.white-player-playlist-song {
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis; }
-    div.white-player-playlist-song div.playlist-song-meta span.playlist-artist-album {
+    .white-player-playlist-song div.playlist-song-meta span.playlist-artist-album {
       color: #AAAFB3;
       font-size: 12px;
       display: block;
@@ -640,50 +649,50 @@ div.white-player-playlist-song {
       overflow: hidden;
       text-overflow: ellipsis; }
 
-div.white-player-playlist-song::after {
+.white-player-playlist-song::after {
   content: "";
   display: table;
   clear: both; }
 
-div.white-player-playlist-controls {
+.white-player-playlist-controls {
   background-color: #F5F5F6;
   border-radius: 8px;
   padding: 16px; }
-  div.white-player-playlist-controls img.playlist-album-art {
+  .white-player-playlist-controls img.playlist-album-art {
     float: left;
     box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.12);
     border-radius: 4px;
     height: 64px;
     width: 64px; }
-  div.white-player-playlist-controls div.playlist-controls {
+  .white-player-playlist-controls .playlist-controls {
     float: left;
     margin-left: 25px;
     width: calc( 100% - 89px ); }
-    div.white-player-playlist-controls div.playlist-controls div.playlist-meta-data {
+    .white-player-playlist-controls div.playlist-meta-data {
       display: inline-block;
       width: calc(100% - 125px);
       vertical-align: middle; }
-      div.white-player-playlist-controls div.playlist-controls div.playlist-meta-data span.song-name {
+      .white-player-playlist-controls span.song-name {
         display: block;
         color: #414344;
         font-size: 20px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis; }
-      div.white-player-playlist-controls div.playlist-controls div.playlist-meta-data span.song-artist {
+      .white-player-playlist-controls .song-artist {
         display: block;
         color: #AAAFB3;
         font-size: 14px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis; }
-    div.white-player-playlist-controls div.playlist-controls div.playlist-control-wrapper {
+    .white-player-playlist-controls .playlist-control-wrapper {
       text-align: center;
       margin-top: 10px;
       display: inline-block;
       width: 120px;
       vertical-align: middle; }
-      div.white-player-playlist-controls div.playlist-controls div.playlist-control-wrapper div#playlist-previous {
+      .white-player-playlist-controls #playlist-previous {
         display: inline-block;
         height: 32px;
         width: 32px;
@@ -691,19 +700,19 @@ div.white-player-playlist-controls {
         background: url("https://521dimensions.com/img/open-source/amplitudejs/examples/dynamic-songs/previous.svg");
         vertical-align: middle;
         background-size: 32px 32px; }
-      div.white-player-playlist-controls div.playlist-controls div.playlist-control-wrapper div#playlist-play-pause {
+      .white-player-playlist-controls #playlist-play-pause {
         display: inline-block;
         width: 32px;
         height: 32px;
         cursor: pointer;
         vertical-align: middle; }
-        div.white-player-playlist-controls div.playlist-controls div.playlist-control-wrapper div#playlist-play-pause.amplitude-paused {
+        .white-player-playlist-controls #playlist-play-pause.amplitude-paused {
           background: url("https://521dimensions.com/img/open-source/amplitudejs/examples/dynamic-songs/play.svg");
           background-size: 32px 32px; }
-        div.white-player-playlist-controls div.playlist-controls div.playlist-control-wrapper div#playlist-play-pause.amplitude-playing {
+        .white-player-playlist-controls #playlist-play-pause.amplitude-playing {
           background: url("https://521dimensions.com/img/open-source/amplitudejs/examples/dynamic-songs/pause.svg");
           background-size: 32px 32px; }
-      div.white-player-playlist-controls div.playlist-controls div.playlist-control-wrapper div#playlist-next {
+      .white-player-playlist-controls #playlist-next {
         display: inline-block;
         height: 32px;
         width: 32px;
@@ -712,12 +721,12 @@ div.white-player-playlist-controls {
         vertical-align: middle;
         background-size: 32px 32px; }
 
-div.white-player-playlist-controls::after {
+.white-player-playlist-controls::after {
   content: "";
   display: table;
   clear: both; }
 
-div.song-to-add {
+.song-to-add {
   width: 33%;
   min-width: 33%;
   padding: 10px;
@@ -736,25 +745,25 @@ div.song-to-add {
   3. Layout
 */
 
-  body div.example-container {
+  .example-container {
     width: 100%;
     display: flex; }
-    body div.example-container div.player-container__tools {
+    .example-container .player-container__tools {
       width: 50%; }
-    body div.example-container div.right {
+    .example-container .right {
       width: 50%;
       display: flex;
       flex-wrap: wrap; }
 
 @media screen and (max-width: 39.9375em) {
-  body div.example-container {
+  .example-container {
     flex-direction: column; }
-    body div.example-container div.player-container__tools {
+    .example-container div.player-container__tools {
       width: 100%; }
-    body div.example-container div.player-container__songs {
+    .example-container div.player-container__songs {
       width: 100%; } }
 @media screen and (min-width: 40em) and (max-width: 63.9375em) {
-  body div.player-container__songs {
+  .player-container__songs {
     padding-left: 20px; } }
 
 .slide-in-top {
@@ -823,7 +832,7 @@ div.song-to-add {
 /*# sourceMappingURL=app.css.map */
 
 a.more-on-ssu{
-  background-color: white;
+    background-color: white;
     color: #CC5CAD;
     box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.12);
     text-align: center;
@@ -858,24 +867,22 @@ a.more-on-ssu{
 }
 
 .dark-mode {
-  div#white-player,
-  div#white-player-playlist-container,
-  div.white-player-playlist-controls {
+  #white-player,
+  #white-player-playlist-container,
+  .white-player-playlist-controls {
     background-color: #3c3939;
   }
 
-  div.white-player-top span.now-playing,
-  div#white-player-center div.song-meta-data span.song-name,
-  div#white-player-center div.song-meta-data span.song-artist,
-  div.white-player-playlist-top div span.queue,
-  div.white-player-up-next,
-  div.white-player-playlist-song div.playlist-song-meta span.playlist-song-name,
-  div.white-player-playlist-song div.playlist-song-meta span.playlist-artist-album,
-  div.white-player-playlist-controls div.playlist-controls div.playlist-meta-data span.song-name {
+  .white-player-top .now-playing,
+  #white-player-center .song-name,
+  #white-player-center .song-artist,
+  .white-player-playlist-top div .queue,
+  .white-player-up-next,
+  .white-player-playlist-song .playlist-song-name,
+  .white-player-playlist-song .playlist-artist-album,
+  .white-player-playlist-controls .song-name {
     color: #FFFFFF;
   }
-
-
 }
 
 @media screen and (min-width:1024px) {

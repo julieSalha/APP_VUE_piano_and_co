@@ -105,7 +105,7 @@
                 <img :src="song.cover_art_url" :alt="song.name + '-' + song.artist"/>
               </div>
               <div>
-                <p>{{song.name}} - {{song.artist}}</p>
+                <p class="song-to-add__description">{{song.name}} - {{song.artist}}</p>
                 <span>Add To Playlist</span>
               </div>
             </a>
@@ -883,6 +883,10 @@ a.more-on-ssu{
   .white-player-playlist-controls .song-name {
     color: #FFFFFF;
   }
+}
+
+.song-to-add__description {
+  min-height: 54px;
 }
 
 @media screen and (min-width:1024px) {

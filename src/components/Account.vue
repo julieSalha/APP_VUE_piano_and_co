@@ -117,7 +117,7 @@ export default {
       });
     },
     clickProgress(e, index) {
-      if( Amplitude.getActiveIndex() == index ){
+      if ( Amplitude.getActiveIndex() === index ) {
         const offset = e.target.getBoundingClientRect();
         const x = e.pageX - offset.left;
 

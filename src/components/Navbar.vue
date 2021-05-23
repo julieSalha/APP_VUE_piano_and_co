@@ -12,7 +12,7 @@
             </button>
         </div>
         <div>
-            <button class="button btn-second">Logout</button>
+            <button id="user-logout" class="button btn-second" @click="logoutUSer">Logout</button>
         </div>
 
     </nav>
@@ -27,6 +27,9 @@ export default {
         },
         toggleMode() {
             document.querySelector('body').classList.toggle('dark-mode');
+        },
+        logoutUSer() {
+            this.$store.dispatch('logoutUser');
         }
     }   
 }

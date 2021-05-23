@@ -132,6 +132,26 @@ const store = new Vuex.Store({
               console.log(this.error);
           }
         },
+        async logoutUser(context, data){
+          try {
+              const apiResponse = await axios.get(
+                'http://localhost:9966/auth/logout', 
+                {
+                  headers: {
+                    'Content-Type': 'application/json'
+                  },
+                  withCredentials: true,
+                }
+                
+              );
+              console.log('logout', apiResponse);
+              //location.href="https://julie.dwsapp.io/"
+              location.href="http://localhost:8080/"
+    
+            } catch (error) {
+              console.log(this.error);
+          }
+        },
         async postStream(context, formData){
           try {
               const apiResponse = await axios.post(

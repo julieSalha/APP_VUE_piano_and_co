@@ -889,6 +889,16 @@ a.more-on-ssu{
   min-height: 54px;
 }
 
+.dark-mode {
+  .white-player-playlist-song div.playlist-song-meta span.playlist-song-name,
+  .white-player-playlist-song div.playlist-song-meta span.playlist-artist-album,
+  .song-artist,
+  #white-player-center .current-time,
+  #white-player-center span.duration {
+    color: #FFFFFF;
+  }
+}
+
 @media screen and (min-width:1024px) {
   div#white-player {
     max-width: 100%;
@@ -900,6 +910,8 @@ a.more-on-ssu{
   }
 
   .add-to-playlist-button.button {
+    width: 100%;
+
     padding: 6px 12px;
     font-size: 1.4rem;
   }

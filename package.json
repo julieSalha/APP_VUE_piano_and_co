@@ -7,12 +7,13 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "server": "json-server server/db.json -m ./node_modules/json-server-auth -r server/routes.json",
-    "deploy": "scp -r ./dist/ julie@134.209.84.253:/home/julie/piano/app"
+    "deploy": "scp -r ./dist/ juliee@134.209.84.253:/home/juliee/APP_VUE_piano_and_co"
   },
   "dependencies": {
     "amplitudejs": "^5.3.0",
     "axios": "^0.21.0",
     "core-js": "^3.10.1",
+    "mini-css-extract-plugin": "^0.5.0",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
     "vuex": "^3.5.1"
@@ -21,7 +22,7 @@
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-plugin-router": "~4.5.0",
-    "@vue/cli-service": "~4.5.0",
+    "@vue/cli-service": "^3.0.5",
     "@vue/eslint-config-standard": "^5.1.2",
     "babel-eslint": "^10.1.0",
     "eslint-plugin-import": "^2.20.2",

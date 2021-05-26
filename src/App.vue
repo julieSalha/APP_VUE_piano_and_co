@@ -106,9 +106,13 @@ body {
       color: #FFFFFF;
     }
     .header__burger-icon__subtitle, 
-    a:not(#header-no-connect__login):not(#header-no-connect__register):not(.add-to-playlist-button):not(.agreement-suggestion__item), 
+    a:not(#header-no-connect__login):not(#header-no-connect__register):not(.add-to-playlist-button):not(.agreement-suggestion__item):not(.footer-link__contact), 
     .btn-primary {
       color: #FFFFFF;
+    }
+
+    .footer-copyright {
+      color: #000000;
     }
 
     .icon-arrow, 
@@ -124,6 +128,10 @@ body {
 
     .trash-clear {
       display: none;
+    }
+
+    #icon-play {
+      fill: #FFFFFF;
     }
   }
 }
@@ -291,6 +299,9 @@ footer, header, hgroup, menu, nav, section {
   .home-content__menu {
     display: block;
 
+    position: sticky;
+    top: 10px;
+
     margin: 0 10px 20px 0;
     padding: 10px;
 
@@ -299,6 +310,14 @@ footer, header, hgroup, menu, nav, section {
 
     h2 {
       font-size: 2rem;
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: nowrap;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
     }
   }
 
@@ -315,6 +334,8 @@ footer, header, hgroup, menu, nav, section {
     .home-content__menu {
       width: 20%;
       min-width: 20%;
+
+      max-height: 450px;
     }
 
     .content-views {

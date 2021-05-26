@@ -37,6 +37,8 @@
                       <div class="player__container">
                         <div class="control-container">
                           <div class="amplitude-play-pause" :data-amplitude-song-index="index">
+                            <svg class="icon-play" xmlns="http://www.w3.org/2000/svg" width="30.051" height="30.047"><path data-name="Tracé 58" d="M19.982 14.436l-6.24-4.538a.752.752 0 00-1.2.607v9.069a.75.75 0 00.411.671.758.758 0 00.342.081.748.748 0 00.442-.146l6.24-4.532a.746.746 0 000-1.214z"/><path data-name="Tracé 59" d="M15.026-.002a15.023 15.023 0 1015.025 15.028A15.024 15.024 0 0015.026-.002zm0 27.54A12.516 12.516 0 1127.54 15.026 12.514 12.514 0 0115.026 27.54z"/></svg>
+                            <svg class="icon-pause" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M437.019 74.98C388.667 26.629 324.38 0 256 0 187.619 0 123.332 26.629 74.98 74.98 26.629 123.332 0 187.619 0 256s26.629 132.668 74.98 181.02C123.332 485.371 187.619 512 256 512c68.38 0 132.667-26.629 181.019-74.98C485.371 388.668 512 324.38 512 256s-26.629-132.668-74.981-181.02zM256 482C131.383 482 30 380.617 30 256S131.383 30 256 30s226 101.383 226 226-101.383 226-226 226z"/><path d="M304.199 137.723c-8.284 0-15 6.716-15 15V359.28c0 8.284 6.716 15 15 15s15-6.716 15-15V152.723c0-8.284-6.716-15-15-15zM207.799 137.723c-8.284 0-15 6.716-15 15V359.28c0 8.284 6.716 15 15 15s15-6.716 15-15V152.723c0-8.284-6.716-15-15-15z"/></svg>
                           </div>
                         </div>
                         <div class="time-container">
@@ -202,9 +204,18 @@ export default {
   }
 }
 
+.icon-play, .icon-pause {
+  width: 30px;
+  height: 30px;
+}
+
 .dark-mode {
   .account-content__identification, .account-content__informations span {
     color: #FFFFFF;
+  }
+
+  .icon-play, .icon-pause {
+    fill: #FFFFFF;
   }
 }
 
@@ -241,14 +252,31 @@ export default {
     div.control-container div.amplitude-play-pause {
       height: 30px;
       background: none;
-      background-image: url('../assets/play.svg');
-      background-repeat: no-repeat;
+      .icon-play {
+        display: block;
+      }
+
+      .icon-pause {
+        display: none;
+      }
 
       &.amplitude-playing {
-        background-image: url('../assets/pause.svg');
+        .icon-play {
+          display: none;
+        }
+
+        .icon-pause {
+          display: block;
+        }
       }
       &.amplitude-paused {
-        background-image: url('../assets/play.svg');
+        .icon-play {
+          display: block;
+        }
+
+        .icon-pause {
+          display: none;
+        }
       }
     }
 
@@ -288,6 +316,7 @@ export default {
 
     div.control-container {
       margin-top: 0;
+      cursor: pointer;
     }
 
     progress.amplitude-song-played-progress {

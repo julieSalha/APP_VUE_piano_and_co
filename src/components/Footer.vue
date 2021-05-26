@@ -11,7 +11,7 @@
           <img src="../assets/picto/icon-instagram.svg" alt="instagram">
         </a>
       </div>
-      <div class="footer-links"><a href="mailto:julie.salha@gmail.com">Contact</a></div>
+      <div class="footer-links"><a class="footer-link__contact" href="mailto:julie.salha@gmail.com">Contact</a></div>
       <div class="footer-copyright">
         <p>© Copyright 2021 - Julie Salha</p>
       </div>

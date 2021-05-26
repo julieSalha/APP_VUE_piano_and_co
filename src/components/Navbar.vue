@@ -2,9 +2,7 @@
     <nav @click="closeMenu()">
         <div>
             <ul>
-                <a href="/" class="logo-header">
-                    <h2>Home</h2>
-                </a>
+                <li><router-link to="/"><h2>Home</h2></router-link></li>
                 <li><router-link to="/account"><h2>My account</h2></router-link></li>
                 <li><router-link to="/"><h2>Chords suggestion</h2></router-link></li>
                 <li><router-link to="/interpretation"><h2>Piano and Co</h2></router-link></li>

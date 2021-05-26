@@ -343,6 +343,14 @@ footer, header, hgroup, menu, nav, section {
       min-width: 80%;
     }
   }
+
+  select {
+    font-size: 1.7rem;
+  }
+
+  label {
+    font-size: 1.5rem;
+  }
 }
 
 @media screen and (min-width: 1400px) {

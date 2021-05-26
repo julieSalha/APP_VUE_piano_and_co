@@ -41,9 +41,16 @@
               </div>
             </div>
           <div id="white-player-controls">
-            <div class="amplitude-prev" id="previous"></div>
-            <div class="amplitude-play-pause" id="play-pause"></div>
-            <div class="amplitude-next" id="next"></div>
+            <div class="amplitude-prev" id="previous">
+              <svg class="icon-previous" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 493.52 493.52"><path d="M447.126.236c-10.056 0-20.884 4.12-32.148 11.884L140.882 200.952c-17.644 12.152-27.252 28.504-27.252 46.06-.004 17.56 9.78 33.924 27.428 46.076L415.39 481.784c11.284 7.768 22.568 11.736 32.604 11.736h.012c10.76 0 18.916-4.404 25.276-12.972 6.268-8.46 8.688-20.476 8.688-35.012V48.508C481.974 18.74 469.186.236 447.126.236zM53.106.036L39.894 0C25.018 0 11.55 12.112 11.55 26.996v439.42c0 14.884 13.024 27.1 27.908 27.1h.456l12.948-.072c14.88 0 28.092-12.164 28.092-27.048V27.028C80.958 12.144 67.97.036 53.106.036z"/></svg>
+            </div>
+            <div class="amplitude-play-pause" id="play-pause">
+              <svg class="icon-play" xmlns="http://www.w3.org/2000/svg" width="30.051" height="30.047"><path data-name="Tracé 58" d="M19.982 14.436l-6.24-4.538a.752.752 0 00-1.2.607v9.069a.75.75 0 00.411.671.758.758 0 00.342.081.748.748 0 00.442-.146l6.24-4.532a.746.746 0 000-1.214z"/><path data-name="Tracé 59" d="M15.026-.002a15.023 15.023 0 1015.025 15.028A15.024 15.024 0 0015.026-.002zm0 27.54A12.516 12.516 0 1127.54 15.026 12.514 12.514 0 0115.026 27.54z"/></svg>
+              <svg class="icon-pause" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M437.019 74.98C388.667 26.629 324.38 0 256 0 187.619 0 123.332 26.629 74.98 74.98 26.629 123.332 0 187.619 0 256s26.629 132.668 74.98 181.02C123.332 485.371 187.619 512 256 512c68.38 0 132.667-26.629 181.019-74.98C485.371 388.668 512 324.38 512 256s-26.629-132.668-74.981-181.02zM256 482C131.383 482 30 380.617 30 256S131.383 30 256 30s226 101.383 226 226-101.383 226-226 226z"/><path d="M304.199 137.723c-8.284 0-15 6.716-15 15V359.28c0 8.284 6.716 15 15 15s15-6.716 15-15V152.723c0-8.284-6.716-15-15-15zM207.799 137.723c-8.284 0-15 6.716-15 15V359.28c0 8.284 6.716 15 15 15s15-6.716 15-15V152.723c0-8.284-6.716-15-15-15z"/></svg>
+            </div>
+            <div class="amplitude-next" id="next">
+              <svg class="icon-next" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 493.796 493.796"><path d="M355.938 200.956L81.414 12.128C70.134 4.352 58.402.248 48.358.248c-22.052 0-36.672 18.496-36.672 48.26v397.036c0 14.54 4.228 26.688 10.496 35.144 6.364 8.572 16.32 13.108 27.076 13.108 10.04 0 21.308-4.112 32.584-11.876l274.276-188.828c17.632-12.152 27.3-28.508 27.296-46.076 0-17.56-9.82-33.916-27.476-46.06zM456.446 493.672l-.293-.004c-.048 0-.095.004-.143.004h.436zM455.638 0L444.29.032c-14.86 0-27.724 12.112-27.724 26.992v439.368c0 14.896 12.652 27.124 27.532 27.124l12.055.152c14.805-.079 25.957-12.412 25.957-27.252V26.996C482.11 12.116 470.51 0 455.638 0z"/></svg>
+            </div>
           </div>
           </div>
 
@@ -541,28 +548,46 @@ div#progress-container progress::-ms-fill {
     height: 53px;
     width: 53px;
     cursor: pointer;
-    background: url("https://521dimensions.com/img/open-source/amplitudejs/examples/dynamic-songs/previous.svg");
     vertical-align: middle;
     margin-right: 16px; }
   #white-player-controls div#play-pause {
     display: inline-block;
-    width: 85px;
-    height: 85px;
     cursor: pointer;
     vertical-align: middle;
-    margin-right: 16px; }
+
+    .icon-play, .icon-pause {
+      transform: scale(1.7);
+      margin-top: 10px;
+    }
+  }
+
     #white-player-controls div#play-pause.amplitude-paused {
-      background: url("https://521dimensions.com/img/open-source/amplitudejs/examples/dynamic-songs/play.svg"); }
+      background: none; 
+      .icon-play {
+        display: block;
+      }
+
+      .icon-pause {
+        display: none;
+      }
+    }
     #white-player-controls div#play-pause.amplitude-playing {
-      background: url("https://521dimensions.com/img/open-source/amplitudejs/examples/dynamic-songs/pause.svg"); }
+      background: none; 
+      .icon-play {
+        display: none;
+      }
+
+      .icon-pause {
+        display: block;
+      }
+    }
   #white-player-controls div#next {
     display: inline-block;
     height: 53px;
     width: 53px;
     cursor: pointer;
-    background: url("https://521dimensions.com/img/open-source/amplitudejs/examples/dynamic-songs/next.svg");
     vertical-align: middle;
-    margin-right: 24px; }
+    margin-left: 16px; }
   #white-player-controls div#repeat {
     display: inline-block;
     width: 18px;
@@ -866,6 +891,13 @@ a.more-on-ssu{
   }
 }
 
+.icon-previous, .icon-next {
+  width: 25px;
+  height: 25px;
+
+  margin-top: 20px;
+}
+
 .dark-mode {
   #white-player,
   #white-player-playlist-container,
@@ -883,13 +915,7 @@ a.more-on-ssu{
   .white-player-playlist-controls .song-name {
     color: #FFFFFF;
   }
-}
 
-.song-to-add__description {
-  min-height: 54px;
-}
-
-.dark-mode {
   .white-player-playlist-song div.playlist-song-meta span.playlist-song-name,
   .white-player-playlist-song div.playlist-song-meta span.playlist-artist-album,
   .song-artist,
@@ -897,6 +923,14 @@ a.more-on-ssu{
   #white-player-center span.duration {
     color: #FFFFFF;
   }
+
+  .icon-previous, .icon-next {
+    fill: #FFFFFF;
+  }
+}
+
+.song-to-add__description {
+  min-height: 54px;
 }
 
 @media screen and (min-width:1024px) {
@@ -914,6 +948,14 @@ a.more-on-ssu{
 
     padding: 6px 12px;
     font-size: 1.4rem;
+  }
+
+  #play-pause {
+    width: 300px;
+
+    .icon-play, .icon-pause {
+      margin: auto;
+    }
   }
 }
 </style>

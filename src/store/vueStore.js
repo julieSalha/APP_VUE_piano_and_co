@@ -86,7 +86,7 @@ const store = new Vuex.Store({
         async registerUser(context, data){
           try {
               const apiResponse = await axios.post(
-                'http://localhost:9966/auth/register', 
+                'https://api-piano-and-co.herokuapp.com/auth/register', 
                 { 
                   givenName : data.givenName, 
                   familyName : data.familyName,
@@ -113,7 +113,7 @@ const store = new Vuex.Store({
         async loginUser(context, data){
           try {
               const apiResponse = await axios.post(
-                'http://localhost:9966/auth/login', 
+                'https://api-piano-and-co.herokuapp.com/auth/login', 
                 { email : data.email, password : data.password },
                 {
                   headers: {
@@ -135,7 +135,7 @@ const store = new Vuex.Store({
         async logoutUser(context, data){
           try {
               const apiResponse = await axios.get(
-                'http://localhost:9966/auth/logout', 
+                'https://api-piano-and-co.herokuapp.com/auth/logout', 
                 {
                   headers: {
                     'Content-Type': 'application/json'
@@ -146,7 +146,7 @@ const store = new Vuex.Store({
               );
               console.log('logout', apiResponse);
               //location.href="https://julie.dwsapp.io/"
-              location.href = "http://localhost:9966/"
+              location.href = "https://api-piano-and-co.herokuapp.com/"
     
             } catch (error) {
               console.log(this.error);
@@ -155,7 +155,7 @@ const store = new Vuex.Store({
         async postStream(context, formData){
           try {
               const apiResponse = await axios.post(
-                'http://localhost:9966/upload/', formData, 
+                'https://api-piano-and-co.herokuapp.com/upload/', formData, 
                 {
                   headers: {
                     'Content-Type': 'multipart/form-data;  boundary=--------------------------898552055688392969814829'
@@ -171,7 +171,7 @@ const store = new Vuex.Store({
         async fetchOneStreaming(context, id) {
           try {
             const apiResponse = await axios.get(
-              `http://localhost:9966/upload/${id}`,
+              `https://api-piano-and-co.herokuapp.com/upload/${id}`,
               {
                 headers: {
                   'Content-Type': 'application/json'
@@ -189,7 +189,7 @@ const store = new Vuex.Store({
         async fetchAllStreamings(context) {
           try {
             const apiResponse = await axios.get(
-              'http://localhost:9966/upload',
+              'https://api-piano-and-co.herokuapp.com/upload',
               {
                 headers: {
                   'Content-Type': 'application/json'
@@ -205,7 +205,7 @@ const store = new Vuex.Store({
         async fetchLastStreamings(context) {
           try {
             const apiResponse = await axios.get(
-              'http://localhost:9966/upload/last',
+              'https://api-piano-and-co.herokuapp.com/upload/last',
               {
                 headers: {
                   'Content-Type': 'application/json'
@@ -231,7 +231,7 @@ const store = new Vuex.Store({
         async deleteStreaming(context, id) {
           try {
             const apiResponse = await axios.delete(
-              `http://localhost:9966/upload/${id}`,
+              `https://api-piano-and-co.herokuapp.com/upload/${id}`,
               {
                 headers: {
                   'Content-Type': 'application/json'
@@ -247,7 +247,7 @@ const store = new Vuex.Store({
         async editStream(context, data){
           try {
               const apiResponse = await axios.post(
-                `http://localhost:9966/upload/${data.id}`, data.payload, 
+                `https://api-piano-and-co.herokuapp.com/upload/${data.id}`, data.payload, 
                 {
                   headers: {
                     'Content-Type': 'multipart/form-data;  boundary=--------------------------898552055688392969814829'
@@ -264,7 +264,7 @@ const store = new Vuex.Store({
         // async editStreaming(context, data) {  
         //   try {
         //     const apiResponse = await axios.put(
-        //       `http://localhost:9966/upload/${data.id}`,
+        //       `https://api-piano-and-co.herokuapp.com/upload/${data.id}`,
         //       { 
         //         title : data.payload.title, 
         //         artist_name : data.payload.artist_name,
@@ -289,7 +289,7 @@ const store = new Vuex.Store({
         async fetchAllComments(context) {
           try {
             const apiResponse = await axios.get(
-              'http://localhost:9966/api/comment',
+              'https://api-piano-and-co.herokuapp.com/api/comment',
               {
                 headers: {
                   'Content-Type': 'application/json'
@@ -306,7 +306,7 @@ const store = new Vuex.Store({
         async createComment(context, data){
           try {
               const apiResponse = await axios.post(
-                'http://localhost:9966/api/comment', 
+                'https://api-piano-and-co.herokuapp.com/api/comment', 
                 { 
                   content : data.content, 
                   subjectOf : data.subjectOf,
@@ -327,7 +327,7 @@ const store = new Vuex.Store({
         async deleteComment(context, id) {
           try {
             const apiResponse = await axios.delete(
-              `http://localhost:9966/api/comment/${id}`,
+              `https://api-piano-and-co.herokuapp.com/api/comment/${id}`,
               {
                 headers: {
                   'Content-Type': 'application/json'
@@ -343,7 +343,7 @@ const store = new Vuex.Store({
         async createLike(context, data){
           try {
               const apiResponse = await axios.post(
-                'http://localhost:9966/api/like', 
+                'https://api-piano-and-co.herokuapp.com/api/like', 
                 { 
                   potentialAction : 'Like', 
                   subjectOf : data.subjectOf,
@@ -368,7 +368,7 @@ const store = new Vuex.Store({
         async deleteLike(context, id) {
           try {
             const apiResponse = await axios.delete(
-              `http://localhost:9966/api/like/${id}`,
+              `https://api-piano-and-co.herokuapp.com/api/like/${id}`,
               {
                 headers: {
                   'Content-Type': 'application/json'
@@ -383,7 +383,7 @@ const store = new Vuex.Store({
         async checkUser(context){
           try {
               const apiResponse = await axios.get(
-                'http://localhost:9966/auth/me', 
+                'https://api-piano-and-co.herokuapp.com/auth/me', 
                 {
                   headers: {
                     'Content-Type': 'application/json'

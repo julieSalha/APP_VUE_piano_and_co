@@ -281,7 +281,7 @@ export default {
     async secondChords() {
       try {
         const response = await axios.get(
-          "https://api-piano-and-co.herokuapp.com/suggest_chord/?chord=" + this.firstChord
+          "http://localhost:9966/suggest_chord/?chord=" + this.firstChord
         );
         // Success 🎉
         const arrayChords = response.data;
@@ -315,7 +315,7 @@ export default {
     async ThirstChords() {
       try {
         const response = await axios.get(
-          "https://api-piano-and-co.herokuapp.com/suggest_chord/?chord=" +
+          "http://localhost:9966/suggest_chord/?chord=" +
             this.firstChord +
             "," +
             this.secondChord
@@ -355,13 +355,13 @@ export default {
       try {
         let response = "";
         if (!this.thirstChord === "") {
-          response = await axios.get("https://api-piano-and-co.herokuapp.com/suggest_song/?song=" +
+          response = await axios.get("http://localhost:9966/suggest_song/?song=" +
             this.secondChord +
             "," +
             this.thirstChord 
           );
         } else {
-          response = await axios.get("https://api-piano-and-co.herokuapp.com/suggest_song/?song=" +
+          response = await axios.get("http://localhost:9966/suggest_song/?song=" +
             this.firstChord +
             "," +
             this.secondChord 
@@ -404,7 +404,7 @@ export default {
   },
   async mounted() {
     try {
-      const response = await axios.get("https://api-piano-and-co.herokuapp.com/api/chord");
+      const response = await axios.get("http://localhost:9966/api/chord");
       // Success 🎉
       const arrayKeys = response.data;
       for (const item of arrayKeys.data) {

@@ -135,7 +135,7 @@ body {
 }
 
 .home-container {
-  min-height: calc(100vh - 200px);
+  min-height: calc(100vh - 285px);
   padding: 10px;
 }
 

@@ -7,12 +7,13 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "server": "json-server server/db.json -m ./node_modules/json-server-auth -r server/routes.json",
-    "deploy": "scp -r ./dist/ juliee@134.209.84.253:/home/juliee/APP_VUE_piano_and_co"
+    "deploy": "node scripts/gh-pages-deploy.js"
   },
   "dependencies": {
     "amplitudejs": "^5.3.0",
     "axios": "^0.21.0",
     "core-js": "^3.10.1",
+    "execa": "latest",
     "mini-css-extract-plugin": "^0.5.0",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",

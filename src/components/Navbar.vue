@@ -29,8 +29,9 @@ export default {
         toggleMode() {
             document.querySelector('body').classList.toggle('dark-mode');
         },
-        logoutUSer() {
-            this.$store.dispatch('logoutUser');
+        async logoutUSer() {
+            await this.$store.dispatch('logoutUser');
+            location.href = "http://localhost:8080/";
         }
     }   
 }

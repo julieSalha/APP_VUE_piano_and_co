@@ -12,11 +12,11 @@
             </div>
             
             <div>
-                <img src="https://521dimensions.com/img/open-source/amplitudejs/examples/dynamic-songs/show-playlist.svg" id="show-playlist" @click="displayPlaylist"/>
+                <img src="https://521dimensions.com/img/open-source/amplitudejs/examples/dynamic-songs/show-playlist.svg" alt="show playlist" id="show-playlist" @click="displayPlaylist"/>
             </div>
           </div>
             <div id="white-player-center">
-              <img data-amplitude-song-info="cover_art_url" class="main-album-art"/>
+              <img data-amplitude-song-info="cover_art_url" alt="main album art" class="main-album-art"/>
 
               <div class="song-meta-data">
                 <span data-amplitude-song-info="name" class="song-name"></span>
@@ -25,7 +25,8 @@
 
               <div class="time-progress">
                 <div id="progress-container">
-                  <input type="range" class="amplitude-song-slider"/>
+                  <label class="hidden" for="amplitude-song-slider">song slider</label>
+                  <input type="range" id="amplitude-song-slider" class="amplitude-song-slider"/>
                   <progress id="song-played-progress" class="amplitude-song-played-progress"></progress>
                   <progress id="song-buffered-progress" class="amplitude-buffered-progress" value="0"></progress>
                 </div>
@@ -74,7 +75,7 @@
 
               <div class="white-player-playlist">
                 <div class="white-player-playlist-song amplitude-song-container amplitude-play-pause" v-for="(song, index) in demoSongs" :key="song.id" :data-amplitude-song-index="index">
-                  <img :src="song.cover_art_url"/>
+                  <img :src="song.cover_art_url" :alt="song.name"/>
 
                   <div class="playlist-song-meta" >
                     <span class="playlist-song-name">{{ song.name }}</span>
@@ -84,7 +85,7 @@
               </div>
 
               <div class="white-player-playlist-controls">
-                <img data-amplitude-song-info="cover_art_url" class="playlist-album-art"/>
+                <img data-amplitude-song-info="cover_art_url" alt="playlist-album-art" class="playlist-album-art"/>
 
                 <div class="playlist-controls">
                   <div class="playlist-meta-data">
@@ -283,7 +284,7 @@ export default {
   }
 
   span.now-playing {
-    color: #414344;
+    color: #000000;
     font-weight: 600; 
   }
 }
@@ -315,12 +316,12 @@ export default {
   }
 
   .song-name {
-    color: #414344;
+    color: #000000;
     font-size: 20px; 
   }
 
   .song-artist {
-    color: #AAAFB3;
+    color: #000000;
     font-size: 14px; 
     }
 
@@ -329,7 +330,7 @@ export default {
   }
 
   .current-time {
-    color: #AAAFB3;
+    color: #000000;
     font-size: 12px;
     display: block;
     float: left;
@@ -530,7 +531,7 @@ div#progress-container progress::-ms-fill {
     #progress-container input[type=range]:focus::-ms-fill-upper {
       background: #FA6733; }
   #white-player-center span.duration {
-    color: #AAAFB3;
+    color: #000000;
     font-size: 12px;
     display: block;
     float: right;
@@ -624,7 +625,7 @@ div#progress-container progress::-ms-fill {
   .white-player-playlist-top div {
     flex: 1; }
     .white-player-playlist-top div span.queue {
-      color: #414344;
+      color: #000000;
       font-family: "Roboto", sans-serif;
       line-height: 64px;
       font-weight: 600; }
@@ -638,7 +639,7 @@ div#progress-container progress::-ms-fill {
   margin-top: 6px;
   padding-left: 20px;
   font-size: 24px;
-  color: #414344; }
+  color: #000000; }
 
 .white-player-playlist {
   margin-top: 32px;
@@ -670,7 +671,7 @@ div#progress-container progress::-ms-fill {
     margin-left: 15px;
     width: calc( 100% - 80px ); }
     .white-player-playlist-song div.playlist-song-meta span.playlist-song-name {
-      color: #414344;
+      color: #000000;
       font-size: 14px;
       display: block;
       width: 100%;
@@ -678,7 +679,7 @@ div#progress-container progress::-ms-fill {
       overflow: hidden;
       text-overflow: ellipsis; }
     .white-player-playlist-song div.playlist-song-meta span.playlist-artist-album {
-      color: #AAAFB3;
+      color: #000000;
       font-size: 12px;
       display: block;
       width: 100%;
@@ -717,14 +718,14 @@ div#progress-container progress::-ms-fill {
       vertical-align: middle; }
       .white-player-playlist-controls span.song-name {
         display: block;
-        color: #414344;
+        color: #000000;
         font-size: 20px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis; }
       .white-player-playlist-controls .song-artist {
         display: block;
-        color: #AAAFB3;
+        color: #000000;
         font-size: 14px;
         white-space: nowrap;
         overflow: hidden;

@@ -783,20 +783,14 @@ div#progress-container progress::-ms-fill {
   clear: both; }
 
 .song-to-add {
-  width: 33%;
-  min-width: 33%;
+  width: 50%;
+  min-width: 50%;
   padding: 10px;
-  max-width: 250px; }
+  max-width: 250px; 
+}
   div.song-to-add img {
     border-radius: 6px;
     width: 100%; }
-
-
-/* Medium only */
-@media screen and (min-width: 40em) and (max-width: 63.9375em) {
-  div.song-to-add {
-    width: 40%;
-    padding: 5px; } }
 /*
   3. Layout
 */
@@ -964,7 +958,16 @@ a.more-on-ssu{
   min-height: 54px;
 }
 
+@media screen and (min-width:768px) {
+  .song-to-add {
+    width: 33%;
+    min-width: 33%;
+  }
+}
+
 @media screen and (min-width:1024px) {
+
+
   div#white-player {
     max-width: 100%;
   }

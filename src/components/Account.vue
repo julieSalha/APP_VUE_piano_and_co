@@ -57,33 +57,13 @@
                   </div>
                 </div>
                 <div>
-                  <button class="button btn-primary" @click="updateThisTrack(track._id)">Edit</button>
+                  <button class="button btn-primary" @click="updateThisTrack(track.id)">Edit</button>
                     <InterpretationEditForm 
                       :interpretation="track"
                     />
-                  <button class="button btn-third" @click="deleteThisTrack(track._id)">Delete</button>
+                  <button class="button btn-third" @click="deleteThisTrack(track.id)">Delete</button>
                 </div>
               </li>
-              <!-- <li v-for="track in myStreamings.data" :key="track.id">
-                <div>
-                  <span>{{ track.title }}</span> - <span>{{ track.artist_name }}</span>
-                  <figure>
-                    <audio
-                        controls
-                        :src="track.track">
-                            Your browser does not support the
-                            <code>audio</code> element.
-                    </audio>
-                  </figure>
-                </div>
-                <div>
-                  <button class="button btn-primary" @click="updateThisTrack(track._id)">Edit</button>
-                    <InterpretationEditForm 
-                      :interpretation="track"
-                    />
-                  <button class="button btn-third" @click="deleteThisTrack(track._id)">Delete</button>
-                </div>
-              </li> -->
             </ul>   
           </div>
         </div>
@@ -136,6 +116,7 @@ export default {
       document.querySelector('#interpretation-modal').classList.add('active');
     },
     deleteThisTrack(id) {
+      console.log('id', id);
       this.$store.dispatch('deleteStreaming', id);
     },
     updateThisTrack(id) {

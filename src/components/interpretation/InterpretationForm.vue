@@ -42,8 +42,8 @@
                 </div>
                 <div>
                     <label for="interpretationDuration">Duration:*</label>
-                    <input id="interpretationDuration" name="interpretationDuration" placeholder="Enter duration" minlength="5" maxlength="10" required v-model="duration" @keyup="checkInput($event)"> 
-                    <p><span id='duration-informations' hidden>Please enter a valid duration. (5-10 characters)</span></p>
+                    <input id="interpretationDuration" name="interpretationDuration" placeholder="Enter duration" minlength="4" maxlength="10" required v-model="duration" @keyup="checkInput($event)"> 
+                    <p><span id='duration-informations' hidden>Please enter a valid duration. (4-10 characters)</span></p>
                 </div>
                 <p>
                   <button class="button btn-second form-submit" type="submit">Create</button>

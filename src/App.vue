@@ -53,8 +53,6 @@ export default {
     displayRegister() {
       document.querySelector('#login').classList.add('hidden');
       document.querySelector('#register').classList.remove('hidden');
-          //console.log('state user', this.$store.state.user);
-          //console.log(this.$store.state.statusLogged);
     },
     displayLogin() {
       document.querySelector('#login').classList.remove('hidden');

@@ -390,7 +390,6 @@ const store = new Vuex.Store({
                   },
                   withCredentials: true,
                 }
-                
               );
               if (apiResponse.status === 200) {
                 context.commit('LOGGED');
